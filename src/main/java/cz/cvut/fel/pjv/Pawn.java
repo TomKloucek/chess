@@ -4,13 +4,13 @@ public class Pawn implements Piece {
     private int points;
     private char representation;
     private Color color;
-    private Square myPosition;
+    private int x;
+    private int y;
 
-    public Pawn(int points, char representation, Color color, Square myPosition) {
+    public Pawn(int points, char representation, Color color, int x, int y) {
         this.points = points;
         this.representation = representation;
         this.color = color;
-        this.myPosition = myPosition;
     }
 
     public int getPoints() {
@@ -37,21 +37,41 @@ public class Pawn implements Piece {
         this.color = color;
     }
 
-    public Square getMyPosition() {
-        return myPosition;
+    public int getX() {
+        return x;
     }
 
-    public void setMyPosition(Square myPosition) {
-        this.myPosition = myPosition;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     @Override
     public Square[] PossibleMovement() {
-        Board.
+        return null;
     }
 
     @Override
     public void Move() {
-        Board.
+       return;
+    }
+
+    @Override
+    public String toString() {
+        String notation = "";
+        if (color == Color.BLACK){
+            notation += "B" + getY() + getX();
+        }
+        else {
+            notation += "W" + getY() + getX();
+        }
+        return notation;
     }
 }

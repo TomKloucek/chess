@@ -7,3 +7,5 @@ public interface Piece {
 
     public void Move();
 }
+
+
