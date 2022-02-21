@@ -1,11 +1,17 @@
 package cz.cvut.fel.pjv;
 
+import java.util.ArrayList;
+
 public interface Piece {
 
     // metody
-    public Square[] PossibleMovement();
+    public ArrayList<Square> PossibleMovement(Board board);
 
-    public void Move();
+    public void Move(int x, int y);
+
+    public Color getColor();
+    public int getY();
+    public int getX();
 }
 
 

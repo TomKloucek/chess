@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv;
 
+import java.util.ArrayList;
+
 public class Pawn implements Piece {
     private int points;
     private char representation;
@@ -11,6 +13,8 @@ public class Pawn implements Piece {
         this.points = points;
         this.representation = representation;
         this.color = color;
+        this.x = x;
+        this.y = y;
     }
 
     public int getPoints() {
@@ -54,13 +58,44 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public Square[] PossibleMovement() {
-        return null;
+    public ArrayList<Square> PossibleMovement(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        if (this.color == Color.BLACK) {
+            if (board.getBoard()[this.getY()-1][this.getX()].getPiece() == null) {
+                possibilities.add(board.getBoard()[this.getY()-1][this.getX()]);
+            }
+            // TODO naimplementovat capture i pro cerneho
+        }
+        else {
+            if (board.getBoard()[this.getY()+1][this.getX()].getPiece() == null) {
+                possibilities.add(board.getBoard()[this.getY()+1][this.getX()]);
+            }
+            if (this.getX() == 0) {
+                if (board.getBoard()[this.getY()+1][this.getX()+1].getPiece() != null && board.getBoard()[this.getY()+1][this.getX()+1].getPiece().getColor() == Color.BLACK) {
+                    possibilities.add(board.getBoard()[this.getY()+1][this.getX()+1]);
+                }
+            }
+            else if (this.getX() == 7) {
+                if (board.getBoard()[this.getY()+1][this.getX()-1].getPiece() != null && board.getBoard()[this.getY()+1][this.getX()-1].getPiece().getColor() == Color.BLACK) {
+                    possibilities.add(board.getBoard()[this.getY()+1][this.getX()-1]);
+                }
+            }
+            else {
+                if (board.getBoard()[this.getY()+1][this.getX()+1].getPiece() != null && board.getBoard()[this.getY()+1][this.getX()+1].getPiece().getColor() == Color.BLACK) {
+                    possibilities.add(board.getBoard()[this.getY()+1][this.getX()+1]);
+                }
+                if (board.getBoard()[this.getY()+1][this.getX()-1].getPiece() != null && board.getBoard()[this.getY()+1][this.getX()-1].getPiece().getColor() == Color.BLACK) {
+                    possibilities.add(board.getBoard()[this.getY()+1][this.getX()-1]);
+                }
+            }
+        }
+        return possibilities;
     }
 
     @Override
-    public void Move() {
-       return;
+    public void Move(int x, int y) {
+       this.setX(x);
+       this.setY(y);
     }
 
     @Override
