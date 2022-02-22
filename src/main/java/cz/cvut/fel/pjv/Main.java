@@ -6,11 +6,9 @@ public class Main {
     board.initializeBoard();
     board.printBoard();
 
-    Piece piece = board.pickPiece(2,0);
+    Piece piece = board.pickPiece(0,6);
 
-    System.out.println(piece.PossibleMovement(board));
-
-    board.movePiece(piece, 1,1);
+    board.movePiece(piece,0,7);
 
     System.out.println();
     board.printBoard();
