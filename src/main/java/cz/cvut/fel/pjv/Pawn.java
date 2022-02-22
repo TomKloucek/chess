@@ -102,11 +102,26 @@ public class Pawn implements Piece {
     public String toString() {
         String notation = "";
         if (color == Color.BLACK){
-            notation += "B" + getY() + getX();
+            notation += "B" + YTranslate() + (getX()+1);
         }
         else {
-            notation += "W" + getY() + getX();
+            notation += "W" + YTranslate() + (getX()+1);
         }
         return notation;
+    }
+
+    @Override
+    public String YTranslate() {
+        return switch (getY() + 1) {
+            case 1 -> "a";
+            case 2 -> "b";
+            case 3 -> "c";
+            case 4 -> "d";
+            case 5 -> "e";
+            case 6 -> "f";
+            case 7 -> "g";
+            case 8 -> "h";
+            default -> "";
+        };
     }
 }

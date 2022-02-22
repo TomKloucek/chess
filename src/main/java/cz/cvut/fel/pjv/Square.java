@@ -18,20 +18,7 @@ public class Square {
         this.x = x;
     }
 
-    public String getY() {
-        return switch (this.y + 1) {
-            case 1 -> "a";
-            case 2 -> "b";
-            case 3 -> "c";
-            case 4 -> "d";
-            case 5 -> "e";
-            case 6 -> "f";
-            case 7 -> "g";
-            case 8 -> "h";
-            default -> "";
-        };
 
-    }
 
     public void setY(int y) {
         this.y = y;
