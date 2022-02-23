@@ -13,16 +13,14 @@ public class Pawn implements Piece {
 
     public Pawn(char representation, Color color, int x, int y) {
         this.points = 1;
-        this.representation = representation;
         this.color = color;
         this.x = x;
         this.y = y;
         this.moved = false;
     }
 
-    public Pawn(char representation, Color color, int x, int y, boolean moved) {
+    public Pawn(Color color, int x, int y, boolean moved) {
         this.points = 1;
-        this.representation = representation;
         this.color = color;
         this.x = x;
         this.y = y;
@@ -33,24 +31,8 @@ public class Pawn implements Piece {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public char getRepresentation() {
-        return representation;
-    }
-
-    public void setRepresentation(char representation) {
-        this.representation = representation;
-    }
-
     public Color getColor() {
         return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public int getX() {
@@ -130,27 +112,12 @@ public class Pawn implements Piece {
     public String toString() {
         String notation = "";
         if (color == Color.BLACK){
-            notation += "B" + YTranslate() + (getX()+1);
+            notation += "B" + Helpers.YTranslate(this.getY()) + (getX()+1);
         }
         else {
-            notation += "W" + YTranslate() + (getX()+1);
+            notation += "W" + Helpers.YTranslate(this.getY()) + (getX()+1);
         }
         return notation;
-    }
-
-    @Override
-    public String YTranslate() {
-        return switch (getY() + 1) {
-            case 1 -> "a";
-            case 2 -> "b";
-            case 3 -> "c";
-            case 4 -> "d";
-            case 5 -> "e";
-            case 6 -> "f";
-            case 7 -> "g";
-            case 8 -> "h";
-            default -> "";
-        };
     }
 
     public static Piece PromoteTo(Pawn pawn) {
@@ -158,8 +125,8 @@ public class Pawn implements Piece {
         Scanner sc = new Scanner(System.in);
         String answer = sc.next();
         return switch (answer) {
-            case "Rook" -> new Rook();
-            case "Queen" -> new Queen(' ',pawn.getColor(), pawn.getX(), pawn.getY());
+            case "Rook" -> new Rook(pawn.getColor(), pawn.getX(), pawn.getY());
+            case "Queen" -> new Queen(pawn.getColor(), pawn.getX(), pawn.getY());
             case "Bishop" -> new Bishop();
             case "Knight" -> new Knight();
             default -> null;

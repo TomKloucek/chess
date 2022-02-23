@@ -3,6 +3,20 @@ package cz.cvut.fel.pjv;
 import java.util.ArrayList;
 
 public class Rook implements Piece {
+    private int points;
+    private Color color;
+    private int x;
+    private int y;
+    private boolean atLeastOnceMoved;
+
+    public Rook(Color color, int x, int y) {
+        this.points = 5;
+        this.color = color;
+        this.x = x;
+        this.y = y;
+        this.atLeastOnceMoved = false;
+    }
+
     @Override
     public ArrayList<Square> PossibleMovement(Board board) {
         return null;
@@ -15,21 +29,17 @@ public class Rook implements Piece {
 
     @Override
     public Color getColor() {
-        return null;
+        return this.color;
     }
 
     @Override
     public int getY() {
-        return 0;
+        return y;
     }
 
     @Override
     public int getX() {
-        return 0;
+        return x;
     }
 
-    @Override
-    public String YTranslate() {
-        return null;
-    }
 }

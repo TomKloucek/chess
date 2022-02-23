@@ -15,7 +15,7 @@ public class Board {
             }
         }
 
-        board[6][0].setPiece(new Pawn(' ',Color.WHITE,0,6,true));
+        board[6][0].setPiece(new Pawn(Color.WHITE,0,6,true));
 
     }
     public void printBoard(){

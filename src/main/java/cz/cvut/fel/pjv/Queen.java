@@ -4,14 +4,12 @@ import java.util.ArrayList;
 
 public class Queen implements Piece {
     private int points;
-    private char representation;
     private Color color;
     private int x;
     private int y;
 
-    public Queen(char representation, Color color, int x, int y) {
+    public Queen(Color color, int x, int y) {
         this.points = 9;
-        this.representation = representation;
         this.color = color;
         this.x = x;
         this.y = y;
@@ -50,26 +48,12 @@ public class Queen implements Piece {
     public String toString() {
         String notation = "Q";
         if (color == Color.BLACK){
-            notation += "B" + YTranslate() + (getX()+1);
+            notation += "B" + Helpers.YTranslate(this.getY()) + (getX()+1);
         }
         else {
-            notation += "W" + YTranslate() + (getX()+1);
+            notation += "W" + Helpers.YTranslate(this.getY()) + (getX()+1);
         }
         return notation;
     }
 
-    @Override
-    public String YTranslate() {
-        return switch (getY() + 1) {
-            case 1 -> "a";
-            case 2 -> "b";
-            case 3 -> "c";
-            case 4 -> "d";
-            case 5 -> "e";
-            case 6 -> "f";
-            case 7 -> "g";
-            case 8 -> "h";
-            default -> "";
-        };
-    }
 }

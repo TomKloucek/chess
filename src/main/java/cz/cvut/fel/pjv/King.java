@@ -28,8 +28,4 @@ public class King implements  Piece {
         return 0;
     }
 
-    @Override
-    public String YTranslate() {
-        return null;
-    }
 }

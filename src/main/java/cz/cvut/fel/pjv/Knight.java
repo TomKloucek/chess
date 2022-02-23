@@ -27,9 +27,4 @@ public class Knight implements Piece {
     public int getX() {
         return 0;
     }
-
-    @Override
-    public String YTranslate() {
-        return null;
-    }
 }

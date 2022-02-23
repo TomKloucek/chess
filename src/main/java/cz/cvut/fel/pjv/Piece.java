@@ -12,7 +12,6 @@ public interface Piece {
     public Color getColor();
     public int getY();
     public int getX();
-    public String YTranslate();
 }
 
 
