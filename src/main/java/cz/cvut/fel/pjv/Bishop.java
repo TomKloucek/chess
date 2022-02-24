@@ -15,6 +15,10 @@ public class Bishop implements Piece {
         this.y = y;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
     public void setX(int x) {
         this.x = x;
     }
@@ -25,7 +29,13 @@ public class Bishop implements Piece {
 
     @Override
     public ArrayList<Square> PossibleMovement(Board board) {
-        return null;
+        ArrayList<Square> possibilities = new ArrayList<>();
+        for (int i = 0; i < 8; i++){
+            if (board.getBoard()[this.getY() + i][this.getX()+i].getPiece() == null){
+                possibilities.add(board.getBoard()[this.getY() + 2][this.getX()]);
+            }
+        }
+        return possibilities;
     }
 
     @Override
@@ -46,5 +56,16 @@ public class Bishop implements Piece {
     @Override
     public int getX() {
         return x;
+    }
+    @Override
+    public String toString() {
+        String notation = "";
+        if (color == Color.BLACK){
+            notation += "BB" + Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        else {
+            notation += "WB" + Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        return notation;
     }
 }

@@ -9,25 +9,25 @@ public class Board {
 
     public void initializeBoard(){
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 7; i > -1; i--) {
             for (int j = 0; j < 8; j++) {
-                board[i][j] = new Square(i,j,null);
+                board[j][i] = new Square(j,i,null);
             }
         }
-
-        board[6][0].setPiece(new Pawn(Color.WHITE,0,6,true));
+//        board[0][2].setPiece(new Bishop(Color.WHITE,0,2));
+        board[6][0].setPiece(new Pawn(Color.WHITE,6,0,true));
 
     }
     public void printBoard(){
         System.out.println("------------------------------------------");
-        for (int i = 0; i < 8; i++) {
+        for (int i = 7; i > -1; i--) {
             for (int j = 0; j < 8; j++) {
-                if (board[i][j].getPiece() != null) {
+                if (board[j][i].getPiece() != null) {
                     if (j == 0) {
-                        System.out.print("| "+board[i][j].getPiece()+" |");
+                        System.out.print("| "+board[j][i].getPiece()+" |");
                     }
                     else {
-                        System.out.print(" "+board[i][j].getPiece()+" |");
+                        System.out.print(" "+board[j][i].getPiece()+" |");
                     }
                 }
                 else {
@@ -44,24 +44,24 @@ public class Board {
     }
 
     public Piece pickPiece(int x, int y) {
-        return this.board[y][x].getPiece();
+        return this.board[x][y].getPiece();
     }
 
     public void movePiece(Piece chosen, int x, int y) {
-        if (chosen.PossibleMovement(this).contains(board[y][x])) {
+        if (chosen.PossibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
-                this.board[chosen.getY()][chosen.getX()].setPiece(null);
+                this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
-                    board[y][x].setPiece(Pawn.PromoteTo((Pawn) chosen));
+                    board[x][y].setPiece(Pawn.PromoteTo((Pawn) chosen));
                 }
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
-                    board[y][x].setPiece(Pawn.PromoteTo((Pawn) chosen));
+                    board[x][y].setPiece(Pawn.PromoteTo((Pawn) chosen));
                 }
-                board[y][x].getPiece().Move(x,y);
+                board[x][y].getPiece().Move(x,y);
             }
             else {
-                this.board[chosen.getY()][chosen.getX()].setPiece(null);
-                this.board[y][x].setPiece(chosen);
+                this.board[chosen.getX()][chosen.getY()].setPiece(null);
+                this.board[x][y].setPiece(chosen);
                 chosen.Move(x, y);
             }
         }

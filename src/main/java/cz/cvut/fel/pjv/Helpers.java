@@ -1,8 +1,8 @@
 package cz.cvut.fel.pjv;
 
 public class Helpers {
-    public static String YTranslate(int y) {
-        return switch (y + 1) {
+    public static String XTranslate(int x) {
+        return switch (x + 1) {
             case 1 -> "a";
             case 2 -> "b";
             case 3 -> "c";

@@ -18,13 +18,8 @@ public class Rook implements Piece {
     }
 
     @Override
-    public ArrayList<Square> PossibleMovement(Board board) {
-        return null;
-    }
-
-    @Override
-    public void Move(int x, int y) {
-
+    public int getPoints() {
+        return 0;
     }
 
     @Override
@@ -33,13 +28,38 @@ public class Rook implements Piece {
     }
 
     @Override
-    public int getY() {
-        return y;
-    }
+    public void setX(int x) {
 
+    }
     @Override
     public int getX() {
         return x;
     }
+
+    @Override
+    public void setY(int y) {
+
+    }
+    @Override
+    public int getY() {
+        return y;
+    }
+
+
+    @Override
+    public ArrayList<Square> PossibleMovement(Board board) {
+        return null;
+    }
+
+    @Override
+    public void Move(int x, int y) {
+
+    }
+    //TODO toString Rook
+//    @Override
+//    public String toString() {
+//        return notation;
+//    }
+
 
 }

@@ -19,6 +19,31 @@ public class Queen implements Piece {
         return points;
     }
 
+
+
+    @Override
+    public Color getColor() {
+        return null;
+    }
+
+    @Override
+    public void setX(int x) {
+    }
+    @Override
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public void setY(int y) {
+    }
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+
+
     @Override
     public ArrayList<Square> PossibleMovement(Board board) {
         return null;
@@ -30,28 +55,13 @@ public class Queen implements Piece {
     }
 
     @Override
-    public Color getColor() {
-        return null;
-    }
-
-    @Override
-    public int getY() {
-        return 0;
-    }
-
-    @Override
-    public int getX() {
-        return 0;
-    }
-
-    @Override
     public String toString() {
         String notation = "Q";
         if (color == Color.BLACK){
-            notation += "B" + Helpers.YTranslate(this.getY()) + (getX()+1);
+            notation += "B" + Helpers.XTranslate(this.getX()) + (getY()+1);
         }
         else {
-            notation += "W" + Helpers.YTranslate(this.getY()) + (getX()+1);
+            notation += "W" + Helpers.XTranslate(this.getX()) + (getY()+1);
         }
         return notation;
     }
