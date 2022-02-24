@@ -8,14 +8,14 @@ public class Pawn implements Piece {
     private Color color;
     private int x;
     private int y;
-    private boolean moved;
+    private boolean atLeastOnceMoved;
 
     public Pawn(Color color, int x, int y) {
         this.points = 1;
         this.color = color;
         this.x = x;
         this.y = y;
-        this.moved = false;
+        this.atLeastOnceMoved = false;
     }
 
     public Pawn(Color color, int x, int y, boolean moved) {
@@ -23,7 +23,7 @@ public class Pawn implements Piece {
         this.color = color;
         this.x = x;
         this.y = y;
-        this.moved = moved;
+        this.atLeastOnceMoved = moved;
     }
     @Override
     public int getPoints() {
@@ -65,7 +65,7 @@ public class Pawn implements Piece {
             // TODO naimplementovat capture i pro cerneho
         }
         else {
-            if (!this.moved) {
+            if (!this.atLeastOnceMoved) {
                 if (board.getBoard()[this.getX()][this.getY() + 2].getPiece() == null) {
                     possibilities.add(board.getBoard()[this.getY() + 2][this.getX()]);
                 }
@@ -107,7 +107,7 @@ public class Pawn implements Piece {
 
     @Override
     public void Move(int x, int y) {
-        this.moved = true;
+        this.atLeastOnceMoved = true;
        this.setX(x);
        this.setY(y);
     }

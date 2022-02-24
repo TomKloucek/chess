@@ -4,12 +4,7 @@ import java.util.ArrayList;
 
 public interface Piece {
 
-    // metody
-
-
     public int getPoints();
-
-
     public Color getColor();
 
     public void setX(int x);

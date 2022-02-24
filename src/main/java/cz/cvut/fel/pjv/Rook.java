@@ -19,7 +19,7 @@ public class Rook implements Piece {
 
     @Override
     public int getPoints() {
-        return 0;
+        return this.points;
     }
 
     @Override
@@ -29,37 +29,95 @@ public class Rook implements Piece {
 
     @Override
     public void setX(int x) {
-
+        this.x = x;
     }
+
     @Override
     public int getX() {
-        return x;
+        return this.x;
     }
 
     @Override
     public void setY(int y) {
-
+        this.y = y;
     }
+
     @Override
     public int getY() {
-        return y;
+        return this.y;
     }
-
 
     @Override
     public ArrayList<Square> PossibleMovement(Board board) {
-        return null;
+        ArrayList<Square> possibilities = new ArrayList<>();
+            // UP
+            for (int i = this.getY()+1; i < 8; i++) {
+                if (board.getBoard()[this.getX()][i].getPiece() != null) {
+                    if (board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor()) {
+                        possibilities.add(board.getBoard()[this.getX()][i]);
+                    }
+                    break;
+                }
+                else {
+                    possibilities.add(board.getBoard()[this.getX()][i]);
+                }
+            }
+            // RIGHT
+            for (int i = this.getX()+1; i < 8; i++) {
+                if (board.getBoard()[this.getX()][i].getPiece() != null) {
+                    if (board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor()) {
+                        possibilities.add(board.getBoard()[i][this.getY()]);
+                    }
+                    break;
+                }
+                else {
+                    possibilities.add(board.getBoard()[i][this.getY()]);
+                }
+            }
+            // DOWN
+            for (int i = this.getY()-1; i > -1; i--) {
+                if (board.getBoard()[this.getX()][i].getPiece() != null) {
+                    if (board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor()) {
+                        possibilities.add(board.getBoard()[this.getX()][i]);
+                    }
+                    break;
+                }
+                else {
+                    possibilities.add(board.getBoard()[this.getX()][i]);
+                }
+            }
+            // LEFT
+            for (int i = this.getX()-1; i > -1; i--) {
+                if (board.getBoard()[i][this.getY()].getPiece() != null) {
+                    if (board.getBoard()[i][this.getY()].getPiece().getColor() != this.getColor()) {
+                        possibilities.add(board.getBoard()[i][this.getY()]);
+                    }
+                    break;
+                }
+                else {
+                    possibilities.add(board.getBoard()[i][this.getY()]);
+                }
+            }
+        return possibilities;
     }
 
     @Override
     public void Move(int x, int y) {
-
+        this.atLeastOnceMoved = true;
+        this.setX(x);
+        this.setY(y);
     }
-    //TODO toString Rook
-//    @Override
-//    public String toString() {
-//        return notation;
-//    }
+    @Override
+    public String toString() {
+        String notation = "R";
+        if (color == Color.BLACK){
+            notation += "B" + Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        else {
+            notation += "W" + Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        return notation;
+    }
 
 
 }
