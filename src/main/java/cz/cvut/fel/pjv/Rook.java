@@ -3,8 +3,8 @@ package cz.cvut.fel.pjv;
 import java.util.ArrayList;
 
 public class Rook implements Piece {
-    private int points;
-    private Color color;
+    private final int points;
+    private final Color color;
     private int x;
     private int y;
     private boolean atLeastOnceMoved;

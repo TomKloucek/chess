@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv;
 
+import java.util.Scanner;
+
 public class Board {
     private Square[][] board = new Square[8][8];
 
@@ -14,8 +16,11 @@ public class Board {
                 board[j][i] = new Square(j,i,null);
             }
         }
-        board[3][1].setPiece(new Bishop(Color.WHITE,3,1));
-        board[6][4].setPiece(new Pawn(Color.BLACK,6,4,true));
+        board[4][4].setPiece(new Pawn(Color.WHITE,4,4, true));
+        board[5][5].setPiece(new Pawn(Color.BLACK,5,5, true));
+        board[3][5].setPiece(new Pawn(Color.BLACK,3,5, true));
+        //board[2][3].setPiece(new Bishop(Color.BLACK,2,3));
+        //board[6][0].setPiece(new Pawn(Color.WHITE,6,0,true));
 
     }
     public void printBoard(){
@@ -52,10 +57,10 @@ public class Board {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
-                    board[x][y].setPiece(Pawn.PromoteTo((Pawn) chosen));
+                    board[x][y].setPiece(PromoteTo((Pawn) chosen));
                 }
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
-                    board[x][y].setPiece(Pawn.PromoteTo((Pawn) chosen));
+                    board[x][y].setPiece(PromoteTo((Pawn) chosen));
                 }
                 board[x][y].getPiece().Move(x,y);
             }
@@ -68,6 +73,18 @@ public class Board {
         else {
             System.out.println("Nezadal jsi spravne hodnoty");
         }
+    }
+
+    public Piece PromoteTo(Pawn pawn) {
+        Scanner sc = new Scanner(System.in);
+        String answer = sc.next();
+        return switch (answer) {
+            case "Rook" -> new Rook(pawn.getColor(), pawn.getX(), pawn.getY());
+            case "Queen" -> new Queen(pawn.getColor(), pawn.getX(), pawn.getY());
+            case "Bishop" -> new Bishop(pawn.getColor(), pawn.getX(), pawn.getY());
+            case "Knight" -> new Knight(pawn.getColor(), pawn.getX(), pawn.getY());
+            default -> null;
+        };
     }
 
 }

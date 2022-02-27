@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Pawn implements Piece {
-    private int points;
-    private Color color;
+    private final int points;
+    private final Color color;
     private int x;
     private int y;
     private boolean atLeastOnceMoved;
@@ -58,47 +58,54 @@ public class Pawn implements Piece {
     @Override
     public ArrayList<Square> PossibleMovement(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
-        if (this.color == Color.BLACK) {
-            if (board.getBoard()[this.getX()][this.getY()-1].getPiece() == null) {
-                possibilities.add(board.getBoard()[this.getX()][this.getY()-1]);
-            }
-            // TODO naimplementovat capture i pro cerneho
+
+        // Prida pohyb o dva, kdyz se hrac nehybnul
+        if (!this.atLeastOnceMoved) {
+            possibilities.add(getMovesIfNotMoved(board));
         }
-        else {
-            if (!this.atLeastOnceMoved) {
-                if (board.getBoard()[this.getX()][this.getY() + 2].getPiece() == null) {
-                    possibilities.add(board.getBoard()[this.getY() + 2][this.getX()]);
-                }
-            }
+
+        // Prida zakladni pohyb pokud ho nic neblokuje
+        Square basicMove = getBasicMove(board);
+        if (basicMove != null) {
+            possibilities.add(basicMove);
+        }
+
+        // Prida utocne metody
+        possibilities.addAll(getAttackMoves(board));
+
+        return possibilities;
+    }
+
+    public Square getMovesIfNotMoved(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        int way = this.getColor()==Color.WHITE ? 2:-2;
+        return board.getBoard()[this.getX()][this.getY()+way];
+    }
+
+    public Square getBasicMove(Board board) {
+        int way = this.getColor()==Color.WHITE ? 1:-1;
             if (board.getBoard()[this.getX()][this.getY()+1].getPiece() == null) {
-                if (this.getY() +1 <= 7) {
-                    possibilities.add(board.getBoard()[this.getX()][this.getY()+1]);
+                return board.getBoard()[this.getX()][this.getY()+way];
+            }
+        return null;
+    }
+
+    public ArrayList<Square> getAttackMoves(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        int way = this.getColor()==Color.WHITE ? 1:-1;
+        // LEFT
+        if (Helpers.MoveInBoard(this.getX()-1, this.getY()+way)) {
+            if (board.getBoard()[this.getX()-1][this.getY()+way].getPiece() != null) {
+                if (board.getBoard()[this.getX() - 1][this.getY() + way].getPiece().getColor() != this.getColor()) {
+                    possibilities.add(board.getBoard()[this.getX() - 1][this.getY() + way]);
                 }
             }
-            if (this.getX() == 0) {
-                if (board.getBoard()[this.getX()+1][this.getY()+1].getPiece() != null && board.getBoard()[this.getX()+1][this.getY()+1].getPiece().getColor() == Color.BLACK) {
-                    if (this.getY()+1 <= 7) {
-                        possibilities.add(board.getBoard()[this.getX() + 1][this.getY() + 1]);
-                    }
-                }
-            }
-            else if (this.getX() == 7) {
-                if (board.getBoard()[this.getX()+1][this.getY()-1].getPiece() != null && board.getBoard()[this.getX()+1][this.getY()-1].getPiece().getColor() == Color.BLACK) {
-                    if (this.getY()+1 <= 7) {
-                        possibilities.add(board.getBoard()[this.getX() - 1][this.getY() + 1]);
-                    }
-                }
-            }
-            else {
-                if (board.getBoard()[this.getX()+1][this.getY()+1].getPiece() != null && board.getBoard()[this.getX()+1][this.getY()+1].getPiece().getColor() == Color.BLACK) {
-                    if (this.getY()+1 <= 7) {
-                        possibilities.add(board.getBoard()[this.getX() + 1][this.getY() + 1]);
-                    }
-                }
-                if (board.getBoard()[this.getX()-1][this.getY()+1].getPiece() != null && board.getBoard()[this.getX()-1][this.getY()+1].getPiece().getColor() == Color.BLACK) {
-                    if (this.getY()+1 <= 7) {
-                        possibilities.add(board.getBoard()[this.getX()-1][this.getY()+1]);
-                    }
+        }
+        // RIGHT
+        if (Helpers.MoveInBoard(this.getX()+1, this.getY()+way)) {
+            if (board.getBoard()[this.getX()+1][this.getY()+way].getPiece() != null) {
+                if (board.getBoard()[this.getX() + 1][this.getY() + way].getPiece().getColor() != this.getColor()) {
+                    possibilities.add(board.getBoard()[this.getX() + 1][this.getY() + way]);
                 }
             }
         }
@@ -122,18 +129,5 @@ public class Pawn implements Piece {
             notation += "W" + Helpers.XTranslate(this.getX()) + (getY()+1);
         }
         return notation;
-    }
-
-    public static Piece PromoteTo(Pawn pawn) {
-        // DOCASNE RESENI
-        Scanner sc = new Scanner(System.in);
-        String answer = sc.next();
-        return switch (answer) {
-            case "Rook" -> new Rook(pawn.getColor(), pawn.getX(), pawn.getY());
-            case "Queen" -> new Queen(pawn.getColor(), pawn.getX(), pawn.getY());
-            case "Bishop" -> new Bishop(pawn.getColor(), pawn.getX(), pawn.getY());
-            case "Knight" -> new Knight();
-            default -> null;
-        };
     }
 }

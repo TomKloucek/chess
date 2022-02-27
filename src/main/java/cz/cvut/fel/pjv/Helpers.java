@@ -14,4 +14,8 @@ public class Helpers {
             default -> "";
         };
     }
+
+    public static boolean MoveInBoard(int x, int y) {
+        return x <= 7 && x >= 0 && y <= 7 && y >= 0;
+    }
 }

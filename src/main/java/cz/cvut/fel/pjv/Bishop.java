@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class Bishop implements Piece {
-    private int points;
-    private Color color;
+    private final int points;
+    private final Color color;
     private int x;
     private int y;
 
