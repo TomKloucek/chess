@@ -16,9 +16,7 @@ public class Board {
                 board[j][i] = new Square(j,i,null);
             }
         }
-        board[4][4].setPiece(new Pawn(Color.WHITE,4,4, true));
-        board[5][5].setPiece(new Pawn(Color.BLACK,5,5, true));
-        board[3][5].setPiece(new Pawn(Color.BLACK,3,5, true));
+        board[4][4].setPiece(new King(Color.WHITE,4,4));
         //board[2][3].setPiece(new Bishop(Color.BLACK,2,3));
         //board[6][0].setPiece(new Pawn(Color.WHITE,6,0,true));
 

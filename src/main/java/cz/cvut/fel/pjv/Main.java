@@ -8,7 +8,7 @@ public class Main {
 
         Piece piece = board.pickPiece(4,4);
         System.out.println(piece.PossibleMovement(board));
-        board.movePiece(piece,0,1);
+        System.out.println("Count of PossibleMoves: " + piece.PossibleMovement(board).size());
 
         System.out.println();
         board.printBoard();

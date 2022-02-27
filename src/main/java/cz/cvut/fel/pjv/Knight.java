@@ -75,7 +75,8 @@ public class Knight implements Piece {
 
     @Override
     public void Move(int x, int y) {
-
+        this.setX(x);
+        this.setY(y);
     }
     @Override
     public String toString() {
