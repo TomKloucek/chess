@@ -16,13 +16,37 @@ public class Board {
                 board[j][i] = new Square(j,i,null);
             }
         }
-        board[4][4].setPiece(new King(Color.WHITE,4,4));
-        //board[2][3].setPiece(new Bishop(Color.BLACK,2,3));
-        //board[6][0].setPiece(new Pawn(Color.WHITE,6,0,true));
 
+        // WHITE PLAYER
+        putPiece(0,0,"Rook",Color.WHITE);
+        putPiece(1,0,"Knight",Color.WHITE);
+        putPiece(2,0,"Bishop",Color.WHITE);
+        putPiece(3,0,"Queen",Color.WHITE);
+        putPiece(4,0,"King",Color.WHITE);
+        putPiece(5,0,"Bishop",Color.WHITE);
+        putPiece(6,0,"Knight",Color.WHITE);
+        putPiece(7,0,"Rook",Color.WHITE);
+
+        for (int i = 0; i < 8; i++) {
+            putPiece(i,1,"Pawn",Color.WHITE);
+        }
+
+        // BLACK PLAYER
+        for (int i = 0; i < 8; i++) {
+            putPiece(i,6,"Pawn",Color.BLACK);
+        }
+
+        putPiece(0,7,"Rook",Color.BLACK);
+        putPiece(1,7,"Knight",Color.BLACK);
+        putPiece(2,7,"Bishop",Color.BLACK);
+        putPiece(3,7,"Queen",Color.BLACK);
+        putPiece(4,7,"King",Color.BLACK);
+        putPiece(5,7,"Bishop",Color.BLACK);
+        putPiece(6,7,"Knight",Color.BLACK);
+        putPiece(7,7,"Rook",Color.BLACK);
     }
     public void printBoard(){
-        System.out.println("------------------------------------------");
+        System.out.println("---------------------------------------------------------");
         for (int i = 7; i > -1; i--) {
             for (int j = 0; j < 8; j++) {
                 if (board[j][i].getPiece() != null) {
@@ -38,12 +62,25 @@ public class Board {
                         System.out.print("|     |");
                     }
                     else {
-                        System.out.print("    |");
+                        System.out.print("      |");
                     }
                 }
             }
-            System.out.println("\n------------------------------------------");
+            System.out.println("\n---------------------------------------------------------");
         }
+    }
+
+    public void putPiece(int x, int y, String type, Color color) {
+        Piece piece = switch (type) {
+            case "Pawn" -> new Pawn(color, x, y);
+            case "Knight" -> new Knight(color, x, y);
+            case "Queen" -> new Queen(color, x, y);
+            case "King" -> new King(color, x, y);
+            case "Rook" -> new Rook(color, x, y);
+            case "Bishop" -> new Bishop(color, x, y);
+            default -> null;
+        };
+        board[x][y].setPiece(piece);
     }
 
     public Piece pickPiece(int x, int y) {
@@ -73,9 +110,8 @@ public class Board {
         }
     }
 
-    public Piece PromoteTo(Pawn pawn) {
-        Scanner sc = new Scanner(System.in);
-        String answer = sc.next();
+    private Piece PromoteTo(Pawn pawn) {
+        String answer = "Queen";
         return switch (answer) {
             case "Rook" -> new Rook(pawn.getColor(), pawn.getX(), pawn.getY());
             case "Queen" -> new Queen(pawn.getColor(), pawn.getX(), pawn.getY());

@@ -4,13 +4,10 @@ public class Main {
     public static void main(String[] args) {
         Board board = new Board();
         board.initializeBoard();
-        board.printBoard();
 
-        Piece piece = board.pickPiece(4,4);
-        System.out.println(piece.PossibleMovement(board));
-        System.out.println("Count of PossibleMoves: " + piece.PossibleMovement(board).size());
-
-        System.out.println();
-        board.printBoard();
+        Player p1 = new Player(Color.WHITE, null);
+        Player p2 = new Player(Color.BLACK, null);
+        Game game = new Game(p1, p2, true, board);
+        game.Play();
     }
 }
