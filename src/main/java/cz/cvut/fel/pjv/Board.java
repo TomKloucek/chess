@@ -45,6 +45,7 @@ public class Board {
         putPiece(6,7,"Knight",Color.BLACK);
         putPiece(7,7,"Rook",Color.BLACK);
     }
+
     public void printBoard(){
         System.out.println("---------------------------------------------------------");
         for (int i = 7; i > -1; i--) {

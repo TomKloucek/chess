@@ -66,7 +66,7 @@ public class Rook implements Piece {
             for (int i = this.getX()+1; i < 8; i++) {
                 if (board.getBoard()[this.getX()][i].getPiece() != null) {
                     if (board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor()) {
-                        possibilities.add(board.getBoard()[i][this.getY()]);
+                        possibilities.add(board.getBoard()[this.getX()][i]);
                     }
                     break;
                 }
