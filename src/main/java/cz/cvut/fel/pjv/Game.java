@@ -17,9 +17,9 @@ public class Game {
     }
 
     public void Play() {
+        Scanner sc = new Scanner(System.in);
         while (!gameEnded()) {
             board.printBoard();
-            Scanner sc = new Scanner(System.in);
             Piece chosen = null;
             if (whiteOnMove) {
                 while (chosen == null || chosen.getColor() == Color.BLACK) {
@@ -35,6 +35,7 @@ public class Game {
                     chosen = board.pickPiece(pick_x,pick_y);
                 }
             }
+            System.out.println(chosen.PossibleMovement(board));
             int pick_x = sc.nextInt();
             int pick_y = sc.nextInt();
             board.movePiece(chosen, pick_x,pick_y);
