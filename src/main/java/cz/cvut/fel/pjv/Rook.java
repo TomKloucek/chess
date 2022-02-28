@@ -53,9 +53,10 @@ public class Rook implements Piece {
             // UP
             for (int i = this.getY()+1; i < 8; i++) {
                 if (board.getBoard()[this.getX()][i].getPiece() != null) {
-                    if (board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor()) {
-                        possibilities.add(board.getBoard()[this.getX()][i]);
+                    if (board.getBoard()[this.getX()][i].getPiece().getColor() == this.getColor()) {
+                        break;
                     }
+                    possibilities.add(board.getBoard()[this.getX()][i]);
                     break;
                 }
                 else {
@@ -64,10 +65,11 @@ public class Rook implements Piece {
             }
             // RIGHT
             for (int i = this.getX()+1; i < 8; i++) {
-                if (board.getBoard()[this.getX()][i].getPiece() != null) {
-                    if (board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor()) {
-                        possibilities.add(board.getBoard()[this.getX()][i]);
+                if (board.getBoard()[i][this.getY()].getPiece() != null) {
+                    if (board.getBoard()[i][this.getY()].getPiece().getColor() == this.getColor()) {
+                        break;
                     }
+                    possibilities.add(board.getBoard()[i][this.getY()]);
                     break;
                 }
                 else {
@@ -77,9 +79,10 @@ public class Rook implements Piece {
             // DOWN
             for (int i = this.getY()-1; i > -1; i--) {
                 if (board.getBoard()[this.getX()][i].getPiece() != null) {
-                    if (board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor()) {
-                        possibilities.add(board.getBoard()[this.getX()][i]);
+                    if (board.getBoard()[this.getX()][i].getPiece().getColor() == this.getColor()) {
+                        break;
                     }
+                    possibilities.add(board.getBoard()[this.getX()][i]);
                     break;
                 }
                 else {
@@ -89,9 +92,10 @@ public class Rook implements Piece {
             // LEFT
             for (int i = this.getX()-1; i > -1; i--) {
                 if (board.getBoard()[i][this.getY()].getPiece() != null) {
-                    if (board.getBoard()[i][this.getY()].getPiece().getColor() != this.getColor()) {
-                        possibilities.add(board.getBoard()[i][this.getY()]);
+                    if (board.getBoard()[i][this.getY()].getPiece().getColor() == this.getColor()) {
+                        break;
                     }
+                    possibilities.add(board.getBoard()[i][this.getY()]);
                     break;
                 }
                 else {

@@ -88,7 +88,7 @@ public class Board {
         return this.board[x][y].getPiece();
     }
 
-    public void movePiece(Piece chosen, int x, int y) {
+    public boolean movePiece(Piece chosen, int x, int y) {
         if (chosen.PossibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
@@ -104,11 +104,14 @@ public class Board {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 chosen.Move(x, y);
+                return true;
             }
         }
         else {
             System.out.println("Nezadal jsi spravne hodnoty");
+            return false;
         }
+        return false;
     }
 
     private Piece PromoteTo(Pawn pawn) {

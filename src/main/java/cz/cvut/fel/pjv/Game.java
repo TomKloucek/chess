@@ -38,9 +38,10 @@ public class Game {
             System.out.println(chosen.PossibleMovement(board));
             int pick_x = sc.nextInt();
             int pick_y = sc.nextInt();
-            board.movePiece(chosen, pick_x,pick_y);
-            whiteOnMove = !whiteOnMove;
-
+            boolean result = board.movePiece(chosen, pick_x,pick_y);
+            if (result) {
+                whiteOnMove = !whiteOnMove;
+            }
         }
     }
 
