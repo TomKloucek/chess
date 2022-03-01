@@ -36,4 +36,14 @@ public class Helpers {
             }
         }
     }
+
+    public static Color getOtherColor(Color color) {
+        if (color == Color.WHITE) {
+            return Color.BLACK;
+        }
+        if (color == Color.BLACK) {
+            return Color.WHITE;
+        }
+        return color;
+    }
 }

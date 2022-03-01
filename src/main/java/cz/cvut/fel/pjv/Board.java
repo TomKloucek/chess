@@ -1,9 +1,27 @@
 package cz.cvut.fel.pjv;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Board {
-    private Square[][] board = new Square[8][8];
+    private Square[][] board;
+    private ArrayList<Piece> whitePieces;
+    private ArrayList<Piece> blackPieces;
+
+    public Board() {
+        this.board = new Square[8][8];
+        this.blackPieces = new ArrayList<>();
+        this.whitePieces = new ArrayList<>();
+    }
+
+    public ArrayList<Piece> getPieces(Color color) {
+        if (color == Color.WHITE) {
+            return whitePieces;
+        }
+        else {
+            return blackPieces;
+        }
+    }
 
     public Square[][] getBoard() {
         return board;
@@ -81,6 +99,12 @@ public class Board {
             case "Bishop" -> new Bishop(color, x, y);
             default -> null;
         };
+        if (color == Color.WHITE) {
+            whitePieces.add(piece);
+        }
+        else {
+            blackPieces.add(piece);
+        }
         board[x][y].setPiece(piece);
     }
 
@@ -123,6 +147,46 @@ public class Board {
             case "Knight" -> new Knight(pawn.getColor(), pawn.getX(), pawn.getY());
             default -> null;
         };
+    }
+
+    public Piece getKing(Color color) {
+        if (color == Color.WHITE) {
+            for (Piece piece: this.getPieces(Color.WHITE)) {
+                if (piece.getPoints() == Integer.MAX_VALUE) {
+                    return piece;
+                }
+            }
+        }
+        else {
+            for (Piece piece: this.getPieces(Color.BLACK)) {
+                if (piece.getPoints() == Integer.MAX_VALUE) {
+                    return piece;
+                }
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Square> getEveryPossibleMoves(ArrayList<Piece> pieces) {
+        ArrayList<Square> moves = new ArrayList<>();
+        for (Piece piece: pieces) {
+            moves.addAll(piece.PossibleMovement(this));
+        }
+        return moves;
+    }
+
+    public boolean whiteInCheck() {
+        Piece king = getKing(Color.WHITE);
+        return getEveryPossibleMoves(this.getPieces(Color.BLACK)).contains(getBoard()[king.getX()][king.getY()]);
+    }
+
+    public boolean blackInCheck() {
+        Piece king = getKing(Color.BLACK);
+        return getEveryPossibleMoves(this.getPieces(Color.WHITE)).contains(getBoard()[king.getX()][king.getY()]);
+    }
+
+    public boolean inCheck(Color color) {
+        return blackInCheck() || whiteInCheck();
     }
 
 }

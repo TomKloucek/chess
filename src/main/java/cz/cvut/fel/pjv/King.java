@@ -8,6 +8,7 @@ public class King implements  Piece {
     private int x;
     private int y;
     private boolean inCheck;
+    private boolean atLeastOnceMoved;
 
     public King(Color color, int x, int y) {
         this.points = Integer.MAX_VALUE;
@@ -53,49 +54,69 @@ public class King implements  Piece {
         for (int i = -1; i <= 1; i++){
                 if (board.getBoard()[this.getX() + i][this.getY() + 1].getPiece() != null) {
                     if (board.getBoard()[this.getX() + i][this.getY() + 1].getPiece().getColor() != this.getColor()) {
-                        possibilities.add(board.getBoard()[this.getX() + i][this.getY() + 1]);
+                        if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() + 1])) {
+                            possibilities.add(board.getBoard()[this.getX() + i][this.getY() + 1]);
+                        }
                     }
                 }
                 else{
-                    possibilities.add(board.getBoard()[this.getX() +i][this.getY() + 1]);
+                    if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() + 1])) {
+                        possibilities.add(board.getBoard()[this.getX() + i][this.getY() + 1]);
+                    }
                 }
         }
         // SQUARE ON THE RIGHT SIDE
         if (board.getBoard()[this.getX() + 1][this.getY()].getPiece() != null) {
             if (board.getBoard()[this.getX() + 1][this.getY()].getPiece().getColor() != this.getColor()) {
-                possibilities.add(board.getBoard()[this.getX() + 1][this.getY()]);
+                if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + 1][this.getY() ])) {
+                    possibilities.add(board.getBoard()[this.getX() + 1][this.getY()]);
+                }
             }
 
         }
         else{
-            possibilities.add(board.getBoard()[this.getX() + 1][this.getY()]);
+            if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + 1][this.getY()])) {
+                possibilities.add(board.getBoard()[this.getX() + 1][this.getY()]);
+            }
         }
         // SQUARE ON THE LEFT SIDE
         if (board.getBoard()[this.getX() - 1][this.getY()].getPiece() != null) {
             if (board.getBoard()[this.getX() - 1][this.getY()].getPiece().getColor() != this.getColor()) {
-                possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
+                if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
+                    possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
+                }
             }
 
         }
         else{
-            possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
+            if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
+                possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
+            }
         }
         // LOWER LINE
         for (int i = -1; i <= 1; i++){
             if (board.getBoard()[this.getX() + i][this.getY() - 1].getPiece() != null) {
                 if (board.getBoard()[this.getX() + i][this.getY() - 1].getPiece().getColor() != this.getColor()) {
-                    possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
+                    if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
+                        possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
+                    }
                 }
             }
             else{
-                possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
+                if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
+                    possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
+                }
             }
         }
+
+        // CASTLE
+
         return possibilities;
     }
 
     @Override
     public void Move(int x, int y) {
+        this.atLeastOnceMoved = true;
         this.setX(x);
         this.setY(y);
     }
