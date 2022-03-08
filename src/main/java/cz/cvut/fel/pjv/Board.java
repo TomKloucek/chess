@@ -112,7 +112,15 @@ public class Board {
         return this.board[x][y].getPiece();
     }
 
+    public void setMotionToPawns(ArrayList<Piece> pieces, Piece chosen) {
+        for (Piece piece: pieces) {
+            if (chosen != piece && piece instanceof Pawn){
+                ((Pawn) piece).movedTwoSquares = false;
+            }
+        }
+    }
     public boolean movePiece(Piece chosen, int x, int y) {
+        setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
         if (chosen.PossibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
@@ -125,41 +133,18 @@ public class Board {
                 board[x][y].getPiece().Move(x,y);
             }
             // EN PASSANT
-            else if(chosen instanceof Pawn && (board[x][y-1].getPiece() instanceof Pawn && board[x][y-1].getPiece().getColor() == Color.BLACK)) {
+            else if(chosen instanceof Pawn && (board[x][y-1].getPiece() instanceof Pawn && board[x][y-1].getPiece().getColor() == Color.BLACK) && board[x][y].getPiece() == null) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y-1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 return true;
             }
-            else if(chosen instanceof Pawn && (board[x][y+1].getPiece() instanceof Pawn && board[x][y+1].getPiece().getColor() == Color.WHITE)) {
+            else if(chosen instanceof Pawn && (board[x][y+1].getPiece() instanceof Pawn && board[x][y+1].getPiece().getColor() == Color.WHITE) && board[x][y].getPiece() == null) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
-                this.board[x][y-1].setPiece(null);
+                this.board[x][y+1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 return true;
             }
-//                int way = chosen.getColor()==Color.WHITE ? 1:-1;
-//                Pawn enPassant = (Pawn) this.board[x][y-way].getPiece();
-//                if (Helpers.MoveInBoard(chosen.getX()+1, chosen.getY()+way)) {
-//                    if (enPassant != null && enPassant.movedTwoSquares == true){
-//                        this.board[chosen.getX()][chosen.getY()].setPiece(null);
-//                        this.board[x][y-way].setPiece(null);
-//                        this.board[x][y].setPiece(chosen);
-//                        return true;
-//                    }
-//                    else if (Helpers.MoveInBoard(chosen.getX()-1, chosen.getY()+way)) {
-//                        if (enPassant != null && enPassant.movedTwoSquares == true) {
-//                            this.board[chosen.getX()][chosen.getY()].setPiece(null);
-//                            this.board[x][y-way].setPiece(null);
-//                            this.board[x][y].setPiece(chosen);
-//                            return true;
-//                        }
-//                    }
-//                }
-//                this.board[chosen.getX()][chosen.getY()].setPiece(null);
-//                this.board[x][y].setPiece(chosen);
-//                chosen.Move(x, y);
-//                return true;
-//            }
             else {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y].setPiece(chosen);
@@ -224,5 +209,6 @@ public class Board {
     public boolean inCheck(Color color) {
         return blackInCheck() || whiteInCheck();
     }
+
 
 }
