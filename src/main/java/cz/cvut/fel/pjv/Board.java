@@ -124,6 +124,32 @@ public class Board {
                 }
                 board[x][y].getPiece().Move(x,y);
             }
+            // EN PASSANT
+//            else if(chosen instanceof Pawn) {
+//                int way = chosen.getColor()==Color.WHITE ? 1:-1;
+//                Pawn enPassant = (Pawn) this.board[x][y-way].getPiece();
+//                if (Helpers.MoveInBoard(chosen.getX()+1, chosen.getY()+way)) {
+//                    if (enPassant != null && enPassant.movedTwoSquares == true){
+//                        this.board[chosen.getX()][chosen.getY()].setPiece(null);
+//                        this.board[x][y-way].setPiece(null);
+//                        this.board[x][y].setPiece(chosen);
+//                        return true;
+//                    }
+//                    else if (Helpers.MoveInBoard(chosen.getX()-1, chosen.getY()+way)) {
+//                        if (enPassant != null && enPassant.movedTwoSquares == true) {
+//                            this.board[chosen.getX()][chosen.getY()].setPiece(null);
+//                            this.board[x][y-way].setPiece(null);
+//                            this.board[x][y].setPiece(chosen);
+//                            return true;
+//                        }
+//                    }
+//                }
+//                this.board[chosen.getX()][chosen.getY()].setPiece(null);
+//                this.board[x][y].setPiece(chosen);
+//                chosen.Move(x, y);
+//                return true;
+
+//            }
             else {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y].setPiece(chosen);
