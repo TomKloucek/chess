@@ -82,9 +82,11 @@ public class Pawn implements Piece {
     }
 
     public Square getMovesIfNotMoved(Board board) {
-        ArrayList<Square> possibilities = new ArrayList<>();
         int way = this.getColor()==Color.WHITE ? 2:-2;
-        return board.getBoard()[this.getX()][this.getY()+way];
+        if (board.getBoard()[this.getX()][getY()+way].getPiece() == null) {
+            return board.getBoard()[this.getX()][this.getY() + way];
+        }
+        return null;
     }
 
     public Square getBasicMove(Board board) {
