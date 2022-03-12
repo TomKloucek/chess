@@ -8,6 +8,7 @@ public class Game {
     private Player playerBlack;
     private boolean whiteOnMove;
     private Board board;
+    private boolean state = false;
 
     public Game(Player playerWhite, Player playerBlack, boolean whiteOnMove, Board board) {
         this.playerWhite = playerWhite;
@@ -40,12 +41,28 @@ public class Game {
             int pick_y = sc.nextInt();
             boolean result = board.movePiece(chosen, pick_x,pick_y);
             if (result) {
+                if (!whiteOnMove) {
+                    if (board.whiteInCheck()) {
+                        if (board.Mated(Color.WHITE)) {
+                            System.out.println("Cerny vyhral");
+                            state = true;
+                        }
+                    }
+                }
+                else {
+                    if (board.blackInCheck()) {
+                        if (board.Mated(Color.BLACK)) {
+                            System.out.println("Bily vyhral");
+                            state = true;
+                        }
+                    }
+                }
                 whiteOnMove = !whiteOnMove;
             }
         }
     }
 
     public boolean gameEnded() {
-        return false;
+        return state;
     }
 }

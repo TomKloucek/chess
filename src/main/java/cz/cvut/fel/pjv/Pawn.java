@@ -128,12 +128,7 @@ public class Pawn implements Piece {
     @Override
     public void Move(int x, int y) {
         this.atLeastOnceMoved = true;
-        if (Math.abs(this.y - y) == 2){
-            movedTwoSquares = true;
-        }
-        else {
-            movedTwoSquares = false;
-        }
+        movedTwoSquares = Math.abs(this.y - y) == 2;
 
         this.setX(x);
         this.setY(y);
