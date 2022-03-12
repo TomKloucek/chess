@@ -137,13 +137,50 @@ public class Board {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y-1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
+                board[x][y].getPiece().Move(x,y);
                 return true;
             }
             else if(chosen instanceof Pawn && (board[x][y+1].getPiece() instanceof Pawn && board[x][y+1].getPiece().getColor() == Color.WHITE) && board[x][y].getPiece() == null) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y+1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
+                board[x][y].getPiece().Move(x,y);
                 return true;
+            }
+            // CASTLE
+            if (chosen instanceof King && board[x][y].getPiece() instanceof Rook) {
+                if (x == 0 && y == 0) {
+                    this.board[chosen.getX()][chosen.getY()].setPiece(null);
+                    Rook rook = (Rook )this.board[0][0].getPiece();
+                    this.board[0][0].setPiece(null);
+                    this.board[2][0].setPiece(rook);
+                    this.board[1][0].setPiece(chosen);
+                    chosen.Move(1,0);
+                }
+                if (x == 7 && y == 0) {
+                    this.board[chosen.getX()][chosen.getY()].setPiece(null);
+                    Rook rook = (Rook )this.board[7][0].getPiece();
+                    this.board[7][0].setPiece(null);
+                    this.board[5][0].setPiece(rook);
+                    this.board[6][0].setPiece(chosen);
+                    chosen.Move(6,0);
+                }
+                if (x == 0 && y == 7) {
+                    this.board[chosen.getX()][chosen.getY()].setPiece(null);
+                    Rook rook = (Rook )this.board[0][7].getPiece();
+                    this.board[0][7].setPiece(null);
+                    this.board[2][7].setPiece(rook);
+                    this.board[1][7].setPiece(chosen);
+                    chosen.Move(1,7);
+                }
+                if (x == 7 && y == 7) {
+                    this.board[chosen.getX()][chosen.getY()].setPiece(null);
+                    Rook rook = (Rook )this.board[7][7].getPiece();
+                    this.board[7][7].setPiece(null);
+                    this.board[5][7].setPiece(rook);
+                    this.board[6][7].setPiece(chosen);
+                    chosen.Move(6,7);
+                }
             }
             else {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
@@ -190,9 +227,16 @@ public class Board {
 
     public ArrayList<Square> getEveryPossibleMoves(ArrayList<Piece> pieces) {
         ArrayList<Square> moves = new ArrayList<>();
-        for (Piece piece: pieces) {
-            moves.addAll(piece.PossibleMovement(this));
+        for (Piece piece : pieces) {
+            if (piece.getPoints() != Integer.MAX_VALUE) {
+                moves.addAll(piece.PossibleMovement(this));
+            }
+            else{
+                King king = (King) piece;
+                moves.addAll(king.getSquaresAroundKing(this));
+            }
         }
+
         return moves;
     }
 
@@ -206,8 +250,32 @@ public class Board {
         return getEveryPossibleMoves(this.getPieces(Color.WHITE)).contains(getBoard()[king.getX()][king.getY()]);
     }
 
-    public boolean inCheck(Color color) {
-        return blackInCheck() || whiteInCheck();
+    public boolean Mated(Color color) {
+        Piece king = getKing(color);
+        return king.PossibleMovement(this).isEmpty();
+    }
+
+    public boolean inCheck() {
+        if (blackInCheck()) {
+            System.out.println("Cerny je v checku");
+            return true;
+        }
+        if (whiteInCheck()) {
+            System.out.println("Bily je v checku");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean willBeChecked(Color color,int x, int y) {
+        if (color == Color.WHITE) {
+            Piece king = getKing(Color.WHITE);
+            return getEveryPossibleMoves(this.getPieces(Color.BLACK)).contains(getBoard()[x][y]);
+        }
+        else {
+            Piece king = getKing(Color.BLACK);
+            return getEveryPossibleMoves(this.getPieces(Color.WHITE)).contains(getBoard()[x][y]);
+        }
     }
 
 

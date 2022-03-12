@@ -100,26 +100,32 @@ public class Pawn implements Piece {
         int way = this.getColor()==Color.WHITE ? 1:-1;
         // LEFT
         if (Helpers.MoveInBoard(this.getX()-1, this.getY()+way)) {
-            Pawn enPassantLeft = (Pawn) board.getBoard()[this.getX() - 1][this.getY()].getPiece();
+
             if (board.getBoard()[this.getX()-1][this.getY()+way].getPiece() != null) {
                 if (board.getBoard()[this.getX() - 1][this.getY() + way].getPiece().getColor() != this.getColor()) {
                     possibilities.add(board.getBoard()[this.getX() - 1][this.getY() + way]);
                 }
             }
-            else if (enPassantLeft != null && enPassantLeft.color != this.getColor() && enPassantLeft.movedTwoSquares == true){
-                possibilities.add(board.getBoard()[this.getX() - 1][this.getY()+way]);
+            else if (board.getBoard()[this.getX() - 1][this.getY()].getPiece() instanceof Pawn) {
+                Pawn enPassantLeft = (Pawn) board.getBoard()[this.getX() - 1][this.getY()].getPiece();
+                if (enPassantLeft != null && enPassantLeft.color != this.getColor() && enPassantLeft.movedTwoSquares == true) {
+                    possibilities.add(board.getBoard()[this.getX() - 1][this.getY() + way]);
+                }
             }
         }
         // RIGHT
         if (Helpers.MoveInBoard(this.getX()+1, this.getY()+way)) {
-            Pawn enPassantRight = (Pawn) board.getBoard()[this.getX() + 1][this.getY()].getPiece();
+
             if (board.getBoard()[this.getX()+1][this.getY()+way].getPiece() != null) {
                 if (board.getBoard()[this.getX() + 1][this.getY() + way].getPiece().getColor() != this.getColor()) {
                     possibilities.add(board.getBoard()[this.getX() + 1][this.getY() + way]);
                 }
             }
-            else if (enPassantRight != null && enPassantRight.color != this.getColor() && enPassantRight.movedTwoSquares == true){
-                possibilities.add(board.getBoard()[this.getX() + 1][this.getY() + way]);
+            else if (board.getBoard()[this.getX() + 1][this.getY()].getPiece() instanceof Pawn) {
+                Pawn enPassantRight = (Pawn) board.getBoard()[this.getX() + 1][this.getY()].getPiece();
+                if (enPassantRight != null && enPassantRight.color != this.getColor() && enPassantRight.movedTwoSquares == true){
+                    possibilities.add(board.getBoard()[this.getX() + 1][this.getY() + way]);
+                }
             }
         }
         return possibilities;
@@ -128,12 +134,7 @@ public class Pawn implements Piece {
     @Override
     public void Move(int x, int y) {
         this.atLeastOnceMoved = true;
-        if (Math.abs(this.y - y) == 2){
-            movedTwoSquares = true;
-        }
-        else {
-            movedTwoSquares = false;
-        }
+        movedTwoSquares = Math.abs(this.y - y) == 2;
 
         this.setX(x);
         this.setY(y);

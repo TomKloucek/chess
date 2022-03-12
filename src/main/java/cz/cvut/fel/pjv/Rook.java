@@ -17,6 +17,10 @@ public class Rook implements Piece {
         this.atLeastOnceMoved = false;
     }
 
+    public boolean isAtLeastOnceMoved() {
+        return atLeastOnceMoved;
+    }
+
     @Override
     public int getPoints() {
         return this.points;
