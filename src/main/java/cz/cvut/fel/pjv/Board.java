@@ -236,7 +236,7 @@ public class Board {
                 moves.addAll(king.getSquaresAroundKing(this));
             }
         }
-
+        
         return moves;
     }
 
