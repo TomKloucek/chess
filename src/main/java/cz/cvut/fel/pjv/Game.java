@@ -43,7 +43,7 @@ public class Game {
             if (result) {
                 if (!whiteOnMove) {
                     if (board.whiteInCheck()) {
-                        if (board.Mated(Color.WHITE)) {
+                        if (board.Mated(Color.WHITE) && board.getSquaresToBlock(board.getPieces(Color.BLACK)).isEmpty()) {
                             System.out.println("Cerny vyhral");
                             state = true;
                         }
@@ -51,7 +51,7 @@ public class Game {
                 }
                 else {
                     if (board.blackInCheck()) {
-                        if (board.Mated(Color.BLACK)) {
+                        if (board.Mated(Color.BLACK) && board.getSquaresToBlock(board.getPieces(Color.WHITE)).isEmpty()) {
                             System.out.println("Bily vyhral");
                             state = true;
                         }

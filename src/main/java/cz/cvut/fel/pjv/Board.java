@@ -239,6 +239,160 @@ public class Board {
         
         return moves;
     }
+    public ArrayList<Square> getSquaresToBlock(ArrayList<Piece> pieces) {
+        ArrayList<Square> squaresToBlock = new ArrayList<>();
+        Square kingSquare = this.board[getKing(Helpers.getOtherColor((pieces.get(0)).getColor())).getX()][getKing(Helpers.getOtherColor((pieces.get(0)).getColor())).getY()];
+        for (Piece piece: pieces) {
+            if (piece instanceof Knight || piece instanceof Pawn) {
+                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                    squaresToBlock.add(this.board[piece.getX()][piece.getY()]);
+                }
+            } else if (piece instanceof Bishop) {
+                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                    int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
+                    int[] bishopPosition = {piece.getX(), piece.getY()};
+                    int x = piece.getX();
+                    int y = piece.getY();
+                    if (kingPosition[0] > bishopPosition[0] && kingPosition[1] > bishopPosition[1]) {
+
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x++;
+                            y++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    } else if (kingPosition[0] < bishopPosition[0] && kingPosition[1] > bishopPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x--;
+                            y++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+
+                    } else if (kingPosition[0] < bishopPosition[0] && kingPosition[1] < bishopPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x--;
+                            y--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    } else {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x++;
+                            y--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    }
+                }
+            } else if (piece instanceof Rook) {
+                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                    int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
+                    int[] rookPosition = {piece.getX(), piece.getY()};
+                    int x = piece.getX();
+                    int y = piece.getY();
+                    if (kingPosition[0] == rookPosition[0] && kingPosition[1] > rookPosition[1]) {
+
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            y++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    } else if (kingPosition[0] < rookPosition[0] && kingPosition[1] == rookPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+
+                    } else if (kingPosition[0] == rookPosition[0] && kingPosition[1] < rookPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            y--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    } else {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    }
+                }
+            }
+            else if (piece instanceof Queen){
+                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                    int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
+                    int[] queenPosition = {piece.getX(), piece.getY()};
+                    int x = piece.getX();
+                    int y = piece.getY();
+                    if (kingPosition[0] == queenPosition[0] && kingPosition[1] > queenPosition[1]) {
+
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            y++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    } else if (kingPosition[0] < queenPosition[0] && kingPosition[1] == queenPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+
+                    } else if (kingPosition[0] == queenPosition[0] && kingPosition[1] < queenPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            y--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    }
+                    else if (kingPosition[0] > queenPosition[0] && kingPosition[1] == queenPosition[1]){
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    }
+                    else if (kingPosition[0] > queenPosition[0] && kingPosition[1] > queenPosition[1]) {
+
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x++;
+                            y++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    } else if (kingPosition[0] < queenPosition[0] && kingPosition[1] > queenPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x--;
+                            y++;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+
+                    } else if (kingPosition[0] < queenPosition[0] && kingPosition[1] < queenPosition[1]) {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x--;
+                            y--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    } else {
+                        do {
+                            squaresToBlock.add(this.board[x][y]);
+                            x++;
+                            y--;
+                        }
+                        while (x != kingPosition[0] && y != kingPosition[1]);
+                    }
+                }
+                }
+            }
+        System.out.println(squaresToBlock);
+        return squaresToBlock;
+    }
+
+
 
     public boolean whiteInCheck() {
         Piece king = getKing(Color.WHITE);
