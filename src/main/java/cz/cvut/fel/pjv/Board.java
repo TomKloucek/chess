@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Board {
@@ -109,7 +110,13 @@ public class Board {
     }
 
     public Piece pickPiece(int x, int y) {
-        return this.board[x][y].getPiece();
+        if (this.board[x][y].getPiece() == null){
+            return null;
+        }
+        if (!this.board[x][y].getPiece().PossibleMovement(this).isEmpty()){
+            return this.board[x][y].getPiece();
+        }
+        return null;
     }
 
     public void setMotionToPawns(ArrayList<Piece> pieces, Piece chosen) {
@@ -121,6 +128,9 @@ public class Board {
     }
     public boolean movePiece(Piece chosen, int x, int y) {
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
+        if ((Helpers.intersection(possibleMovesToUncheck(chosen),chosen.PossibleMovement(this))).contains(board[x][y])){
+            board[x][y].getPiece().Move(x,y); //TODO
+        }
         if (chosen.PossibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
@@ -388,7 +398,6 @@ public class Board {
                 }
                 }
             }
-        System.out.println(squaresToBlock);
         return squaresToBlock;
     }
 
@@ -432,5 +441,25 @@ public class Board {
         }
     }
 
-
+    public boolean canBlockOrEscapeFromCheck(Piece piece){
+        if(piece instanceof King){
+            if(piece.PossibleMovement(this).isEmpty()){
+                return false;
+            }
+            return true;
+        }
+        else {
+            ArrayList<Square> squaresToBlock = getSquaresToBlock(this.getPieces(Helpers.getOtherColor(piece.getColor())));
+            ArrayList<Square> piecePossibleMovements = piece.PossibleMovement(this);
+            if (!Collections.disjoint(squaresToBlock, piecePossibleMovements)){
+                return true;
+            }
+            return false;
+        }
+    }
+    public ArrayList<Square> possibleMovesToUncheck(Piece piece){
+        ArrayList<Square> squaresToBlock = getSquaresToBlock(this.getPieces(Helpers.getOtherColor(piece.getColor())));
+        ArrayList<Square> piecePossibleMovements = piece.PossibleMovement(this);
+        return (ArrayList<Square>) Helpers.intersection(squaresToBlock, piecePossibleMovements);
+    }
 }

@@ -27,6 +27,15 @@ public class Game {
                     int pick_x = sc.nextInt();
                     int pick_y = sc.nextInt();
                     chosen = board.pickPiece(pick_x, pick_y);
+
+                    if (chosen == null){
+                        System.out.println("Na vybraném poli není figurka, nebo vybraná figurka nemá žádný validní pohyb.");
+                    }
+                    else if(board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(chosen)){
+                        System.out.println("Tento výběr vás nedostane z šachu.");
+                        chosen = null;
+                    }
+
                 }
             }
             else {
@@ -34,6 +43,13 @@ public class Game {
                     int pick_x = sc.nextInt();
                     int pick_y = sc.nextInt();
                     chosen = board.pickPiece(pick_x,pick_y);
+
+                    if (chosen == null){
+                        System.out.println("Na vybraném poli není figurka, nebo vybraná figurka nemá žádný validní pohyb.");
+                    }
+                    else if(board.blackInCheck() && !board.canBlockOrEscapeFromCheck(chosen)){
+                        System.out.println("Tento výběr vás nedostane z šachu.");
+                    }
                 }
             }
             System.out.println(chosen.PossibleMovement(board));

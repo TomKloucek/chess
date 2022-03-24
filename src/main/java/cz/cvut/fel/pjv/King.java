@@ -117,13 +117,13 @@ public class King implements  Piece {
         // CASTLE
         if (!this.atLeastOnceMoved) {
             if (this.getColor() == Color.WHITE) {
-                Rook left_rook = (Rook)board.pickPiece(0,0);
+                Rook left_rook = (Rook)board.getBoard()[0][0].getPiece();
                 if (!left_rook.isAtLeastOnceMoved() && board.getBoard()[1][0].getPiece() == null && board.getBoard()[2][0].getPiece() == null && board.getBoard()[3][0].getPiece() == null) {
                     if (!board.willBeChecked(Color.WHITE, 2, 0)) {
                         possibilities.add(board.getBoard()[0][0]);
                     }
                 }
-                Rook right_rook = (Rook)board.pickPiece(0,0);
+                Rook right_rook = (Rook)board.getBoard()[7][0].getPiece();
                 if (!right_rook.isAtLeastOnceMoved() && board.getBoard()[5][0].getPiece() == null && board.getBoard()[6][0].getPiece() == null) {
                     if (!board.willBeChecked(Color.WHITE, 6, 0)) {
                         possibilities.add(board.getBoard()[7][0]);
