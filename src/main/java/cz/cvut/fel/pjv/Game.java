@@ -52,7 +52,12 @@ public class Game {
                     }
                 }
             }
-            System.out.println(chosen.PossibleMovement(board));
+            if (board.whiteInCheck() || board.blackInCheck()){
+                System.out.println(board.possibleMovesToUncheck(chosen));
+            }
+            else {
+                System.out.println(chosen.PossibleMovement(board));
+            }
             int pick_x = sc.nextInt();
             int pick_y = sc.nextInt();
             boolean result = board.movePiece(chosen, pick_x,pick_y);
