@@ -33,6 +33,29 @@ Hráč zapne hru, a zadává souřadnice jako figurku chce vybrat a v konzoli se
 
 <img src="/media/gitlab/console.png" alt="UML" width="488"/>
 
+Budoucím plánem je následující implemetace v grafickém rozhraní viz. níže uvedené ukázky
+
+Naše šachovnice bude vypadat následujicím způsobem
+
+<img src="/media/gitlab/manual/chess_board.jpg" alt="UML" width="400"/>
+
+Po zvolení figurky se na šachovnici zobrazí možné tahy vybrané figurky
+
+<img src="/media/gitlab/manual/chess_board_move_example.jpg" alt="UML" width="400"/>
+
+Pokud figurka bude mít možnost vzít figurku protivníka, bude to znázorněno následujícím způsobem
+
+<img src="/media/gitlab/manual/chess_board_take_example.jpg" alt="UML" width="400"/>
+
+Po zvolení políčka, na které se figurka má posunout kliknutím na jednu z vykreslených "teček" se figurka pohne na 
+zvolené místo 
+
+<img src="/media/gitlab/manual/chess_board_after_move_example.jpg" alt="UML" width="400"/>
+
+Pokud se po tahu protivníkův král ocitne v šachu bude to vypadat následovně
+
+<img src="/media/gitlab/manual/chess_board_check_example.jpg" alt="UML" width="400"/>
+
 ## Technická Dokumentace
 
 TODO vygenerovaná dokumentace
