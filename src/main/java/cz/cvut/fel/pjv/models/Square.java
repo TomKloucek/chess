@@ -1,4 +1,6 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.models;
+
+import cz.cvut.fel.pjv.pieces.Piece;
 
 public class Square {
     private int x,y;

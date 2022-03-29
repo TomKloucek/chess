@@ -1,8 +1,10 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.models;
+
+import cz.cvut.fel.pjv.helpers.Helpers;
+import cz.cvut.fel.pjv.pieces.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class Board {
     private Square[][] board;

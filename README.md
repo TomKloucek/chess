@@ -31,7 +31,7 @@ V současné době aplikace umožnujě hrát šachy v konzoli, kdy se dva hráč
 
 Hráč zapne hru, a zadává souřadnice jako figurku chce vybrat a v konzoli se vypíše zda je figurka validní a má možnost se někam pohnout, v případě že, ne, má hráč možnost si vybrat jinou figurku, v opačném případě se vypíšou možnosti kam se figurka může pohnout a hráč zadává finální souřadnice.
 
-<img src="/media/console.png" alt="UML" width="488"/>
+<img src="/media/gitlab/console.png" alt="UML" width="488"/>
 
 ## Technická Dokumentace
 
@@ -39,4 +39,4 @@ TODO vygenerovaná dokumentace
 
 ### UML Diagram
 
-<img src="/media/uml.png" alt="UML" />
+<img src="/media/gitlab/uml.png" alt="UML" />

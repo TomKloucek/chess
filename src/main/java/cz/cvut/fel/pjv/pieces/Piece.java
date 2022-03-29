@@ -1,4 +1,8 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.pieces;
+
+import cz.cvut.fel.pjv.models.Board;
+import cz.cvut.fel.pjv.models.Color;
+import cz.cvut.fel.pjv.models.Square;
 
 import java.util.ArrayList;
 

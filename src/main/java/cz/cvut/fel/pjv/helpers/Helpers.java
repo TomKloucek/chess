@@ -1,4 +1,6 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.helpers;
+
+import cz.cvut.fel.pjv.models.Color;
 
 import java.util.ArrayList;
 import java.util.List;
