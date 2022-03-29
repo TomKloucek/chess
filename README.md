@@ -2,7 +2,7 @@
 
 <img src="https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/SamCopeland/phpuTejFE.gif" alt="chess" width="250"/>
 
-###Autoři
+### Autoři
 Tomáš Klouček & Vladyslav Babyč
 
 ## Téma

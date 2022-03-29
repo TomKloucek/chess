@@ -128,9 +128,6 @@ public class Board {
     }
     public boolean movePiece(Piece chosen, int x, int y) {
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
-        if ((Helpers.intersection(possibleMovesToUncheck(chosen),chosen.PossibleMovement(this))).contains(board[x][y])){
-            board[x][y].getPiece().Move(x,y); //TODO
-        }
         if (chosen.PossibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);

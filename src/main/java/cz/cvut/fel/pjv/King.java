@@ -130,13 +130,13 @@ public class King implements  Piece {
                     }
                 }
             } else {
-                Rook left_rook = (Rook)board.pickPiece(0,7);
+                Rook left_rook = (Rook)board.getBoard()[0][7].getPiece();
                 if (!left_rook.isAtLeastOnceMoved() && board.getBoard()[1][7].getPiece() == null && board.getBoard()[2][7].getPiece() == null && board.getBoard()[3][7].getPiece() == null) {
                     if (!board.willBeChecked(Color.WHITE, 2, 7)) {
                         possibilities.add(board.getBoard()[0][7]);
                     }
                 }
-                Rook right_rook = (Rook)board.pickPiece(7,7);
+                Rook right_rook = (Rook)board.getBoard()[7][7].getPiece();
                 if (!right_rook.isAtLeastOnceMoved() && board.getBoard()[5][7].getPiece() == null && board.getBoard()[6][7].getPiece() == null) {
                     if (!board.willBeChecked(Color.WHITE, 6, 7)) {
                         possibilities.add(board.getBoard()[7][7]);
