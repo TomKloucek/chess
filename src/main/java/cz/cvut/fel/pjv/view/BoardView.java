@@ -1,17 +1,25 @@
 package cz.cvut.fel.pjv.view;
 
+import cz.cvut.fel.pjv.models.Board;
+import cz.cvut.fel.pjv.models.Square;
+
 import javax.swing.*;
 import java.awt.*;
 
     public class BoardView extends JPanel {
         private static final int RECT_WIDTH = 50;
         private static final int RECT_HEIGHT = 50;
+        private Board board;
 
+        public BoardView(Board board) {
+            this.board = board;
+        }
 
         private void drawBoard(Graphics g){
             Color COLOR_WHITE = new Color(255,255,255);
             Color COLOR_BROWN = new Color(132,97,40);
             // draw the rectangle here
+            Square[][] squares = board.getBoard();
             Color tmp = COLOR_BROWN;
             for (int i = 0; i < 8; i++) {
                 if (tmp == COLOR_BROWN){
@@ -39,9 +47,7 @@ import java.awt.*;
 
 
         // create the GUI explicitly on the Swing event thread
-        private static void createAndShowGui() {
-            BoardView mainPanel = new BoardView();
-
+        public void createAndShowGui(BoardView mainPanel) {
             JFrame frame = new JFrame("Chess");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.getContentPane().add(mainPanel);
@@ -51,11 +57,4 @@ import java.awt.*;
             frame.setVisible(true);
         }
 
-        public static void main(String[] args) {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    createAndShowGui();
-                }
-            });
-        }
     }
