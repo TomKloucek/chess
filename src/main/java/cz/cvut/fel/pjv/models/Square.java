@@ -16,6 +16,10 @@ public class Square {
         return x+1;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public void setX(int x) {
         this.x = x;
     }

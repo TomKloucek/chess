@@ -1,7 +1,10 @@
 package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.pieces.Piece;
+import cz.cvut.fel.pjv.view.BoardView;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 
 public class Game {
@@ -10,6 +13,7 @@ public class Game {
     private boolean whiteOnMove;
     private Board board;
     private boolean state = false;
+    private BoardView bw;
 
     public Game(Player playerWhite, Player playerBlack, boolean whiteOnMove, Board board) {
         this.playerWhite = playerWhite;
@@ -82,6 +86,25 @@ public class Game {
                 whiteOnMove = !whiteOnMove;
             }
         }
+    }
+
+    public static void createAndShowGui() {
+
+        Board board = new Board();
+        board.initializeBoard();
+        BoardView mainPanel = new BoardView(board);
+
+        Player p1 = new Player(Color.WHITE, null);
+        Player p2 = new Player(Color.BLACK, null);
+        Game game = new Game(p1, p2, true, board);
+
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(mainPanel);
+        frame.setMinimumSize(new Dimension(800, 679));
+//            frame.setMaximumSize(new Dimension(800, 540));
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
     }
 
     public boolean gameEnded() {

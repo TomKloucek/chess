@@ -12,16 +12,16 @@ import java.io.IOException;
 
 public class SquareView extends JPanel {
     private Square square;
-    private final JButton button;
+    private final ButtonCoord button;
     private Image dot = null;
 
     public Square getSquare() {
         return square;
     }
 
-    public SquareView(Square square, JButton button, Board board, BoardView bw) {
+    public SquareView(Square square, Board board, BoardView bw) {
         this.square = square;
-        this.button = button;
+        this.button = new ButtonCoord(square.getX()-1,square.getY());
         button.addActionListener(new ClickListener(square,board,bw));
     }
 
@@ -29,10 +29,14 @@ public class SquareView extends JPanel {
         this.dot = dot;
     }
 
+    public Image getDot() {
+        return dot;
+    }
+
     public SquareView(LayoutManager layout, Square square, Board board, BoardView bw) {
         super(layout);
         this.square = square;
-        this.button = new JButton();
+        this.button = new ButtonCoord(square.getX()-1, square.getY());
         button.addActionListener(new ClickListener(square,board, bw));
         button.setOpaque(false);
         button.setContentAreaFilled(false);

@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.models.Board;
+import cz.cvut.fel.pjv.pieces.Piece;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,6 +25,8 @@ public class BoardView extends JPanel {
         private JPanel boardPanel;
         private SquareView[][] squarePanels;
 
+        private Piece pickedPiece;
+
         public BoardView(Board board) {
             super(new BorderLayout());
             this.board = board;
@@ -45,7 +48,20 @@ public class BoardView extends JPanel {
             this.add(boardLayeredPane, BorderLayout.CENTER);
         }
 
-        private void initializeSquares() {
+    public Piece getPickedPiece() {
+        return pickedPiece;
+    }
+
+    public void setPickedPiece(int x, int y) {
+         if (x == -1 && y == -1) {
+             this.pickedPiece = null;
+         }
+         else {
+             this.pickedPiece = board.pickPiece(x, y);
+         }
+    }
+
+    private void initializeSquares() {
             squarePanels = new SquareView[8][8];
             if (boardReversed) {
                 for (int r = 0; r < 8; r ++) {
@@ -61,6 +77,8 @@ public class BoardView extends JPanel {
                 }
             }
         }
+
+
 
         public void repaintBoard() {
             for (int r = 7; r >= 0; r --) {
@@ -78,25 +96,4 @@ public class BoardView extends JPanel {
             boardPanel.add(squarePanels[f][r]);
         }
 
-        private static void createAndShowGui() {
-            Board board = new Board();
-            board.initializeBoard();
-            BoardView mainPanel = new BoardView(board);
-
-            JFrame frame = new JFrame("Chess");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.getContentPane().add(mainPanel);
-            frame.setMinimumSize(new Dimension(800, 679));
-//            frame.setMaximumSize(new Dimension(800, 540));
-            frame.setLocationByPlatform(true);
-            frame.setVisible(true);
-        }
-
-        public static void main(String[] args) {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    createAndShowGui();
-                }
-            });
-        }
     }
