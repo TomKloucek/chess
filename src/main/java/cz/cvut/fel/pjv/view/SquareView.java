@@ -37,6 +37,7 @@ public class SquareView extends JPanel {
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.add(button);
     }
 
@@ -44,10 +45,11 @@ public class SquareView extends JPanel {
         super.paintComponent(g);
 
         Image piece = Helpers.getPieceImage(square);
-        g.drawImage(piece, 10, 10, this);
+            g.drawImage(piece, 8, 8, this);
+
 
         if (dot != null) {
-            g.drawImage(dot, 10, 10, this);
+            g.drawImage(dot, 8, 8, this);
         }
 
     }
