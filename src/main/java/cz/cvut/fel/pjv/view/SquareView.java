@@ -25,7 +25,7 @@ public class SquareView extends JPanel {
         super.paintComponent(g);
 
         Image piece = Helpers.getPieceImage(square);
-        g.drawImage(piece, 0, 0, this);
+        g.drawImage(piece, 10, 10, this);
     }
 
 }

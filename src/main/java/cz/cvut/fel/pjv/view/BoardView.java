@@ -127,7 +127,7 @@ public class BoardView extends JPanel {
             JFrame frame = new JFrame("Chess");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.getContentPane().add(mainPanel);
-            frame.setMinimumSize(new Dimension(800, 670));
+            frame.setMinimumSize(new Dimension(800, 679));
 //            frame.setMaximumSize(new Dimension(800, 540));
             frame.setLocationByPlatform(true);
             frame.setVisible(true);

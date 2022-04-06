@@ -9,7 +9,6 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Helpers {
     public static String XTranslate(int x) {
@@ -70,52 +69,55 @@ public class Helpers {
         return list;
     }
 
+
     public static Image getPieceImage(Square square) {
         Piece piece = square.getPiece();
+
         if (piece == null) {
             return null;
         }
         try {
             if (piece instanceof Pawn) {
                 if (piece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("pieces/white_pawn.svg"));
+                    return ImageIO.read(new File("resources/pieces/white_pawn.png"));
                 } else {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_pawn.svg"));
+                    return ImageIO.read(new File("resources/pieces/black_pawn.png"));
                 }
             }
             if (piece instanceof Knight) {
                 if (piece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_knight.svg"));
+                    return ImageIO.read(new File("resources/pieces/white_knight.png"));
                 } else {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_knight.svg"));
+                    return ImageIO.read(new File("resources/pieces/black_knight.png"));
                 }
             }
             if (piece instanceof Bishop) {
                 if (piece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_bishop.svg"));
+                    return ImageIO.read(new File("resources/pieces/white_bishop.png"));
                 } else {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_bishop.svg"));
+
+                    return ImageIO.read(new File("resources/pieces/black_bishop.png"));
                 }
             }
             if (piece instanceof Rook) {
                 if (piece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_rook.svg"));
+                    return ImageIO.read(new File("resources/pieces/white_rook.png"));
                 } else {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_rook.svg"));
+                    return ImageIO.read(new File("resources/pieces/black_rook.png"));
                 }
             }
             if (piece instanceof Queen) {
                 if (piece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_queen.svg"));
+                    return ImageIO.read(new File("resources/pieces/white_queen.png"));
                 } else {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_queen.svg"));
+                    return ImageIO.read(new File("resources/pieces/black_queen.png"));
                 }
             }
             if (piece instanceof King) {
                 if (piece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_king.svg"));
+                    return ImageIO.read(new File("resources/pieces/white_king.png"));
                 } else {
-                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_king.svg"));
+                    return ImageIO.read(new File("resources/pieces/black_king.png"));
                 }
             }
             else {
