@@ -10,19 +10,15 @@ import java.util.Scanner;
 public class Game {
     private Player playerWhite;
     private Player playerBlack;
-    private boolean whiteOnMove;
     private Board board;
-    private boolean state = false;
-    private BoardView bw;
 
-    public Game(Player playerWhite, Player playerBlack, boolean whiteOnMove, Board board) {
+    public Game(Player playerWhite, Player playerBlack, Board board) {
         this.playerWhite = playerWhite;
         this.playerBlack = playerBlack;
-        this.whiteOnMove = whiteOnMove;
         this.board = board;
     }
 
-    public void Play() {
+   /* public void Play() {
         Scanner sc = new Scanner(System.in);
         while (!gameEnded()) {
             board.printBoard();
@@ -86,7 +82,7 @@ public class Game {
                 whiteOnMove = !whiteOnMove;
             }
         }
-    }
+    }*/
 
     public static void createAndShowGui() {
 
@@ -96,7 +92,10 @@ public class Game {
 
         Player p1 = new Player(Color.WHITE, null);
         Player p2 = new Player(Color.BLACK, null);
-        Game game = new Game(p1, p2, true, board);
+        Game game = new Game(p1, p2, board);
+
+        State.getInstance();
+        State.getInstance().setGame(game);
 
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,9 +104,5 @@ public class Game {
 //            frame.setMaximumSize(new Dimension(800, 540));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
-    }
-
-    public boolean gameEnded() {
-        return state;
     }
 }

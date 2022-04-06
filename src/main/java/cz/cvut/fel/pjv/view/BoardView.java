@@ -55,6 +55,8 @@ public class BoardView extends JPanel {
     public void setPickedPiece(int x, int y) {
          if (x == -1 && y == -1) {
              this.pickedPiece = null;
+             this.restoreBoard();
+             this.repaintBoard();
          }
          else {
              this.pickedPiece = board.pickPiece(x, y);
@@ -78,8 +80,6 @@ public class BoardView extends JPanel {
             }
         }
 
-
-
         public void repaintBoard() {
             for (int r = 7; r >= 0; r --) {
                 for (int f = 0; f < 8; f++) {
@@ -87,6 +87,14 @@ public class BoardView extends JPanel {
                 }
             }
         }
+
+    public void restoreBoard() {
+        for (int r = 7; r >= 0; r --) {
+            for (int f = 0; f < 8; f++) {
+                squarePanels[f][r].setDot(null);
+            }
+        }
+    }
 
         private void initializeSingleSquarePanel(int f, int r) {
             squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this);

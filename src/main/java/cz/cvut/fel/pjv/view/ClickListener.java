@@ -1,7 +1,6 @@
 package cz.cvut.fel.pjv.view;
 
-import cz.cvut.fel.pjv.models.Board;
-import cz.cvut.fel.pjv.models.Square;
+import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.pieces.Piece;
 
 import javax.imageio.ImageIO;
@@ -19,29 +18,59 @@ public class ClickListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Game game = State.getInstance().getGame();
         SquareView[][] squarePanels = bw.getSquarePanels();
         ButtonCoord buttonCoord = (ButtonCoord) e.getSource();
         if (squarePanels[buttonCoord.getX()][buttonCoord.getY()].getDot() != null) {
             Piece picked = bw.getPickedPiece();
-            board.movePiece(picked,buttonCoord.getX(),buttonCoord.getY());
-            bw.setPickedPiece(-1,-1);
+            board.movePiece(picked, buttonCoord.getX(), buttonCoord.getY());
+            bw.setPickedPiece(-1, -1);
+            if (!State.getInstance().isWhiteOnMove()) {
+                if (board.whiteInCheck()) {
+                    if (board.Mated(Color.WHITE)) {
+                        JOptionPane.showMessageDialog(null, "Cerny vyhral");
+                    }
+                }
+            }
+            else {
+                if (board.blackInCheck()) {
+                    if (board.Mated(Color.BLACK)) {
+                        JOptionPane.showMessageDialog(null, "Bily vyhral");
+                    }
+                }
+            }
+            State.getInstance().reverseMove();
         }
         else {
             ArrayList<Square> possibleMovement = square.getPiece().PossibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    if (possibleMovement.contains(squarePanels[i][j].getSquare())) {
-                        try {
-                            squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
-                            squarePanels[i][j].repaint();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+            Piece picked = bw.getPickedPiece();
+            if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
+                bw.setPickedPiece(-1,-1);
+                JOptionPane.showMessageDialog(null, "Tento vyber vas nedostane z sachu");
+            }
+            else if (picked.getColor() == Color.BLACK && board.blackInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
+                bw.setPickedPiece(-1,-1);
+                JOptionPane.showMessageDialog(null, "Tento vyber vas nedostane z sachu");
+            }
+            else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK) {
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (possibleMovement.contains(squarePanels[i][j].getSquare())) {
+                            try {
+                                squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
+                                squarePanels[i][j].repaint();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        } else {
+                            squarePanels[i][j].setDot(null);
                         }
-                    } else {
-                        squarePanels[i][j].setDot(null);
                     }
                 }
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Tento hrac neni na tahu");
             }
         }
         bw.repaintBoard();

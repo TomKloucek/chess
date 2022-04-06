@@ -413,8 +413,21 @@ public class Board {
     }
 
     public boolean Mated(Color color) {
-        Piece king = getKing(color);
-        return king.PossibleMovement(this).isEmpty();
+        if (color == Color.WHITE) {
+            for (Piece piece : whitePieces) {
+                if (canBlockOrEscapeFromCheck(piece)) {
+                    return false;
+                }
+            }
+        }
+        else {
+            for (Piece piece : blackPieces) {
+                if (canBlockOrEscapeFromCheck(piece)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public boolean inCheck() {
@@ -442,7 +455,7 @@ public class Board {
 
     public boolean canBlockOrEscapeFromCheck(Piece piece){
         if(piece instanceof King){
-            if(piece.PossibleMovement(this).isEmpty()){
+            if (piece.PossibleMovement(this).isEmpty()){
                 return false;
             }
             return true;
