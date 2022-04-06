@@ -1,9 +1,15 @@
 package cz.cvut.fel.pjv.helpers;
 
 import cz.cvut.fel.pjv.models.Color;
+import cz.cvut.fel.pjv.models.Square;
+import cz.cvut.fel.pjv.pieces.*;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Helpers {
     public static String XTranslate(int x) {
@@ -62,5 +68,63 @@ public class Helpers {
         }
 
         return list;
+    }
+
+    public static Image getPieceImage(Square square) {
+        Piece piece = square.getPiece();
+        if (piece == null) {
+            return null;
+        }
+        try {
+            if (piece instanceof Pawn) {
+                if (piece.getColor() == Color.WHITE) {
+                    return ImageIO.read(new File("pieces/white_pawn.svg"));
+                } else {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_pawn.svg"));
+                }
+            }
+            if (piece instanceof Knight) {
+                if (piece.getColor() == Color.WHITE) {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_knight.svg"));
+                } else {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_knight.svg"));
+                }
+            }
+            if (piece instanceof Bishop) {
+                if (piece.getColor() == Color.WHITE) {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_bishop.svg"));
+                } else {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_bishop.svg"));
+                }
+            }
+            if (piece instanceof Rook) {
+                if (piece.getColor() == Color.WHITE) {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_rook.svg"));
+                } else {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_rook.svg"));
+                }
+            }
+            if (piece instanceof Queen) {
+                if (piece.getColor() == Color.WHITE) {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_queen.svg"));
+                } else {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_queen.svg"));
+                }
+            }
+            if (piece instanceof King) {
+                if (piece.getColor() == Color.WHITE) {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/white_king.svg"));
+                } else {
+                    return ImageIO.read(new File("../../../media/gitlab/pieces/svg/black_king.svg"));
+                }
+            }
+            else {
+                return null;
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
