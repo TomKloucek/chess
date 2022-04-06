@@ -29,7 +29,10 @@ public class BoardView extends JPanel {
             this.board = board;
             initializeBoardLayeredPane();
             initializeSquares();
-            //initializePieces();
+        }
+
+        public SquareView[][] getSquarePanels() {
+            return this.squarePanels;
         }
 
         private void initializeBoardLayeredPane() {
@@ -59,66 +62,22 @@ public class BoardView extends JPanel {
             }
         }
 
+        public void repaintBoard() {
+            for (int r = 7; r >= 0; r --) {
+                for (int f = 0; f < 8; f++) {
+                    squarePanels[f][r].repaint();
+                }
+            }
+        }
+
         private void initializeSingleSquarePanel(int f, int r) {
-            squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r]);
+            squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this);
             squarePanels[f][r].setPreferredSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
             squarePanels[f][r].setSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
             squarePanels[f][r].setBackground(f % 2 == r % 2 ? COLOR_GREEN : COLOR_WHITE);
             boardPanel.add(squarePanels[f][r]);
         }
 
-
-
-        /*
-
-        private void drawBoard(Graphics g){
-            Color COLOR_WHITE = new Color(238,238,213);
-            Color COLOR_GREEN = new Color(125,148,93);
-            Color textColor = COLOR_GREEN;
-            Color tmp = COLOR_WHITE;
-            for (int i = 0; i < 8; i++) {
-                if (tmp == COLOR_GREEN){
-                    tmp = COLOR_WHITE;
-                }
-                else if(tmp == COLOR_WHITE){
-                    tmp = COLOR_GREEN;
-                }
-
-                for (int j = 0; j < 8; j++) {
-                    if (tmp == COLOR_GREEN){
-                        tmp = COLOR_WHITE;
-                    }
-                    else if(tmp == COLOR_WHITE){
-                        tmp = COLOR_GREEN;
-                    }
-                    g.setColor(tmp);
-                    g.fillRect(j*SQUARE_HEIGHT_WIDTH,i*SQUARE_HEIGHT_WIDTH, SQUARE_HEIGHT_WIDTH, SQUARE_HEIGHT_WIDTH);
-                    g.drawString(Integer.toString(COORDINATES[i]), 4,i*SQUARE_HEIGHT_WIDTH+14);
-                    if (i == 7){
-                        if (tmp == COLOR_GREEN){
-                            textColor = COLOR_WHITE;
-                        }
-                        else if (tmp == COLOR_WHITE){
-                            textColor = COLOR_GREEN;
-                        }
-                        g.setColor(textColor);
-                        g.drawString(LETTERS[j], j*SQUARE_HEIGHT_WIDTH+54,508);
-                    }
-                }
-            }
-        }
-//        private void drawPieces(Graphics g){
-//            g.drawImage()
-//        }
-
-
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            drawBoard(g);
-        }
-
-*/
         private static void createAndShowGui() {
             Board board = new Board();
             board.initializeBoard();
