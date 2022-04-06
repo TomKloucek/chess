@@ -17,13 +17,6 @@ public class Main {
         Player p2 = new Player(Color.BLACK, null);
         Game game = new Game(p1, p2, true, board);
 
-        BoardView boardView = new BoardView(board);
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                boardView.createAndShowGui(boardView);
-            }
-        });
 
         game.Play();
 
