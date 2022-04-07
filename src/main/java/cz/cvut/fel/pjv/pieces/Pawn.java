@@ -137,6 +137,23 @@ public class Pawn implements Piece {
         return possibilities;
     }
 
+    public ArrayList<Square> getAttackMovesForKingMove(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        int way = this.getColor()==Color.WHITE ? 1:-1;
+        // LEFT
+        if (Helpers.MoveInBoard(this.getX()-1, this.getY()+way)) {
+
+                    possibilities.add(board.getBoard()[this.getX() - 1][this.getY() + way]);
+                }
+
+        // RIGHT
+        if (Helpers.MoveInBoard(this.getX()+1, this.getY()+way)) {
+                    possibilities.add(board.getBoard()[this.getX() + 1][this.getY() + way]);
+                }
+        return possibilities;
+    }
+
+
     @Override
     public void Move(int x, int y) {
         this.atLeastOnceMoved = true;

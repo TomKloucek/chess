@@ -237,15 +237,18 @@ public class Board {
     public ArrayList<Square> getEveryPossibleMoves(ArrayList<Piece> pieces) {
         ArrayList<Square> moves = new ArrayList<>();
         for (Piece piece : pieces) {
-            if (piece.getPoints() != Integer.MAX_VALUE) {
+            if(piece instanceof Pawn){
+                    moves.addAll(((Pawn) piece).getAttackMovesForKingMove(this));
+            }
+            else if (piece.getPoints() != Integer.MAX_VALUE) {
                 moves.addAll(piece.PossibleMovement(this));
             }
+
             else{
                 King king = (King) piece;
                 moves.addAll(king.getSquaresAroundKing(this));
             }
         }
-        
         return moves;
     }
     public ArrayList<Square> getSquaresToBlock(ArrayList<Piece> pieces) {

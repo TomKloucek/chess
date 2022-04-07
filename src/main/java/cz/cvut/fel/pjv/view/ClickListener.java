@@ -28,14 +28,14 @@ public class ClickListener implements ActionListener {
             if (!State.getInstance().isWhiteOnMove()) {
                 if (board.whiteInCheck()) {
                     if (board.Mated(Color.WHITE)) {
-                        JOptionPane.showMessageDialog(null, "Cerny vyhral");
+                        JOptionPane.showMessageDialog(null, "Černý vyhrál");
                     }
                 }
             }
             else {
                 if (board.blackInCheck()) {
                     if (board.Mated(Color.BLACK)) {
-                        JOptionPane.showMessageDialog(null, "Bily vyhral");
+                        JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                     }
                 }
             }
@@ -47,11 +47,11 @@ public class ClickListener implements ActionListener {
             Piece picked = bw.getPickedPiece();
             if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
                 bw.setPickedPiece(-1,-1);
-                JOptionPane.showMessageDialog(null, "Tento vyber vas nedostane z sachu");
+                JOptionPane.showMessageDialog(null, "Tento výběr vás nedostane z šachu");
             }
             else if (picked.getColor() == Color.BLACK && board.blackInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
                 bw.setPickedPiece(-1,-1);
-                JOptionPane.showMessageDialog(null, "Tento vyber vas nedostane z sachu");
+                JOptionPane.showMessageDialog(null, "Tento výběr vas nedostane z šachu");
             }
             else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK) {
                 for (int i = 0; i < 8; i++) {
@@ -70,7 +70,7 @@ public class ClickListener implements ActionListener {
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null, "Tento hrac neni na tahu");
+                JOptionPane.showMessageDialog(null, "Tento hráč není na tahu");
             }
         }
         bw.repaintBoard();
