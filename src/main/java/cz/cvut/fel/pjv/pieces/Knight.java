@@ -51,8 +51,8 @@ public class Knight implements Piece {
     }
 
     @Override
-    public ArrayList<Square> PossibleMovement(Board board) {
-        ArrayList<int[]> possibilities = GenerateAllPossibleWays(this.getX(), this.getY());
+    public ArrayList<Square> possibleMovement(Board board) {
+        ArrayList<int[]> possibilities = generateAllPossibleWays(this.getX(), this.getY());
         ArrayList<Square> returnArray = new ArrayList<>();
         for (var value : possibilities) {
             if (board.getBoard()[value[0]][value[1]].getPiece() == null || board.getBoard()[value[0]][value[1]].getPiece().getColor() != this.getColor()) {
@@ -62,7 +62,19 @@ public class Knight implements Piece {
         return returnArray;
     }
 
-    public ArrayList<int[]> GenerateAllPossibleWays(int x, int y) {
+    @Override
+    public ArrayList<Square> getAttackMovesForKingMove(Board board) {
+        ArrayList<int[]> possibilities = generateAllPossibleWays(this.getX(), this.getY());
+        ArrayList<Square> returnArray = new ArrayList<>();
+        for (var value : possibilities) {
+            if (board.getBoard()[value[0]][value[1]].getPiece() == null || board.getBoard()[value[0]][value[1]].getPiece().getColor() != this.getColor()) {
+                returnArray.add(board.getBoard()[value[0]][value[1]]);
+            }
+        }
+        return returnArray;
+    }
+
+    public ArrayList<int[]> generateAllPossibleWays(int x, int y) {
         ArrayList<int[]> possibleMoves = new ArrayList<>();
         int[] moves = {-2,-1,1,2};
         for (int i = 0; i < 4; i++) {
@@ -77,6 +89,7 @@ public class Knight implements Piece {
         }
         return possibleMoves;
     }
+
 
     @Override
     public void Move(int x, int y) {

@@ -115,7 +115,7 @@ public class Board {
         if (this.board[x][y].getPiece() == null){
             return null;
         }
-        if (!this.board[x][y].getPiece().PossibleMovement(this).isEmpty()){
+        if (!this.board[x][y].getPiece().possibleMovement(this).isEmpty()){
             return this.board[x][y].getPiece();
         }
         return null;
@@ -130,7 +130,7 @@ public class Board {
     }
     public boolean movePiece(Piece chosen, int x, int y) {
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
-        if (chosen.PossibleMovement(this).contains(board[x][y])) {
+        if (chosen.possibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
@@ -237,30 +237,29 @@ public class Board {
     public ArrayList<Square> getEveryPossibleMoves(ArrayList<Piece> pieces) {
         ArrayList<Square> moves = new ArrayList<>();
         for (Piece piece : pieces) {
-            if(piece instanceof Pawn){
-                    moves.addAll(((Pawn) piece).getAttackMovesForKingMove(this));
-            }
-            else if (piece.getPoints() != Integer.MAX_VALUE) {
-                moves.addAll(piece.PossibleMovement(this));
-            }
-
-            else{
-                King king = (King) piece;
-                moves.addAll(king.getSquaresAroundKing(this));
-            }
+            moves.addAll(piece.possibleMovement(this));
+            System.out.println(moves);
         }
         return moves;
     }
+    public ArrayList<Square> getEveryPossibleMovesWithCover(ArrayList<Piece> pieces) {
+        ArrayList<Square> moves = new ArrayList<>();
+        for (Piece piece : pieces) {
+            moves.addAll(piece.getAttackMovesForKingMove(this));
+        }
+        return moves;
+    }
+
     public ArrayList<Square> getSquaresToBlock(ArrayList<Piece> pieces) {
         ArrayList<Square> squaresToBlock = new ArrayList<>();
         Square kingSquare = this.board[getKing(Helpers.getOtherColor((pieces.get(0)).getColor())).getX()][getKing(Helpers.getOtherColor((pieces.get(0)).getColor())).getY()];
         for (Piece piece: pieces) {
             if (piece instanceof Knight || piece instanceof Pawn) {
-                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                if (piece.possibleMovement(this).contains(kingSquare)) {
                     squaresToBlock.add(this.board[piece.getX()][piece.getY()]);
                 }
             } else if (piece instanceof Bishop) {
-                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                if (piece.possibleMovement(this).contains(kingSquare)) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
                     int[] bishopPosition = {piece.getX(), piece.getY()};
                     int x = piece.getX();
@@ -298,7 +297,7 @@ public class Board {
                     }
                 }
             } else if (piece instanceof Rook) {
-                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                if (piece.possibleMovement(this).contains(kingSquare)) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
                     int[] rookPosition = {piece.getX(), piece.getY()};
                     int x = piece.getX();
@@ -333,7 +332,7 @@ public class Board {
                 }
             }
             else if (piece instanceof Queen){
-                if (piece.PossibleMovement(this).contains(kingSquare)) {
+                if (piece.possibleMovement(this).contains(kingSquare)) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
                     int[] queenPosition = {piece.getX(), piece.getY()};
                     int x = piece.getX();
@@ -458,14 +457,14 @@ public class Board {
 
     public boolean canBlockOrEscapeFromCheck(Piece piece){
         if(piece instanceof King){
-            if (piece.PossibleMovement(this).isEmpty()){
+            if (piece.possibleMovement(this).isEmpty()){
                 return false;
             }
             return true;
         }
         else {
             ArrayList<Square> squaresToBlock = getSquaresToBlock(this.getPieces(Helpers.getOtherColor(piece.getColor())));
-            ArrayList<Square> piecePossibleMovements = piece.PossibleMovement(this);
+            ArrayList<Square> piecePossibleMovements = piece.possibleMovement(this);
             if (!Collections.disjoint(squaresToBlock, piecePossibleMovements)){
                 return true;
             }
@@ -474,7 +473,7 @@ public class Board {
     }
     public ArrayList<Square> possibleMovesToUncheck(Piece piece){
         ArrayList<Square> squaresToBlock = getSquaresToBlock(this.getPieces(Helpers.getOtherColor(piece.getColor())));
-        ArrayList<Square> piecePossibleMovements = piece.PossibleMovement(this);
+        ArrayList<Square> piecePossibleMovements = piece.possibleMovement(this);
         return (ArrayList<Square>) Helpers.intersection(squaresToBlock, piecePossibleMovements);
     }
 }

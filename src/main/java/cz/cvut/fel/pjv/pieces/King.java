@@ -53,19 +53,19 @@ public class King implements Piece {
     }
 
     @Override
-    public ArrayList<Square> PossibleMovement(Board board) {
+    public ArrayList<Square> possibleMovement(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
         // UPPER LINE
         for (int i = -1; i <= 1; i++){
             if (this.getX()+i <= 7 && this.getX()+i >= 0 && this.getY()+1 >= 0 && this.getY()+1 <= 7) {
                 if (board.getBoard()[this.getX() + i][this.getY() + 1].getPiece() != null) {
                     if (board.getBoard()[this.getX() + i][this.getY() + 1].getPiece().getColor() != this.getColor()) {
-                        if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() + 1])) {
+                        if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() + 1])) {
                             possibilities.add(board.getBoard()[this.getX() + i][this.getY() + 1]);
                         }
                     }
                 } else {
-                    if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() + 1])) {
+                    if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() + 1])) {
                         possibilities.add(board.getBoard()[this.getX() + i][this.getY() + 1]);
                     }
                 }
@@ -75,13 +75,13 @@ public class King implements Piece {
         if (this.getX()+1 <= 7 && this.getX()+1 >= 0) {
             if (board.getBoard()[this.getX() + 1][this.getY()].getPiece() != null) {
                 if (board.getBoard()[this.getX() + 1][this.getY()].getPiece().getColor() != this.getColor()) {
-                    if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + 1][this.getY()])) {
+                    if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + 1][this.getY()])) {
                         possibilities.add(board.getBoard()[this.getX() + 1][this.getY()]);
                     }
                 }
 
             } else {
-                if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + 1][this.getY()])) {
+                if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + 1][this.getY()])) {
                     possibilities.add(board.getBoard()[this.getX() + 1][this.getY()]);
                 }
             }
@@ -90,13 +90,13 @@ public class King implements Piece {
         if (this.getX()-1 <= 7 && this.getX()-1 >= 0){
             if (board.getBoard()[this.getX() - 1][this.getY()].getPiece() != null) {
                 if (board.getBoard()[this.getX() - 1][this.getY()].getPiece().getColor() != this.getColor()) {
-                    if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
+                    if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
                         possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
                     }
                 }
 
             } else {
-                if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
+                if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
                     possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
                 }
             }
@@ -107,12 +107,12 @@ public class King implements Piece {
 
                     if (board.getBoard()[this.getX() + i][this.getY() - 1].getPiece() != null) {
                         if (board.getBoard()[this.getX() + i][this.getY() - 1].getPiece().getColor() != this.getColor()) {
-                            if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
+                            if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
                                 possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
                             }
                         }
                     } else {
-                        if (!board.getEveryPossibleMoves(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
+                        if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
                             possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
                         }
                     }
@@ -154,7 +154,7 @@ public class King implements Piece {
     }
 
     // GET SQUARES AROUND KING
-    public ArrayList<Square> getSquaresAroundKing(Board board){
+    public ArrayList<Square> getAttackMovesForKingMove(Board board){
         ArrayList<Square> squaresAroundKing = new ArrayList<>();
         // UPPER LINE
         for (int i = -1; i <= 1; i++){

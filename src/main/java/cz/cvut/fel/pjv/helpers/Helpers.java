@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.helpers;
 
+import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.Square;
 import cz.cvut.fel.pjv.pieces.*;
@@ -8,7 +9,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Helpers {
     public static String XTranslate(int x) {
@@ -68,11 +71,17 @@ public class Helpers {
 
         return list;
     }
+    public <T> List<T> union(List<T> list1, List<T> list2) {
+        Set<T> set = new HashSet<T>();
 
+        set.addAll(list1);
+        set.addAll(list2);
 
-    public static Image getPieceImage(Square square) {
+        return new ArrayList<T>(set);
+    }
+
+    public static Image getPieceImage(Square square, Board board) {
         Piece piece = square.getPiece();
-
         if (piece == null) {
             return null;
         }
@@ -115,8 +124,17 @@ public class Helpers {
             }
             if (piece instanceof King) {
                 if (piece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("resources/pieces/white_king.png"));
+                    if (board.whiteInCheck()){
+                        return ImageIO.read(new File("resources/pieces/white_king_in_check.png"));
+                    }
+                    else {
+                        return ImageIO.read(new File("resources/pieces/white_king.png"));
+                    }
+
                 } else {
+                    if (board.blackInCheck()){
+                        return ImageIO.read(new File("resources/pieces/black_king_in_check.png"));
+                    }
                     return ImageIO.read(new File("resources/pieces/black_king.png"));
                 }
             }

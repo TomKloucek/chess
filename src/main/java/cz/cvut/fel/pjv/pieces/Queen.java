@@ -50,7 +50,7 @@ public class Queen implements Piece {
 
 
     @Override
-    public ArrayList<Square> PossibleMovement(Board board) {
+    public ArrayList<Square> possibleMovement(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
         // UP
         for (int i = this.getY()+1; i < 8; i++) {
@@ -156,6 +156,96 @@ public class Queen implements Piece {
             }
             else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() != null
                     && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece().getColor() != this.getColor()) {
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")]);
+                break;
+            }
+            else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() == null) {
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")]);
+            }
+        }
+        return possibilities;
+    }
+
+    @Override
+    public ArrayList<Square> getAttackMovesForKingMove(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        // UP
+        for (int i = this.getY()+1; i < 8; i++) {
+            if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+            }
+        }
+        // RIGHT
+        for (int i = this.getX()+1; i < 8; i++) {
+            if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+            }
+        }
+        // DOWN
+        for (int i = this.getY()-1; i > -1; i--) {
+            if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+            }
+        }
+        // LEFT
+        for (int i = this.getX()-1; i > -1; i--) {
+            if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+            }
+        }
+        // RIGHT UP
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != this){
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")]);
+                break;
+            }
+            else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() == null) {
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")]);
+            }
+        }
+        // RIGHT DOWN
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")].getPiece() != this){
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")]);
+                break;
+            }
+            else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")].getPiece() == null) {
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")]);
+            }
+        }
+        //LEFT UP
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")].getPiece() != this){
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")]);
+                break;
+            }
+            else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")].getPiece() == null) {
+                possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")]);
+            }
+        }
+        // LEFT DOWN
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() != this){
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")]);
                 break;
             }

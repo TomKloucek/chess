@@ -57,7 +57,7 @@ public class Rook implements Piece {
     }
 
     @Override
-    public ArrayList<Square> PossibleMovement(Board board) {
+    public ArrayList<Square> possibleMovement(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
             // UP
             for (int i = this.getY()+1; i < 8; i++) {
@@ -111,6 +111,52 @@ public class Rook implements Piece {
                     possibilities.add(board.getBoard()[i][this.getY()]);
                 }
             }
+        return possibilities;
+    }
+
+    @Override
+    public ArrayList<Square> getAttackMovesForKingMove(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        // UP
+        for (int i = this.getY()+1; i < 8; i++) {
+            if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+            }
+        }
+        // RIGHT
+        for (int i = this.getX()+1; i < 8; i++) {
+            if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+            }
+        }
+        // DOWN
+        for (int i = this.getY()-1; i > -1; i--) {
+            if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[this.getX()][i]);
+            }
+        }
+        // LEFT
+        for (int i = this.getX()-1; i > -1; i--) {
+            if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+                break;
+            }
+            else {
+                possibilities.add(board.getBoard()[i][this.getY()]);
+            }
+        }
         return possibilities;
     }
 

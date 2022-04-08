@@ -27,6 +27,7 @@ public class ClickListener implements ActionListener {
             bw.setPickedPiece(-1, -1);
             if (!State.getInstance().isWhiteOnMove()) {
                 if (board.whiteInCheck()) {
+                    System.out.println("Bílý je v šachu");
                     if (board.Mated(Color.WHITE)) {
                         JOptionPane.showMessageDialog(null, "Černý vyhrál");
                     }
@@ -34,6 +35,7 @@ public class ClickListener implements ActionListener {
             }
             else {
                 if (board.blackInCheck()) {
+                    System.out.println("Černý je v šachu");
                     if (board.Mated(Color.BLACK)) {
                         JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                     }
@@ -42,7 +44,7 @@ public class ClickListener implements ActionListener {
             State.getInstance().reverseMove();
         }
         else {
-            ArrayList<Square> possibleMovement = square.getPiece().PossibleMovement(board);
+            ArrayList<Square> possibleMovement = square.getPiece().possibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             Piece picked = bw.getPickedPiece();
             if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {

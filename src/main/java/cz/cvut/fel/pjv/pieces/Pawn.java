@@ -65,7 +65,7 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public ArrayList<Square> PossibleMovement(Board board) {
+    public ArrayList<Square> possibleMovement(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
 
         // Prida pohyb o dva, kdyz se hrac nehybnul

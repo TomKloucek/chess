@@ -17,7 +17,8 @@ public interface Piece {
     public void setY(int y);
     public int getY();
 
-    public ArrayList<Square> PossibleMovement(Board board);
+    public ArrayList<Square> possibleMovement(Board board);
+    public ArrayList<Square> getAttackMovesForKingMove(Board board);
 
     public void Move(int x, int y);
 

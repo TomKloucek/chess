@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class SquareView extends JPanel {
     private Square square;
+    private Board board;
     private final ButtonCoord button;
     private Image dot = null;
 
@@ -36,6 +37,7 @@ public class SquareView extends JPanel {
     public SquareView(LayoutManager layout, Square square, Board board, BoardView bw) {
         super(layout);
         this.square = square;
+        this.board = board;
         this.button = new ButtonCoord(square.getX()-1, square.getY());
         button.addActionListener(new ClickListener(square,board, bw));
         button.setOpaque(false);
@@ -46,15 +48,17 @@ public class SquareView extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+
         super.paintComponent(g);
 
-        Image piece = Helpers.getPieceImage(square);
-            g.drawImage(piece, 8, 8, this);
+        Image piece = Helpers.getPieceImage(square, board);
+        g.drawImage(piece, 8, 8, this);
 
 
         if (dot != null) {
             g.drawImage(dot, 8, 8, this);
         }
+
 
     }
 
