@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.helpers;
 import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.Square;
+import cz.cvut.fel.pjv.models.State;
 import cz.cvut.fel.pjv.pieces.*;
 
 import javax.imageio.ImageIO;
@@ -124,7 +125,8 @@ public class Helpers {
             }
             if (piece instanceof King) {
                 if (piece.getColor() == Color.WHITE) {
-                    if (board.whiteInCheck()){
+                    if (State.getInstance().isWhiteOnMove() && board.whiteInCheck()) {
+
                         return ImageIO.read(new File("resources/pieces/white_king_in_check.png"));
                     }
                     else {
@@ -132,7 +134,7 @@ public class Helpers {
                     }
 
                 } else {
-                    if (board.blackInCheck()){
+                    if (!State.getInstance().isWhiteOnMove() && board.blackInCheck()){
                         return ImageIO.read(new File("resources/pieces/black_king_in_check.png"));
                     }
                     return ImageIO.read(new File("resources/pieces/black_king.png"));

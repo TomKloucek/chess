@@ -238,7 +238,6 @@ public class Board {
         ArrayList<Square> moves = new ArrayList<>();
         for (Piece piece : pieces) {
             moves.addAll(piece.possibleMovement(this));
-            System.out.println(moves);
         }
         return moves;
     }
@@ -447,11 +446,11 @@ public class Board {
     public boolean willBeChecked(Color color,int x, int y) {
         if (color == Color.WHITE) {
             Piece king = getKing(Color.WHITE);
-            return getEveryPossibleMoves(this.getPieces(Color.BLACK)).contains(getBoard()[x][y]);
+            return getEveryPossibleMovesWithCover(this.getPieces(Color.BLACK)).contains(getBoard()[x][y]);
         }
         else {
             Piece king = getKing(Color.BLACK);
-            return getEveryPossibleMoves(this.getPieces(Color.WHITE)).contains(getBoard()[x][y]);
+            return getEveryPossibleMovesWithCover(this.getPieces(Color.WHITE)).contains(getBoard()[x][y]);
         }
     }
 

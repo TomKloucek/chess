@@ -1,8 +1,7 @@
 package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
-import cz.cvut.fel.pjv.models.Board;
-import cz.cvut.fel.pjv.models.Square;
+import cz.cvut.fel.pjv.models.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
