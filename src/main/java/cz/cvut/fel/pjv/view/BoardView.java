@@ -87,6 +87,17 @@ public class BoardView extends JPanel {
                 }
             }
         }
+        public void deleteButtonsOnSquaresWithoutPiece(){
+            for (int r = 7; r >= 0; r --) {
+                for (int f = 0; f < 8; f++) {
+                    if (squarePanels[f][r].getSquare().getPiece()==null) {
+                        squarePanels[f][r].remove(squarePanels[f][r].getButton());
+                        squarePanels[f][r].validate();
+                        squarePanels[f][r].repaint();
+                    }
+                }
+            }
+        }
 
     public void restoreBoard() {
         for (int r = 7; r >= 0; r --) {

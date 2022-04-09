@@ -26,6 +26,7 @@ public class ClickListener implements ActionListener {
             board.movePiece(picked, buttonCoord.getX(), buttonCoord.getY());
             bw.setPickedPiece(-1, -1);
             if (!State.getInstance().isWhiteOnMove()) {
+                bw.deleteButtonsOnSquaresWithoutPiece();
                 if (board.whiteInCheck()) {
                     System.out.println("Bílý je v šachu");
                     if (board.Mated(Color.WHITE)) {
@@ -34,6 +35,7 @@ public class ClickListener implements ActionListener {
                 }
             }
             else {
+                bw.deleteButtonsOnSquaresWithoutPiece();
                 if (board.blackInCheck()) {
                     System.out.println("Černý je v šachu");
                     if (board.Mated(Color.BLACK)) {
@@ -47,6 +49,8 @@ public class ClickListener implements ActionListener {
             ArrayList<Square> possibleMovement = square.getPiece().possibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             Piece picked = bw.getPickedPiece();
+            System.out.println(picked);
+            ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
             if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vás nedostane z šachu");
@@ -55,17 +59,40 @@ public class ClickListener implements ActionListener {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vas nedostane z šachu");
             }
+            else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE && board.whiteInCheck() || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK
+            && board.blackInCheck()) {
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        if (possibleMovesToUncheck.contains(squarePanels[i][j].getSquare())) {
+                            try {
+                                squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
+                                squarePanels[i][j].setButton();
+                                squarePanels[i][j].validate();
+                                squarePanels[i][j].repaint();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        } else {
+                            squarePanels[i][j].setButton();
+                            squarePanels[i][j].setDot(null);
+                        }
+                    }
+                }
+            }
             else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK) {
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         if (possibleMovement.contains(squarePanels[i][j].getSquare())) {
                             try {
                                 squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
+                                squarePanels[i][j].setButton();
+                                squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
                         } else {
+                            squarePanels[i][j].setButton();
                             squarePanels[i][j].setDot(null);
                         }
                     }

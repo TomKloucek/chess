@@ -36,6 +36,9 @@ public class Bishop implements Piece {
     @Override
     public ArrayList<Square> possibleMovement(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
+//        if(board.getSquaresToBlock(board.getPieces(Helpers.getOtherColor(color))).contains(board.getBoard()[this.getX()][this.getY()])){
+//            return possibilities;
+//        }
         // RIGHT UP
         for (int i = 1; i < 8; i++) {
                 if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != null

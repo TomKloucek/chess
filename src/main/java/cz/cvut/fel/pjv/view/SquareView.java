@@ -43,9 +43,18 @@ public class SquareView extends JPanel {
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.add(button);
+        if(square.getPiece()!=null) {
+            this.add(button);
+        }
     }
-
+    public void setButton(){
+        if(square.getPiece()!=null || this.getDot()!=null) {
+            this.add(button);
+        }
+    }
+    public ButtonCoord getButton(){
+        return this.button;
+    }
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);

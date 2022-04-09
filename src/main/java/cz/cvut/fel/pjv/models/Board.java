@@ -115,10 +115,9 @@ public class Board {
         if (this.board[x][y].getPiece() == null){
             return null;
         }
-        if (!this.board[x][y].getPiece().possibleMovement(this).isEmpty()){
+        else {
             return this.board[x][y].getPiece();
         }
-        return null;
     }
 
     public void setMotionToPawns(ArrayList<Piece> pieces, Piece chosen) {
