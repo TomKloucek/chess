@@ -162,9 +162,9 @@ public class Board {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[0][0].getPiece();
                     this.board[0][0].setPiece(null);
-                    this.board[2][0].setPiece(rook);
-                    this.board[1][0].setPiece(chosen);
-                    chosen.Move(1,0);
+                    this.board[3][0].setPiece(rook);
+                    this.board[2][0].setPiece(chosen);
+                    chosen.Move(2,0);
                 }
                 if (x == 7 && y == 0) {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
