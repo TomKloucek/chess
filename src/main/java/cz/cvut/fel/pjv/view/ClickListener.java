@@ -49,7 +49,6 @@ public class ClickListener implements ActionListener {
             ArrayList<Square> possibleMovement = square.getPiece().possibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             Piece picked = bw.getPickedPiece();
-            System.out.println(picked);
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
             if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
                 bw.setPickedPiece(-1,-1);
