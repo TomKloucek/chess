@@ -35,6 +35,14 @@ Hráč zapne hru, a zadává souřadnice jako figurku chce vybrat a v konzoli se
 
 Budoucím plánem je následující implemetace v grafickém rozhraní viz. níže uvedené ukázky
 
+Úvodní obrazovka hry bude vypadat následovně:
+
+<img src="/media/gitlab/manual/uvodni_obrazovka.png" alt="UML"/>
+
+Okno hry bude vypadat takto:
+
+<img src="/media/gitlab/manual/nahled_hry.png" alt="UML" />
+
 Naše šachovnice bude vypadat následujicím způsobem
 
 <img src="/media/gitlab/manual/chess_board.jpg" alt="UML" width="400"/>
@@ -61,5 +69,17 @@ Pokud se po tahu protivníkův král ocitne v šachu bude to vypadat následovn�
 TODO vygenerovaná dokumentace
 
 ### UML Diagram
+
+V současné době neobsahuje všechny třídy, v budoucnu přibydou třídy, které budou mít podobné názvy těmto:
+
+chessTimer s metodami, které budou umožňovat sledování času a přepínání hodin, při změně tahu
+
+historyManagement s metodami, které budou umožňovat zobrazit odehranou hru uživatele
+
+userManagement s metodami, které budou umožňovat založení účtu a hru pod daným účtem
+
+chessServer s metodami, které budou umožňovat síťovou hru
+
+
 
 <img src="/media/gitlab/uml.png" alt="UML" />
