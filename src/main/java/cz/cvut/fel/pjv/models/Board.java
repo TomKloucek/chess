@@ -446,10 +446,12 @@ public class Board {
     public boolean willBeChecked(Color color,int x, int y) {
         if (color == Color.WHITE) {
             Piece king = getKing(Color.WHITE);
+            System.out.println(getEveryPossibleMovesWithCover(this.getPieces(Color.BLACK)));
             return getEveryPossibleMovesWithCover(this.getPieces(Color.BLACK)).contains(getBoard()[x][y]);
         }
         else {
             Piece king = getKing(Color.BLACK);
+            System.out.println(getEveryPossibleMovesWithCover(this.getPieces(Color.WHITE)));
             return getEveryPossibleMovesWithCover(this.getPieces(Color.WHITE)).contains(getBoard()[x][y]);
         }
     }
