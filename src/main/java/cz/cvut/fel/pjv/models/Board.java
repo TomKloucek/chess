@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.models;
 import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.pieces.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -133,12 +134,17 @@ public class Board {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
+                    board[x][y].setPiece(null);
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
+                    board[x][y].getPiece().Move(x,y);
+                    blackPieces.add(board[x][y].getPiece());
                 }
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
+                    board[x][y].setPiece(null);
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
+                    board[x][y].getPiece().Move(x,y);
+                    whitePieces.add(board[x][y].getPiece());
                 }
-                board[x][y].getPiece().Move(x,y);
             }
             // EN PASSANT
             else if(chosen instanceof Pawn && (board[x][y-1].getPiece() instanceof Pawn && board[x][y-1].getPiece().getColor() == Color.BLACK) && board[x][y].getPiece() == null) {
@@ -208,12 +214,15 @@ public class Board {
     }
 
     private Piece PromoteTo(Pawn pawn) {
-        String answer = "Queen";
+        String[] options = {"Rook", "Queen", "Bishop", "Knight"};
+        int answer = JOptionPane.showOptionDialog(null, "Returns the position of your choice on the array",
+                "Click a button",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         return switch (answer) {
-            case "Rook" -> new Rook(pawn.getColor(), pawn.getX(), pawn.getY());
-            case "Queen" -> new Queen(pawn.getColor(), pawn.getX(), pawn.getY());
-            case "Bishop" -> new Bishop(pawn.getColor(), pawn.getX(), pawn.getY());
-            case "Knight" -> new Knight(pawn.getColor(), pawn.getX(), pawn.getY());
+            case 0 -> new Rook(pawn.getColor(), pawn.getX(), pawn.getY());
+            case 1 -> new Queen(pawn.getColor(), pawn.getX(), pawn.getY());
+            case 2 -> new Bishop(pawn.getColor(), pawn.getX(), pawn.getY());
+            case 3 -> new Knight(pawn.getColor(), pawn.getX(), pawn.getY());
             default -> null;
         };
     }

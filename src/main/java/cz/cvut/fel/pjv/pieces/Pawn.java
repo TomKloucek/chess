@@ -95,9 +95,11 @@ public class Pawn implements Piece {
 
     public Square getBasicMove(Board board) {
         int way = this.getColor()==Color.WHITE ? 1:-1;
-            if (board.getBoard()[this.getX()][this.getY()+way].getPiece() == null) {
-                return board.getBoard()[this.getX()][this.getY()+way];
+        if (this.getY()+way >= 0 && this.getY()+way <= 7) {
+            if (board.getBoard()[this.getX()][this.getY() + way].getPiece() == null) {
+                return board.getBoard()[this.getX()][this.getY() + way];
             }
+        }
         return null;
     }
 
