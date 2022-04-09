@@ -146,6 +146,7 @@ public class Board {
                 this.board[x][y-1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 board[x][y].getPiece().Move(x,y);
+                refillPiecesLists();
                 return true;
             }
             else if(chosen instanceof Pawn && (board[x][y+1].getPiece() instanceof Pawn && board[x][y+1].getPiece().getColor() == Color.WHITE) && board[x][y].getPiece() == null) {
@@ -153,6 +154,7 @@ public class Board {
                 this.board[x][y+1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 board[x][y].getPiece().Move(x,y);
+                refillPiecesLists();
                 return true;
             }
             // CASTLE
@@ -194,6 +196,7 @@ public class Board {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 chosen.Move(x, y);
+                refillPiecesLists();
                 return true;
             }
         }
@@ -231,6 +234,26 @@ public class Board {
             }
         }
         return null;
+    }
+
+    public void refillPiecesLists() {
+        ArrayList<Piece> whitePieces = new ArrayList<>();
+        ArrayList<Piece> blackPieces = new ArrayList<>();
+        for (int r = 7; r >= 0; r --) {
+            for (int f = 0; f < 8; f++) {
+                Piece piece = board[f][r].getPiece();
+                if (piece != null) {
+                    if (piece.getColor() == Color.WHITE) {
+                        whitePieces.add(piece);
+                    }
+                    else {
+                        blackPieces.add(piece);
+                    }
+                }
+            }
+        }
+        this.whitePieces = whitePieces;
+        this.blackPieces = blackPieces;
     }
 
     public ArrayList<Square> getEveryPossibleMoves(ArrayList<Piece> pieces) {
