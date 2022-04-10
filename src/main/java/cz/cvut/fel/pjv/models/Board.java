@@ -112,6 +112,15 @@ public class Board {
         board[x][y].setPiece(piece);
     }
 
+    public void putPiece(Piece piece) {
+        if (piece.getColor() == Color.WHITE) {
+            whitePieces.add(piece);
+        }
+        else {
+            blackPieces.add(piece);
+        }
+    }
+
     public Piece pickPiece(int x, int y) {
         if (this.board[x][y].getPiece() == null){
             return null;
@@ -119,6 +128,89 @@ public class Board {
         else {
             return this.board[x][y].getPiece();
         }
+    }
+
+    public void stringToBoard(String s) {
+        for (int i = 7; i > -1; i--) {
+            for (int j = 0; j < 8; j++) {
+                board[j][i] = new Square(j,i,null);
+            }
+        }
+        int counter = 0;
+        String[] boardArray = s.split(",");
+        for (int i = 7; i > -1; i--) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = pieceFromString(boardArray[counter]);
+                if (piece != null) {
+                    putPiece(piece);
+                }
+                board[j][i].setPiece(piece);
+                counter++;
+            }
+        }
+    }
+
+    public Piece pieceFromString(String piece) {
+        // TODO pawn ktery se hnul
+        piece = piece.trim();
+        char[] chars = piece.toCharArray();
+        System.out.println("|"+piece+"|");
+        if (chars.length == 0) {
+            return null;
+        }
+        if (chars.length == 3) {
+            int y = Character.getNumericValue(chars[2])-1;
+            if (chars[0] == 'W') {
+                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])),y);
+            }
+            else {
+                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])),y);
+            }
+        }
+        else {
+            int y = Character.getNumericValue(chars[3])-1;
+            if (chars[0] == 'K') {
+                if (chars[1] == 'W') {
+                    return new King(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+                else {
+                    return new King(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+            }
+            else if (chars[0] == 'R') {
+                if (chars[1] == 'W') {
+                    return new Rook(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+                else {
+                    return new Rook(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+            }
+            else if (chars[0] == 'Q') {
+                if (chars[1] == 'W') {
+                    return new Queen(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+                else {
+                    return new Rook(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+            }
+            else if (chars[0] == 'N') {
+                if (chars[1] == 'W') {
+                    return new Knight(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+                else {
+                    return new Knight(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+            }
+            else if (chars[0] == 'B') {
+                if (chars[1] == 'W') {
+                    return new Bishop(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+                else {
+                    return new Bishop(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                }
+            }
+        }
+        return null;
     }
 
     public void setMotionToPawns(ArrayList<Piece> pieces, Piece chosen) {

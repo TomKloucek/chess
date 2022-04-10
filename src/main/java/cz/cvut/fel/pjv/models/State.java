@@ -29,6 +29,7 @@ public class State {
 
     public void reverseMove() {
         whiteOnMove = !whiteOnMove;
+        System.out.println(this.game.boardToString());
     }
 
     public Game getGame() {

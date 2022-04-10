@@ -180,7 +180,7 @@ public class Bishop implements Piece {
             notation += "BB" + Helpers.XTranslate(this.getX()) + (getY()+1);
         }
         else {
-            notation += "WB" + Helpers.XTranslate(this.getX()) + (getY()+1);
+            notation += "BW" + Helpers.XTranslate(this.getX()) + (getY()+1);
         }
         return notation;
     }
