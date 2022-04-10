@@ -134,15 +134,16 @@ public class Board {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
-                    board[x][y].setPiece(null);
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
                     board[x][y].getPiece().Move(x,y);
+                    blackPieces.remove(chosen);
                     blackPieces.add(board[x][y].getPiece());
                 }
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
-                    board[x][y].setPiece(null);
+                    this.board[x][y].setPiece(null);
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
-                    board[x][y].getPiece().Move(x,y);
+                    this.board[x][y].getPiece().Move(x,y);
+                    whitePieces.remove(chosen);
                     whitePieces.add(board[x][y].getPiece());
                 }
             }
@@ -164,13 +165,14 @@ public class Board {
                 return true;
             }
             // CASTLE
-            if (chosen instanceof King && board[x][y].getPiece() instanceof Rook) {
+            else if (chosen instanceof King && board[x][y].getPiece() instanceof Rook) {
                 if (x == 0 && y == 0) {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[0][0].getPiece();
                     this.board[0][0].setPiece(null);
                     this.board[3][0].setPiece(rook);
                     this.board[2][0].setPiece(chosen);
+                    rook.Move(3,0);
                     chosen.Move(2,0);
                 }
                 if (x == 7 && y == 0) {
@@ -179,6 +181,7 @@ public class Board {
                     this.board[7][0].setPiece(null);
                     this.board[5][0].setPiece(rook);
                     this.board[6][0].setPiece(chosen);
+                    rook.Move(5,0);
                     chosen.Move(6,0);
                 }
                 if (x == 0 && y == 7) {
@@ -187,6 +190,7 @@ public class Board {
                     this.board[0][7].setPiece(null);
                     this.board[2][7].setPiece(rook);
                     this.board[1][7].setPiece(chosen);
+                    rook.Move(2,7);
                     chosen.Move(1,7);
                 }
                 if (x == 7 && y == 7) {
@@ -195,6 +199,7 @@ public class Board {
                     this.board[7][7].setPiece(null);
                     this.board[5][7].setPiece(rook);
                     this.board[6][7].setPiece(chosen);
+                    rook.Move(5,7);
                     chosen.Move(6,7);
                 }
             }
