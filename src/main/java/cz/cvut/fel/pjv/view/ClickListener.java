@@ -96,9 +96,7 @@ public class ClickListener implements ActionListener {
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         if(board.getEveryXRayMove(board.getPieces(Helpers.getOtherColor(picked.getColor()))).contains(square)){
-                            System.out.println("ahokj");
                             if(possibleMovesToUncheck.contains(squarePanels[i][j].getSquare())) {
-                                System.out.println("Neahoj");
                                 try {
                                     squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
                                     squarePanels[i][j].setButton();

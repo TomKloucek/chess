@@ -379,9 +379,9 @@ public class Board {
     public ArrayList<Square> getEveryXRayMove(ArrayList<Piece> pieces) {
         ArrayList<Square> moves = new ArrayList<>();
         for (Piece piece : pieces) {
-//            if (piece instanceof Queen){
-//                moves.addAll(((Queen) piece).getXRayedMoves(this));
-//            }
+            if (piece instanceof Queen){
+                moves.addAll(((Queen) piece).getXRayedMoves(this));
+            }
             if (piece instanceof Rook){
                 moves.addAll(((Rook) piece).getXRayedMoves(this));
             }
