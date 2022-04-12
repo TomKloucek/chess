@@ -124,14 +124,14 @@ public class King implements Piece {
             if (this.getColor() == Color.WHITE) {
                 if (board.getBoard()[0][0].getPiece() instanceof Rook left_rook) {
                     if (!left_rook.isAtLeastOnceMoved() && board.getBoard()[1][0].getPiece() == null && board.getBoard()[2][0].getPiece() == null && board.getBoard()[3][0].getPiece() == null) {
-                        if (!board.willBeChecked(Color.WHITE, 1, 0) && !board.willBeChecked(Color.WHITE, 2, 0) && !board.willBeChecked(Color.WHITE, 3, 0)) {
+                        if (!board.willBeChecked(Color.WHITE, 1, 0) && !board.willBeChecked(Color.WHITE, 2, 0) && !board.willBeChecked(Color.WHITE, 3, 0) && !board.willBeChecked(Color.WHITE, 4, 0) ) {
                             possibilities.add(board.getBoard()[0][0]);
                         }
                     }
                 }
                 if (board.getBoard()[7][0].getPiece() instanceof Rook right_rook) {
                     if (!right_rook.isAtLeastOnceMoved() && board.getBoard()[5][0].getPiece() == null && board.getBoard()[6][0].getPiece() == null) {
-                        if (!board.willBeChecked(Color.WHITE, 5, 0) && !board.willBeChecked(Color.WHITE, 6, 0)) {
+                        if (!board.willBeChecked(Color.WHITE, 4, 0) && !board.willBeChecked(Color.WHITE, 5, 0) && !board.willBeChecked(Color.WHITE, 6, 0)) {
                             possibilities.add(board.getBoard()[7][0]);
                         }
                     }
@@ -139,21 +139,20 @@ public class King implements Piece {
             } else {
                 if (board.getBoard()[0][7].getPiece() instanceof Rook left_rook) {
                     if (!left_rook.isAtLeastOnceMoved() && board.getBoard()[1][7].getPiece() == null && board.getBoard()[2][7].getPiece() == null && board.getBoard()[3][7].getPiece() == null) {
-                        if (!board.willBeChecked(Color.BLACK, 1, 0) && !board.willBeChecked(Color.BLACK, 2, 0) && !board.willBeChecked(Color.BLACK, 3, 0)) {
+                        if (!board.willBeChecked(Color.BLACK, 1, 7) && !board.willBeChecked(Color.BLACK, 2, 7) && !board.willBeChecked(Color.BLACK, 3, 7) && !board.willBeChecked(Color.BLACK, 4, 7)) {
                             possibilities.add(board.getBoard()[0][7]);
                         }
                     }
                 }
                 if (board.getBoard()[7][7].getPiece() instanceof Rook right_rook) {
                     if (!right_rook.isAtLeastOnceMoved() && board.getBoard()[5][7].getPiece() == null && board.getBoard()[6][7].getPiece() == null) {
-                        if (!board.willBeChecked(Color.BLACK, 5, 7) && !board.willBeChecked(Color.BLACK, 6, 7)) {
+                        if (!board.willBeChecked(Color.WHITE, 4, 7) &&!board.willBeChecked(Color.BLACK, 5, 7) && !board.willBeChecked(Color.BLACK, 6, 7)) {
                             possibilities.add(board.getBoard()[7][7]);
                         }
                     }
                 }
             }
         }
-
         return possibilities;
     }
 

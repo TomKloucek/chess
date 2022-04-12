@@ -376,6 +376,22 @@ public class Board {
         }
         return moves;
     }
+    public ArrayList<Square> getEveryXRayMove(ArrayList<Piece> pieces) {
+        ArrayList<Square> moves = new ArrayList<>();
+        for (Piece piece : pieces) {
+//            if (piece instanceof Queen){
+//                moves.addAll(((Queen) piece).getXRayedMoves(this));
+//            }
+            if (piece instanceof Rook){
+                moves.addAll(((Rook) piece).getXRayedMoves(this));
+            }
+            else if(piece instanceof Bishop){
+                moves.addAll(((Bishop) piece).getXRayedMoves(this));
+            }
+
+        }
+        return moves;
+    }
 
     public ArrayList<Square> getSquaresToBlock(ArrayList<Piece> pieces) {
         ArrayList<Square> squaresToBlock = new ArrayList<>();
@@ -386,7 +402,7 @@ public class Board {
                     squaresToBlock.add(this.board[piece.getX()][piece.getY()]);
                 }
             } else if (piece instanceof Bishop) {
-                if (piece.possibleMovement(this).contains(kingSquare)) {
+                if (piece.possibleMovement(this).contains(kingSquare) || ((Bishop) piece).getXRayedMoves(this).size() !=0) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
                     int[] bishopPosition = {piece.getX(), piece.getY()};
                     int x = piece.getX();
@@ -424,7 +440,7 @@ public class Board {
                     }
                 }
             } else if (piece instanceof Rook) {
-                if (piece.possibleMovement(this).contains(kingSquare)) {
+                if (piece.possibleMovement(this).contains(kingSquare) || ((Rook) piece).getXRayedMoves(this).size() !=0) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
                     int[] rookPosition = {piece.getX(), piece.getY()};
                     int x = piece.getX();
@@ -435,31 +451,32 @@ public class Board {
                             squaresToBlock.add(this.board[x][y]);
                             y++;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x == kingPosition[0] && y != kingPosition[1]);
                     } else if (kingPosition[0] < rookPosition[0] && kingPosition[1] == rookPosition[1]) {
                         do {
                             squaresToBlock.add(this.board[x][y]);
                             x--;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x != kingPosition[0] && y == kingPosition[1]);
 
                     } else if (kingPosition[0] == rookPosition[0] && kingPosition[1] < rookPosition[1]) {
                         do {
                             squaresToBlock.add(this.board[x][y]);
                             y--;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x == kingPosition[0] && y != kingPosition[1]);
                     } else {
                         do {
                             squaresToBlock.add(this.board[x][y]);
                             x++;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x != kingPosition[0] && y == kingPosition[1]);
                     }
                 }
+
             }
             else if (piece instanceof Queen){
-                if (piece.possibleMovement(this).contains(kingSquare)) {
+                if (piece.possibleMovement(this).contains(kingSquare) || ((Queen) piece).getXRayedMoves(this).size() !=0) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(piece.getColor())).getX(), getKing(Helpers.getOtherColor(piece.getColor())).getY()};
                     int[] queenPosition = {piece.getX(), piece.getY()};
                     int x = piece.getX();
@@ -470,27 +487,27 @@ public class Board {
                             squaresToBlock.add(this.board[x][y]);
                             y++;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x == kingPosition[0] && y != kingPosition[1]);
                     } else if (kingPosition[0] < queenPosition[0] && kingPosition[1] == queenPosition[1]) {
                         do {
                             squaresToBlock.add(this.board[x][y]);
                             x--;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x != kingPosition[0] && y == kingPosition[1]);
 
                     } else if (kingPosition[0] == queenPosition[0] && kingPosition[1] < queenPosition[1]) {
                         do {
                             squaresToBlock.add(this.board[x][y]);
                             y--;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x == kingPosition[0] && y != kingPosition[1]);
                     }
                     else if (kingPosition[0] > queenPosition[0] && kingPosition[1] == queenPosition[1]){
                         do {
                             squaresToBlock.add(this.board[x][y]);
                             x++;
                         }
-                        while (x != kingPosition[0] && y != kingPosition[1]);
+                        while (x != kingPosition[0] && y == kingPosition[1]);
                     }
                     else if (kingPosition[0] > queenPosition[0] && kingPosition[1] > queenPosition[1]) {
 

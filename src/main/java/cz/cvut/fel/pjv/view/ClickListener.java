@@ -1,6 +1,8 @@
 package cz.cvut.fel.pjv.view;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.models.*;
+import cz.cvut.fel.pjv.pieces.King;
 import cz.cvut.fel.pjv.pieces.Piece;
 
 import javax.imageio.ImageIO;
@@ -50,19 +52,31 @@ public class ClickListener implements ActionListener {
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             Piece picked = bw.getPickedPiece();
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
-            if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
+            if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked) && !(picked instanceof  King)) {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vás nedostane z šachu");
             }
-            else if (picked.getColor() == Color.BLACK && board.blackInCheck() && !board.canBlockOrEscapeFromCheck(picked)) {
+            else if (picked.getColor() == Color.BLACK && board.blackInCheck() && !board.canBlockOrEscapeFromCheck(picked) && !(picked instanceof  King)) {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vas nedostane z šachu");
             }
+
             else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE && board.whiteInCheck() || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK
             && board.blackInCheck()) {
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        if (possibleMovesToUncheck.contains(squarePanels[i][j].getSquare())) {
+                        if (picked instanceof King && possibleMovement.contains(squarePanels[i][j].getSquare())){
+                            try {
+                                squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
+                                squarePanels[i][j].setButton();
+                                squarePanels[i][j].validate();
+                                squarePanels[i][j].repaint();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+
+                        else if (possibleMovesToUncheck.contains(squarePanels[i][j].getSquare())) {
                             try {
                                 squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
                                 squarePanels[i][j].setButton();
@@ -81,7 +95,24 @@ public class ClickListener implements ActionListener {
             else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK) {
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        if (possibleMovement.contains(squarePanels[i][j].getSquare())) {
+                        if(board.getEveryXRayMove(board.getPieces(Helpers.getOtherColor(picked.getColor()))).contains(square)){
+                            System.out.println("ahokj");
+                            if(possibleMovesToUncheck.contains(squarePanels[i][j].getSquare())) {
+                                System.out.println("Neahoj");
+                                try {
+                                    squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
+                                    squarePanels[i][j].setButton();
+                                    squarePanels[i][j].validate();
+                                    squarePanels[i][j].repaint();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            } else {
+                                squarePanels[i][j].setButton();
+                                squarePanels[i][j].setDot(null);
+                            }
+                        }
+                        else if (possibleMovement.contains(squarePanels[i][j].getSquare())) {
                             try {
                                 squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
                                 squarePanels[i][j].setButton();

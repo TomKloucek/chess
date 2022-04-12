@@ -121,7 +121,12 @@ public class Rook implements Piece {
         for (int i = this.getY()+1; i < 8; i++) {
             if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
                 possibilities.add(board.getBoard()[this.getX()][i]);
-                break;
+                if (board.getBoard()[this.getX()][i].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
             }
             else {
                 possibilities.add(board.getBoard()[this.getX()][i]);
@@ -131,7 +136,12 @@ public class Rook implements Piece {
         for (int i = this.getX()+1; i < 8; i++) {
             if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
                 possibilities.add(board.getBoard()[i][this.getY()]);
-                break;
+                if (board.getBoard()[i][this.getY()].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
             }
             else {
                 possibilities.add(board.getBoard()[i][this.getY()]);
@@ -141,7 +151,12 @@ public class Rook implements Piece {
         for (int i = this.getY()-1; i > -1; i--) {
             if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
                 possibilities.add(board.getBoard()[this.getX()][i]);
-                break;
+                if (board.getBoard()[this.getX()][i].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
             }
             else {
                 possibilities.add(board.getBoard()[this.getX()][i]);
@@ -151,12 +166,91 @@ public class Rook implements Piece {
         for (int i = this.getX()-1; i > -1; i--) {
             if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
                 possibilities.add(board.getBoard()[i][this.getY()]);
-                break;
+                if (board.getBoard()[i][this.getY()].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
             }
             else {
                 possibilities.add(board.getBoard()[i][this.getY()]);
             }
         }
+        return possibilities;
+    }
+
+
+    public ArrayList<Square> getXRayedMoves(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        ArrayList<Square> betweenKingAndPiece = new ArrayList<>();
+        // UP
+        for (int i = this.getY()+1; i < 8; i++) {
+            if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
+                if ((board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor() && board.getBoard()[this.getX()][i].getPiece() instanceof King) ||
+                        ((board.getBoard()[this.getX()][i].getPiece().getColor() == this.getColor()))){
+                    break;
+                }
+                else {
+                    betweenKingAndPiece.add(board.getBoard()[this.getX()][i]);
+                }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1){
+            possibilities.add(betweenKingAndPiece.get(0));
+        }
+        betweenKingAndPiece = new ArrayList<>();
+
+        // RIGHT
+        for (int i = this.getX()+1; i < 8; i++) {
+            if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
+                if ((board.getBoard()[i][this.getY()].getPiece().getColor() != this.getColor() && board.getBoard()[i][this.getY()].getPiece() instanceof King) ||
+                        ((board.getBoard()[i][this.getY()].getPiece().getColor() == this.getColor()))){
+                    break;
+                }
+                else {
+                    betweenKingAndPiece.add(board.getBoard()[i][this.getY()]);
+                }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1) {
+            possibilities.add(betweenKingAndPiece.get(0));
+        }
+        betweenKingAndPiece = new ArrayList<>();
+
+        // DOWN
+        for (int i = this.getY()-1; i > -1; i--) {
+            if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
+                if ((board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor() && board.getBoard()[this.getX()][i].getPiece() instanceof King) ||
+                        ((board.getBoard()[this.getX()][i].getPiece().getColor() == this.getColor()))){
+                    break;
+                }
+                else {
+                    betweenKingAndPiece.add(board.getBoard()[this.getX()][i]);
+                }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1){
+            possibilities.add(betweenKingAndPiece.get(0));
+        }
+        betweenKingAndPiece = new ArrayList<>();
+
+        // LEFT
+        for (int i = this.getX()-1; i > -1; i--) {
+            if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
+                if ((board.getBoard()[i][this.getY()].getPiece().getColor() != this.getColor() && board.getBoard()[i][this.getY()].getPiece() instanceof King) ||
+                        ((board.getBoard()[i][this.getY()].getPiece().getColor() == this.getColor()))){
+                    break;
+                }
+                else {
+                    betweenKingAndPiece.add(board.getBoard()[i][this.getY()]);
+                }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1) {
+            possibilities.add(betweenKingAndPiece.get(0));
+        }
+
         return possibilities;
     }
 

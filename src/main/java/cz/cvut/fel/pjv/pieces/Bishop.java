@@ -36,9 +36,6 @@ public class Bishop implements Piece {
     @Override
     public ArrayList<Square> possibleMovement(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
-//        if(board.getSquaresToBlock(board.getPieces(Helpers.getOtherColor(color))).contains(board.getBoard()[this.getX()][this.getY()])){
-//            return possibilities;
-//        }
         // RIGHT UP
         for (int i = 1; i < 8; i++) {
                 if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != null
@@ -110,7 +107,12 @@ public class Bishop implements Piece {
             if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != null
                     && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != this){
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")]);
-                break;
+                if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
             }
             else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() == null) {
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")]);
@@ -121,7 +123,13 @@ public class Bishop implements Piece {
             if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")].getPiece() != null
                     && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")].getPiece() != this){
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")]);
-                break;
+                if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
+
             }
             else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")].getPiece() == null) {
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),-i, "y")]);
@@ -132,7 +140,13 @@ public class Bishop implements Piece {
             if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")].getPiece() != null
                     && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")].getPiece() != this){
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")]);
-                break;
+                if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
+
             }
             else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")].getPiece() == null) {
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),i, "y")]);
@@ -143,11 +157,93 @@ public class Bishop implements Piece {
             if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() != null
                     && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() != this){
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")]);
-                break;
+                if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() instanceof King){
+                    continue;
+                }
+                else {
+                    break;
+                }
             }
             else if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")].getPiece() == null) {
                 possibilities.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "x")][Helpers.checkSquareCoordinates(this.getX(),-i, this.getY(),-i, "y")]);
             }
+        }
+        return possibilities;
+    }
+
+
+    public ArrayList<Square> getXRayedMoves(Board board) {
+        ArrayList<Square> possibilities = new ArrayList<>();
+        ArrayList<Square> betweenKingAndPiece = new ArrayList<>();
+        // RIGHT UP
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != this){
+                    if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece().getColor() != this.getColor() &&
+                    board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() instanceof King) ||
+                    board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece().getColor() == this.getColor()){
+                        break;
+                    }
+                    else {
+                        betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")]);
+                    }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1){
+            possibilities.add(betweenKingAndPiece.get(0));
+        }
+        betweenKingAndPiece = new ArrayList<>();
+
+
+        // RIGHT DOWN
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece() != this) {
+                if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece().getColor() != this.getColor() &&
+                        board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece() instanceof King) ||
+                        board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece().getColor() == this.getColor()) {
+                    break;
+                } else {
+                    betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")]);
+                }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1){
+            possibilities.add(betweenKingAndPiece.get(0));
+        }
+        betweenKingAndPiece = new ArrayList<>();
+        //LEFT UP
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece() != this) {
+                if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece().getColor() != this.getColor() &&
+                        board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece() instanceof King) ||
+                        board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece().getColor() == this.getColor()) {
+                    break;
+                } else {
+                    betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")]);
+                }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1){
+            possibilities.add(betweenKingAndPiece.get(0));
+        }
+        betweenKingAndPiece = new ArrayList<>();
+        // LEFT DOWN
+        for (int i = 1; i < 8; i++) {
+            if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece() != null
+                    && board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece() != this) {
+                if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece().getColor() != this.getColor() &&
+                        board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece() instanceof King) ||
+                        board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece().getColor() == this.getColor()) {
+                    break;
+                } else {
+                    betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")]);
+                }
+            }
+        }
+        if (betweenKingAndPiece.size() == 1){
+            possibilities.add(betweenKingAndPiece.get(0));
         }
         return possibilities;
     }
