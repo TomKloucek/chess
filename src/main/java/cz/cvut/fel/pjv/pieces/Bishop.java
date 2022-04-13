@@ -175,6 +175,7 @@ public class Bishop implements Piece {
     public ArrayList<Square> getXRayedMoves(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
         ArrayList<Square> betweenKingAndPiece = new ArrayList<>();
+        Piece king = board.getKing(Helpers.getOtherColor(this.color));
         // RIGHT UP
         for (int i = 1; i < 8; i++) {
             if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != null
@@ -182,6 +183,7 @@ public class Bishop implements Piece {
                     if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece().getColor() != this.getColor() &&
                     board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() instanceof King) ||
                     board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece().getColor() == this.getColor()){
+                        betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")]);
                         break;
                     }
                     else {
@@ -189,7 +191,7 @@ public class Bishop implements Piece {
                     }
             }
         }
-        if (betweenKingAndPiece.size() == 1){
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
         betweenKingAndPiece = new ArrayList<>();
@@ -202,13 +204,14 @@ public class Bishop implements Piece {
                 if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece().getColor() != this.getColor() &&
                         board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece() instanceof King) ||
                         board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")].getPiece().getColor() == this.getColor()) {
+                    betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")]);
                     break;
                 } else {
                     betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), +i, this.getY(), -i, "y")]);
                 }
             }
         }
-        if (betweenKingAndPiece.size() == 1){
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
         betweenKingAndPiece = new ArrayList<>();
@@ -219,13 +222,14 @@ public class Bishop implements Piece {
                 if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece().getColor() != this.getColor() &&
                         board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece() instanceof King) ||
                         board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")].getPiece().getColor() == this.getColor()) {
+                    betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")]);
                     break;
                 } else {
                     betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), i, "y")]);
                 }
             }
         }
-        if (betweenKingAndPiece.size() == 1){
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
         betweenKingAndPiece = new ArrayList<>();
@@ -236,13 +240,14 @@ public class Bishop implements Piece {
                 if ((board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece().getColor() != this.getColor() &&
                         board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece() instanceof King) ||
                         board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")].getPiece().getColor() == this.getColor()) {
+                    betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")]);
                     break;
                 } else {
                     betweenKingAndPiece.add(board.getBoard()[Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "x")][Helpers.checkSquareCoordinates(this.getX(), -i, this.getY(), -i, "y")]);
                 }
             }
         }
-        if (betweenKingAndPiece.size() == 1){
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
         return possibilities;

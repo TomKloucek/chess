@@ -184,11 +184,13 @@ public class Rook implements Piece {
     public ArrayList<Square> getXRayedMoves(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
         ArrayList<Square> betweenKingAndPiece = new ArrayList<>();
+        Piece king = board.getKing(Helpers.getOtherColor(this.color));
         // UP
         for (int i = this.getY()+1; i < 8; i++) {
             if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
                 if ((board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor() && board.getBoard()[this.getX()][i].getPiece() instanceof King) ||
                         ((board.getBoard()[this.getX()][i].getPiece().getColor() == this.getColor()))){
+                    betweenKingAndPiece.add(board.getBoard()[this.getX()][i]);
                     break;
                 }
                 else {
@@ -196,7 +198,7 @@ public class Rook implements Piece {
                 }
             }
         }
-        if (betweenKingAndPiece.size() == 1){
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
         betweenKingAndPiece = new ArrayList<>();
@@ -206,6 +208,7 @@ public class Rook implements Piece {
             if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
                 if ((board.getBoard()[i][this.getY()].getPiece().getColor() != this.getColor() && board.getBoard()[i][this.getY()].getPiece() instanceof King) ||
                         ((board.getBoard()[i][this.getY()].getPiece().getColor() == this.getColor()))){
+                    betweenKingAndPiece.add(board.getBoard()[i][this.getY()]);
                     break;
                 }
                 else {
@@ -213,7 +216,7 @@ public class Rook implements Piece {
                 }
             }
         }
-        if (betweenKingAndPiece.size() == 1) {
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
         betweenKingAndPiece = new ArrayList<>();
@@ -223,6 +226,7 @@ public class Rook implements Piece {
             if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {
                 if ((board.getBoard()[this.getX()][i].getPiece().getColor() != this.getColor() && board.getBoard()[this.getX()][i].getPiece() instanceof King) ||
                         ((board.getBoard()[this.getX()][i].getPiece().getColor() == this.getColor()))){
+                    betweenKingAndPiece.add(board.getBoard()[this.getX()][i]);
                     break;
                 }
                 else {
@@ -230,7 +234,7 @@ public class Rook implements Piece {
                 }
             }
         }
-        if (betweenKingAndPiece.size() == 1){
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
         betweenKingAndPiece = new ArrayList<>();
@@ -240,6 +244,7 @@ public class Rook implements Piece {
             if (board.getBoard()[i][this.getY()].getPiece() != null && board.getBoard()[i][this.getY()].getPiece() != this) {
                 if ((board.getBoard()[i][this.getY()].getPiece().getColor() != this.getColor() && board.getBoard()[i][this.getY()].getPiece() instanceof King) ||
                         ((board.getBoard()[i][this.getY()].getPiece().getColor() == this.getColor()))){
+                    betweenKingAndPiece.add(board.getBoard()[i][this.getY()]);
                     break;
                 }
                 else {
@@ -247,7 +252,7 @@ public class Rook implements Piece {
                 }
             }
         }
-        if (betweenKingAndPiece.size() == 1) {
+        if (betweenKingAndPiece.contains(board.getBoard()[king.getX()][king.getY()]) && betweenKingAndPiece.size()==2){
             possibilities.add(betweenKingAndPiece.get(0));
         }
 
