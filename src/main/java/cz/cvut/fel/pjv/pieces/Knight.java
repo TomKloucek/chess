@@ -67,7 +67,7 @@ public class Knight implements Piece {
         ArrayList<int[]> possibilities = generateAllPossibleWays(this.getX(), this.getY());
         ArrayList<Square> returnArray = new ArrayList<>();
         for (var value : possibilities) {
-            if (board.getBoard()[value[0]][value[1]].getPiece() == null || board.getBoard()[value[0]][value[1]].getPiece().getColor() != this.getColor()) {
+            if (board.getBoard()[value[0]][value[1]].getPiece() == null || board.getBoard()[value[0]][value[1]].getPiece().getColor() != this.getColor() || board.getBoard()[value[0]][value[1]].getPiece().getColor() == this.getColor()) {
                 returnArray.add(board.getBoard()[value[0]][value[1]]);
             }
         }
