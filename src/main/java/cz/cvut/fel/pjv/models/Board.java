@@ -294,12 +294,14 @@ public class Board {
                     rook.Move(5,7);
                     chosen.Move(6,7);
                 }
+                State.getInstance().reverseMove();
             }
             else {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 chosen.Move(x, y);
                 refillPiecesLists();
+                State.getInstance().reverseMove();
                 return true;
             }
         }

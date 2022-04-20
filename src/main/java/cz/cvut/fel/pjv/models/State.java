@@ -4,6 +4,7 @@ public class State {
     private static State _instance;
 
     private boolean whiteOnMove;
+    private boolean end;
     private Game game;
 
     public State() {
@@ -12,6 +13,10 @@ public class State {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public boolean isRunning() {
+        return !end;
     }
 
     public static State getInstance()

@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.pieces.Piece;
+import cz.cvut.fel.pjv.server.Client;
 import cz.cvut.fel.pjv.view.BoardView;
 
 import javax.swing.*;
@@ -11,6 +12,10 @@ public class Game {
     private Player playerWhite;
     private Player playerBlack;
     private Board board;
+
+    private Client client;
+
+    private Player me;
 
     public Game(Player playerWhite, Player playerBlack, Board board) {
         this.playerWhite = playerWhite;
@@ -36,7 +41,23 @@ public class Game {
         return game.toString();
     }
 
-   /* public void Play() {
+    public Player getMe() {
+        return me;
+    }
+
+    public void setMe(Player me) {
+        this.me = me;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    /* public void Play() {
         Scanner sc = new Scanner(System.in);
         while (!gameEnded()) {
             board.printBoard();
@@ -102,20 +123,31 @@ public class Game {
         }
     }*/
 
-    public static void createAndShowGui() {
+    public static void createAndShowGui(Color color) {
 
         Board board = new Board();
-        board.initializeBoard();
-        BoardView mainPanel = new BoardView(board);
 
         Player p1 = new Player(Color.WHITE, null);
         Player p2 = new Player(Color.BLACK, null);
         Game game = new Game(p1, p2, board);
 
-        System.out.println(game.boardToString());
+        Client client = new Client();
+        client.connectToServer();
+
+        if (color == Color.WHITE) {
+            game.setMe(p1);
+        }
+        else {
+            game.setMe(p2);
+        }
+
+        game.setClient(client);
 
         State.getInstance();
         State.getInstance().setGame(game);
+
+        board.initializeBoard();
+        BoardView mainPanel = new BoardView(board);
 
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

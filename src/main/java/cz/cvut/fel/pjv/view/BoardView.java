@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.models.Board;
+import cz.cvut.fel.pjv.models.State;
 import cz.cvut.fel.pjv.pieces.Piece;
 
 import javax.imageio.ImageIO;
@@ -30,6 +31,9 @@ public class BoardView extends JPanel {
         public BoardView(Board board) {
             super(new BorderLayout());
             this.board = board;
+            if (State.getInstance().getGame().getMe().getColor() == cz.cvut.fel.pjv.models.Color.BLACK) {
+                boardReversed = true;
+            }
             initializeBoardLayeredPane();
             initializeSquares();
         }

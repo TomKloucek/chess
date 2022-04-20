@@ -45,14 +45,17 @@ public class ClickListener implements ActionListener {
                     }
                 }
             }
-            State.getInstance().reverseMove();
         }
         else {
             ArrayList<Square> possibleMovement = square.getPiece().possibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             Piece picked = bw.getPickedPiece();
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
-            if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked) && !(picked instanceof  King)) {
+            if (game.getMe().getColor() != picked.getColor()) {
+                bw.setPickedPiece(-1,-1);
+                JOptionPane.showMessageDialog(null, "Toto není tvoje figurka");
+            }
+            else if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked) && !(picked instanceof  King)) {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vás nedostane z šachu");
             }
@@ -60,7 +63,6 @@ public class ClickListener implements ActionListener {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vas nedostane z šachu");
             }
-
             else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE && board.whiteInCheck() || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK
             && board.blackInCheck()) {
                 for (int i = 0; i < 8; i++) {
@@ -71,17 +73,18 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].setButton();
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
+                                game.getClient().sendToServer(game.boardToString());
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
                         }
-
                         else if (possibleMovesToUncheck.contains(squarePanels[i][j].getSquare())) {
                             try {
                                 squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
                                 squarePanels[i][j].setButton();
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
+                                game.getClient().sendToServer(game.boardToString());
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
@@ -102,6 +105,7 @@ public class ClickListener implements ActionListener {
                                     squarePanels[i][j].setButton();
                                     squarePanels[i][j].validate();
                                     squarePanels[i][j].repaint();
+                                    game.getClient().sendToServer(game.boardToString());
                                 } catch (IOException ex) {
                                     ex.printStackTrace();
                                 }
@@ -116,6 +120,7 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].setButton();
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
+                                game.getClient().sendToServer(game.boardToString());
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
