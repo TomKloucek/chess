@@ -6,8 +6,6 @@ public class MainController {
         // Driver code
         public static void main(String[] args)
         {
-
-            // calling the constructor
             new MainMenu();
         }
     }

@@ -154,17 +154,25 @@ public class Board {
         // TODO pawn ktery se hnul
         piece = piece.trim();
         char[] chars = piece.toCharArray();
-        System.out.println("|"+piece+"|");
         if (chars.length == 0) {
             return null;
         }
         if (chars.length == 3) {
             int y = Character.getNumericValue(chars[2])-1;
             if (chars[0] == 'W') {
-                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])),y);
+                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])),y,true);
             }
             else {
-                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])),y);
+                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])),y,true);
+            }
+        }
+        else if ((chars[0] == 'W' || chars[0] == 'B') && chars[3] == 'X') {
+            int y = Character.getNumericValue(chars[2])-1;
+            if (chars[0] == 'W') {
+                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])),y,false);
+            }
+            else {
+                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])),y,false);
             }
         }
         else {

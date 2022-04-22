@@ -176,6 +176,12 @@ public class Pawn implements Piece {
         else {
             notation += "W" + Helpers.XTranslate(this.getX()) + (getY()+1);
         }
-        return notation+" ";
+        String moved = "X";
+        if (this.movedTwoSquares) {
+            return notation+" ";
+        }
+        else {
+            return notation+moved;
+        }
     }
 }

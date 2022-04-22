@@ -1,7 +1,14 @@
 package cz.cvut.fel.pjv.view;// Java program to illustrate the BorderLayout
+import cz.cvut.fel.pjv.models.Board;
+import cz.cvut.fel.pjv.models.Game;
+import cz.cvut.fel.pjv.models.Player;
+import cz.cvut.fel.pjv.models.State;
+import cz.cvut.fel.pjv.server.Client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.*;
 
 // class extends JFrame
@@ -35,7 +42,11 @@ public class MainMenu extends JFrame {
         button0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showGameDialogue();
+                try {
+                    showGameDialogue();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -80,40 +91,47 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public void showGameDialogue() {
-            // create a dialog Box
-            JDialog dialogBox = new JDialog(frame, "dialog Box");
-        dialogBox = new JDialog(frame, "dialog Box");
+    public void showGameDialogue() throws IOException {
+        ImageIcon loading = new ImageIcon("loading.gif");
+        frame.add(new JLabel("loading... ", loading, JLabel.CENTER));
 
-        // create a label
-        JLabel l = new JLabel("this is first dialog box");
+        Board board = new Board();
 
-        // create a button
-        JButton b = new JButton("click me");
-
-        // add Action Listener
-        b.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showGameDialogue();
-            }
-        });
-
-        // create a panel
-        JPanel p = new JPanel();
-
-        p.add(l);
-        p.add(b);
+        Player p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+        Player p2 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+        Game game = new Game(p1, p2, board);
 
 
-        // add panel to dialog
-        dialogBox.add(p);
+        Client client = new Client();
+        client.connectToServer();
+        client.listenFromServer();
 
-        // setsize of dialog
-        dialogBox.setSize(200, 200);
+        cz.cvut.fel.pjv.models.Color color = cz.cvut.fel.pjv.models.Color.WHITE;
 
-        // set visibility of dialog
-        dialogBox.setVisible(true);
+        if (color == cz.cvut.fel.pjv.models.Color.WHITE) {
+            game.setMe(p1);
+        }
+        else {
+            game.setMe(p2);
+        }
+
+        game.setClient(client);
+
+        State.getInstance();
+        State.getInstance().setGame(game);
+
+        board.initializeBoard();
+        BoardView mainPanel = new BoardView(board);
+
+        System.out.println(game.boardToString());
+
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(mainPanel);
+        frame.setMinimumSize(new Dimension(800, 679));
+//            frame.setMaximumSize(new Dimension(800, 540));
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
     }
 }
 

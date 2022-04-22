@@ -57,82 +57,18 @@ public class Game {
         this.client = client;
     }
 
-    /* public void Play() {
-        Scanner sc = new Scanner(System.in);
-        while (!gameEnded()) {
-            board.printBoard();
-            Piece chosen = null;
-            if (whiteOnMove) {
-                while (chosen == null || chosen.getColor() == Color.BLACK) {
-                    int pick_x = sc.nextInt();
-                    int pick_y = sc.nextInt();
-                    chosen = board.pickPiece(pick_x, pick_y);
-
-                    if (chosen == null){
-                        System.out.println("Na vybraném poli není figurka, nebo vybraná figurka nemá žádný validní pohyb.");
-                    }
-                    else if(board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(chosen)){
-                        System.out.println("Tento výběr vás nedostane z šachu.");
-                        chosen = null;
-                    }
-
-                }
-            }
-            else {
-                while (chosen == null || chosen.getColor() == Color.WHITE) {
-                    int pick_x = sc.nextInt();
-                    int pick_y = sc.nextInt();
-                    chosen = board.pickPiece(pick_x,pick_y);
-
-                    if (chosen == null){
-                        System.out.println("Na vybraném poli není figurka, nebo vybraná figurka nemá žádný validní pohyb.");
-                    }
-                    else if(board.blackInCheck() && !board.canBlockOrEscapeFromCheck(chosen)){
-                        System.out.println("Tento výběr vás nedostane z šachu.");
-                    }
-                }
-            }
-            if (board.whiteInCheck() || board.blackInCheck()){
-                System.out.println(board.possibleMovesToUncheck(chosen));
-            }
-            else {
-                System.out.println(chosen.PossibleMovement(board));
-            }
-            int pick_x = sc.nextInt();
-            int pick_y = sc.nextInt();
-            boolean result = board.movePiece(chosen, pick_x,pick_y);
-            if (result) {
-                if (!whiteOnMove) {
-                    if (board.whiteInCheck()) {
-                        if (board.Mated(Color.WHITE) && board.getSquaresToBlock(board.getPieces(Color.BLACK)).isEmpty()) {
-                            System.out.println("Cerny vyhral");
-                            state = true;
-                        }
-                    }
-                }
-                else {
-                    if (board.blackInCheck()) {
-                        if (board.Mated(Color.BLACK) && board.getSquaresToBlock(board.getPieces(Color.WHITE)).isEmpty()) {
-                            System.out.println("Bily vyhral");
-                            state = true;
-                        }
-                    }
-                }
-                whiteOnMove = !whiteOnMove;
-            }
-        }
-    }*/
-
     public static void createAndShowGui(Color color) {
 
         Board board = new Board();
+        board.stringToBoard("RBa8,NBb8,BBc8,QBd8,KBe8,BBf8,NBg8,RBh8,Ba7X,Bb7X,Bc7X,Bd7X,Be7X,Bf7X,Bg7X,Bh7X, , , , , , , , , , , , , , , , , , , ,Wd4 , , , , , , , , , , , , ,Wa2X,Wb2X,Wc2X, ,We2X,Wf2X,Wg2X,Wh2X,RWa1,NWb1,BWc1,QWd1,KWe1,BWf1,NWg1,RWh1");
 
         Player p1 = new Player(Color.WHITE, null);
         Player p2 = new Player(Color.BLACK, null);
         Game game = new Game(p1, p2, board);
 
-        Client client = new Client();
-        client.connectToServer();
+
+        /*Client client = new Client();
+        client.connectToServer();*/
 
         if (color == Color.WHITE) {
             game.setMe(p1);
@@ -141,13 +77,15 @@ public class Game {
             game.setMe(p2);
         }
 
-        game.setClient(client);
+        //game.setClient(client);
 
         State.getInstance();
         State.getInstance().setGame(game);
 
-        board.initializeBoard();
+        //board.initializeBoard();
         BoardView mainPanel = new BoardView(board);
+
+        System.out.println(game.boardToString());
 
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

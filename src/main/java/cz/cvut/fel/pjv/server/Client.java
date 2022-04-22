@@ -13,7 +13,7 @@ public class Client {
     private Socket clientSocket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
-    private BufferedReader systemIn = null;
+    private BufferedReader stdIn = null;
 
     public void connectToServer() {
         try {
@@ -37,7 +37,7 @@ public class Client {
         try {
             this.out = new PrintWriter(clientSocket.getOutputStream(), true);
             this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            this.systemIn = new BufferedReader(new InputStreamReader(System.in));
+            this.stdIn = new BufferedReader(new InputStreamReader(System.in));
         }
         catch (IOException ex) {
             System.exit(-1);
@@ -48,14 +48,29 @@ public class Client {
         out.println(message);
     }
 
-    public String readFromServer() throws IOException {
-        return in.readLine();
+    public void listenFromServer() throws IOException {
+        String fromServer;
+        String fromUser;
+        System.out.println("hrac");
+        out.println("your mama");
+        while (true) {
+            fromServer = in.readLine();
+            System.out.println("Server: " + fromServer);
+            if (fromServer.equals("Bye."))
+                break;
+
+            fromUser = stdIn.readLine();
+            if (fromUser != null) {
+                System.out.println("Client: " + fromUser);
+                out.println(fromUser);
+            }
+        }
     }
 
     public void endConnection() throws IOException {
         in.close();
         out.close();
-        systemIn.close();
+        stdIn.close();
         clientSocket.close();
     }
 }
