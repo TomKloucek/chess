@@ -17,7 +17,7 @@ public class Client {
 
     public void connectToServer() {
         try {
-            this.clientSocket = new Socket("127.0.1.1", 7165);
+            this.clientSocket = new Socket("192.168.100.100", 7165);
         }
         catch (UnknownHostException ex) {
             // Nepodarilo se najit (DNS, NIS atp.) hostitele
@@ -52,7 +52,6 @@ public class Client {
         String fromServer;
         String fromUser;
         System.out.println("hrac");
-        out.println("your mama");
         while (true) {
             fromServer = in.readLine();
             System.out.println("Server: " + fromServer);

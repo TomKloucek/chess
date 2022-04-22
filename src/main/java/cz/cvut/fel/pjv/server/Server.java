@@ -32,8 +32,8 @@ public class Server {
                 System.out.println("Client connected!");
                 System.out.println(clientSocket.getRemoteSocketAddress()+" connected\n");
                 waiting.add(clientSocket);
-                clientSocket.getOutputStream().write(Integer.parseInt("15"));
                 if (waiting.size() == 1) {
+
                     handleAiGame(waiting.get(0));
                 }
                 if (waiting.size() == 2) {
@@ -76,15 +76,18 @@ public class Server {
         Room room = new Room(player);
 
         DataOutputStream playerOut = new DataOutputStream(player.getOutputStream());
-
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(player.getOutputStream()));
         DataInputStream playerIn = new DataInputStream(player.getInputStream());
 
-        System.out.println(playerIn);
-        while (playerIn.readLine() == null) {
-            playerOut.writeBytes(room.getGameState());
-        }
-        System.out.println(room.getGameState());
-        System.out.println("super2");
+        writer.write("HelloThere");
+        writer.flush();
+
+        System.out.println("odeslano");
+
+
+//        playerOut.writeBytes(room.getGameState());
+
+
     }
 
     public void handleGame(Socket white, Socket black) throws IOException {
@@ -97,7 +100,6 @@ public class Server {
         DataInputStream whiteIn = new DataInputStream(white.getInputStream());
         DataInputStream blackIn = new DataInputStream(black.getInputStream());
 
-        System.out.println("super");
 
         whiteOut.writeBytes(room.getGameState());
         blackOut.writeBytes(room.getGameState());

@@ -4,6 +4,7 @@ import cz.cvut.fel.pjv.models.Game;
 import cz.cvut.fel.pjv.models.Player;
 import cz.cvut.fel.pjv.models.State;
 import cz.cvut.fel.pjv.server.Client;
+import cz.cvut.fel.pjv.server.Client2;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -102,12 +103,10 @@ public class MainMenu extends JFrame {
         Game game = new Game(p1, p2, board);
 
 
-        Client client = new Client();
+        Client2 client = new Client2();
         client.connectToServer();
-        client.listenFromServer();
 
         cz.cvut.fel.pjv.models.Color color = cz.cvut.fel.pjv.models.Color.WHITE;
-
         if (color == cz.cvut.fel.pjv.models.Color.WHITE) {
             game.setMe(p1);
         }
@@ -115,7 +114,6 @@ public class MainMenu extends JFrame {
             game.setMe(p2);
         }
 
-        game.setClient(client);
 
         State.getInstance();
         State.getInstance().setGame(game);
