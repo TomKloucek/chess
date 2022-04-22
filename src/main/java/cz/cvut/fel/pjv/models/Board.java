@@ -31,6 +31,14 @@ public class Board {
         return board;
     }
 
+    public void initializeEditor() {
+        for (int i = 7; i > -1; i--) {
+            for (int j = 0; j < 8; j++) {
+                board[j][i] = new Square(j,i,null);
+            }
+        }
+    }
+
     public void initializeBoard(){
 
         for (int i = 7; i > -1; i--) {
@@ -151,7 +159,6 @@ public class Board {
     }
 
     public Piece pieceFromString(String piece) {
-        // TODO pawn ktery se hnul
         piece = piece.trim();
         char[] chars = piece.toCharArray();
         if (chars.length == 0) {

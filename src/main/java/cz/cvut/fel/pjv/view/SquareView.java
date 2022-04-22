@@ -19,10 +19,15 @@ public class SquareView extends JPanel {
         return square;
     }
 
-    public SquareView(Square square, Board board, BoardView bw) {
+    public SquareView(Square square, Board board, BoardView bw,boolean editor) {
         this.square = square;
         this.button = new ButtonCoord(square.getX()-1,square.getY());
-        button.addActionListener(new ClickListener(square,board,bw));
+        if (!editor) {
+            button.addActionListener(new ClickListener(square, board, bw));
+        }
+        else {
+            button.addActionListener(new EditorListener(square, board, bw));
+        }
     }
 
     public void setDot(Image dot) {
@@ -33,12 +38,18 @@ public class SquareView extends JPanel {
         return dot;
     }
 
-    public SquareView(LayoutManager layout, Square square, Board board, BoardView bw) {
+    public SquareView(LayoutManager layout, Square square, Board board, BoardView bw,boolean editor) {
         super(layout);
         this.square = square;
         this.board = board;
         this.button = new ButtonCoord(square.getX()-1, square.getY());
-        button.addActionListener(new ClickListener(square,board, bw));
+        if (!editor) {
+            button.addActionListener(new ClickListener(square, board, bw));
+        }
+        else {
+            button.addActionListener(new EditorListener(square, board, bw));
+            this.add(button);
+        }
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);

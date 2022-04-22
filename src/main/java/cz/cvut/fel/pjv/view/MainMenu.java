@@ -61,6 +61,12 @@ public class MainMenu extends JFrame {
         button2.setForeground(Color.black);
         button2.setText("Editor");
         button2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openEditor();
+            }
+        });
 
         JButton button3 = new JButton();
         button3.setBackground(Color.black);
@@ -72,7 +78,6 @@ public class MainMenu extends JFrame {
         middlePanel.add(button1);
         middlePanel.add(button2);
         middlePanel.add(button3);
-
 
         JLabel foot = new JLabel("\u00A9 babycvla & kloucto2");
         foot.setForeground(Color.black);
@@ -102,10 +107,6 @@ public class MainMenu extends JFrame {
         Game game = new Game(p1, p2, board);
 
 
-        Client client = new Client();
-        client.connectToServer();
-        client.listenFromServer();
-
         cz.cvut.fel.pjv.models.Color color = cz.cvut.fel.pjv.models.Color.WHITE;
 
         if (color == cz.cvut.fel.pjv.models.Color.WHITE) {
@@ -115,7 +116,7 @@ public class MainMenu extends JFrame {
             game.setMe(p2);
         }
 
-        game.setClient(client);
+        //game.setClient(client);
 
         State.getInstance();
         State.getInstance().setGame(game);
@@ -123,13 +124,24 @@ public class MainMenu extends JFrame {
         board.initializeBoard();
         BoardView mainPanel = new BoardView(board);
 
-        System.out.println(game.boardToString());
-
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(800, 679));
 //            frame.setMaximumSize(new Dimension(800, 540));
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+    }
+
+    public void openEditor() {
+        Board board = new Board();
+        board.initializeEditor();
+
+        BoardView mainPanel = new BoardView(board);
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(mainPanel);
+        frame.setMinimumSize(new Dimension(800, 679));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
