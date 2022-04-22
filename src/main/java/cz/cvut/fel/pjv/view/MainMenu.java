@@ -62,6 +62,12 @@ public class MainMenu extends JFrame {
         button2.setForeground(Color.black);
         button2.setText("Editor");
         button2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openEditor();
+            }
+        });
 
         JButton button3 = new JButton();
         button3.setBackground(Color.black);
@@ -107,6 +113,7 @@ public class MainMenu extends JFrame {
         client.connectToServer();
 
         cz.cvut.fel.pjv.models.Color color = cz.cvut.fel.pjv.models.Color.WHITE;
+
         if (color == cz.cvut.fel.pjv.models.Color.WHITE) {
             game.setMe(p1);
         }
@@ -121,13 +128,24 @@ public class MainMenu extends JFrame {
         board.initializeBoard();
         BoardView mainPanel = new BoardView(board);
 
-        System.out.println(game.boardToString());
-
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(800, 679));
 //            frame.setMaximumSize(new Dimension(800, 540));
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+    }
+
+    public void openEditor() {
+        Board board = new Board();
+        board.initializeEditor();
+
+        BoardView mainPanel = new BoardView(board);
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(mainPanel);
+        frame.setMinimumSize(new Dimension(800, 679));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }

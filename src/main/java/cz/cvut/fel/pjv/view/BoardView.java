@@ -31,7 +31,7 @@ public class BoardView extends JPanel {
         public BoardView(Board board) {
             super(new BorderLayout());
             this.board = board;
-            if (State.getInstance().getGame().getMe().getColor() == cz.cvut.fel.pjv.models.Color.BLACK) {
+            if (State.getInstance().getGame() != null && State.getInstance().getGame().getMe().getColor() == cz.cvut.fel.pjv.models.Color.BLACK) {
                 boardReversed = true;
             }
             initializeBoardLayeredPane();
@@ -112,7 +112,12 @@ public class BoardView extends JPanel {
     }
 
         private void initializeSingleSquarePanel(int f, int r) {
-            squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this);
+            if (board.getPieces(cz.cvut.fel.pjv.models.Color.WHITE).isEmpty()) {
+                squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this,true);
+            }
+            else {
+                squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this,false);
+            }
             squarePanels[f][r].setPreferredSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
             squarePanels[f][r].setSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
             squarePanels[f][r].setBackground(f % 2 == r % 2 ? COLOR_GREEN : COLOR_WHITE);
