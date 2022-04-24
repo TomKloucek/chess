@@ -1,5 +1,8 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.Main;
+import cz.cvut.fel.pjv.view.MainMenu;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,12 +27,11 @@ public class ClientHandler implements Runnable {
         bufferedReader = new BufferedReader(inputStreamReader);
 
         String receivedMessage;
-
         while ((receivedMessage = bufferedReader.readLine())!= null){
             System.out.printf(
                     " Sent from the client: %s\n",
                     receivedMessage);
-            printWriter.println("khamo");
+            printWriter.println("Welcome to server");
             printWriter.flush();
         }
     } catch (IOException e) {

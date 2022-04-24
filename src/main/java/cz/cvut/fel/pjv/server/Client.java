@@ -1,75 +1,73 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.view.MainMenu;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class Client {
-    private static final int TIMEOUT_1M = 6000;
-    private Socket clientSocket = null;
-    private PrintWriter out = null;
-    private BufferedReader in = null;
-    private BufferedReader stdIn = null;
+    PrintWriter printWriter;
+    InputStreamReader inputStreamReader;
+    BufferedReader bufferedReader;
 
-    public void connectToServer() {
-        try {
-            this.clientSocket = new Socket("192.168.100.100", 7165);
-        }
-        catch (UnknownHostException ex) {
-            // Nepodarilo se najit (DNS, NIS atp.) hostitele
-            System.exit(-1);
-        }
-        catch (IOException ex) {
-            // Nepodarilo se spojit s hostitelem
-            System.exit(-1);
-        }
-        // parametry spojeni - vyprseni (pri cteni ze socketu)
-        try {
-            clientSocket.setSoTimeout(TIMEOUT_1M);
-        } catch (SocketException ex) {
-            // Nepodarilo se nastavit timeout
-        }
-        // otevreni proudu, spojeni
-        try {
-            this.out = new PrintWriter(clientSocket.getOutputStream(), true);
-            this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            this.stdIn = new BufferedReader(new InputStreamReader(System.in));
-        }
-        catch (IOException ex) {
-            System.exit(-1);
-        }
+    //    PrintWriter printWriter;
+//    InputStreamReader inputStreamReader;
+//    BufferedReader bufferedReader;
+//    public void connectToServer() throws IOException{
+//        Socket player = new Socket("localhost", 4999);
+//        printWriter = new PrintWriter(player.getOutputStream());
+//        inputStreamReader = new InputStreamReader(player.getInputStream());
+//        bufferedReader = new BufferedReader(inputStreamReader);
+//
+//        System.out.println(receiveMessage());
+//        }
+//    public void sendMessage(String message){
+//        printWriter.println(message);
+//        printWriter.flush();
+//    }
+//    public String receiveMessage() throws IOException {
+//        String serverMessage = bufferedReader.readLine();
+//        return "server: " + serverMessage;
+//    }
+    public void connectToServer() throws IOException {
+        Socket player = new Socket("localhost", 4999);
+
+        printWriter = new PrintWriter(player.getOutputStream());
+        inputStreamReader = new InputStreamReader(player.getInputStream());
+        bufferedReader = new BufferedReader(inputStreamReader);
+        printWriter.println("Hello I am player");
+        printWriter.flush();
+        MainMenu game = new MainMenu();
+        game.showGameDialogue();
+//        Scanner sc = new Scanner(System.in);
+//        String line = null;
+//        while (!"exit".equalsIgnoreCase(line)) {
+//
+//            // reading from user
+//            line = sc.nextLine();
+//
+//            // sending the user input to server
+//            printWriter.println(line);
+//            printWriter.flush();
+//
+//            // displaying server reply
+//            System.out.println("Server replied "
+//                    + bufferedReader.readLine());
+//        }
+//
+//        // closing the connection
+//        player.close();
     }
 
-    public void sendToServer(String message) {
-        out.println(message);
-    }
+//    public void readFromServer() throws IOException {
+//        String serverReply;
+//        while ((serverReply = bufferedReader.readLine()) != null)
+//
+//
+//            System.out.println("Server replied " + serverReply);
+//    }
 
-    public void listenFromServer() throws IOException {
-        String fromServer;
-        String fromUser;
-        System.out.println("hrac");
-        while (true) {
-            fromServer = in.readLine();
-            System.out.println("Server: " + fromServer);
-            if (fromServer.equals("Bye."))
-                break;
-
-            fromUser = stdIn.readLine();
-            if (fromUser != null) {
-                System.out.println("Client: " + fromUser);
-                out.println(fromUser);
-            }
-        }
-    }
-
-    public void endConnection() throws IOException {
-        in.close();
-        out.close();
-        stdIn.close();
-        clientSocket.close();
-    }
 }

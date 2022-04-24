@@ -85,7 +85,7 @@ public class Game {
         //board.initializeBoard();
         BoardView mainPanel = new BoardView(board);
 
-        System.out.println(game.boardToString());
+//        System.out.println(game.boardToString());
 
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

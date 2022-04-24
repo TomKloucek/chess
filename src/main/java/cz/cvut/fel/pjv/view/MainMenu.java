@@ -4,7 +4,6 @@ import cz.cvut.fel.pjv.models.Game;
 import cz.cvut.fel.pjv.models.Player;
 import cz.cvut.fel.pjv.models.State;
 import cz.cvut.fel.pjv.server.Client;
-import cz.cvut.fel.pjv.server.Client2;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,7 +43,8 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    showGameDialogue();
+                    Client client = new Client();
+                    client.connectToServer();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -99,18 +99,14 @@ public class MainMenu extends JFrame {
     }
 
     public void showGameDialogue() throws IOException {
-        ImageIcon loading = new ImageIcon("loading.gif");
-        frame.add(new JLabel("loading... ", loading, JLabel.CENTER));
+//        ImageIcon loading = new ImageIcon("loading.gif");
+//        frame.add(new JLabel("loading... ", loading, JLabel.CENTER));
 
         Board board = new Board();
 
         Player p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
         Player p2 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
         Game game = new Game(p1, p2, board);
-
-
-        Client2 client = new Client2();
-        client.connectToServer();
 
         cz.cvut.fel.pjv.models.Color color = cz.cvut.fel.pjv.models.Color.WHITE;
 
@@ -121,7 +117,6 @@ public class MainMenu extends JFrame {
             game.setMe(p2);
         }
 
-
         State.getInstance();
         State.getInstance().setGame(game);
 
@@ -129,10 +124,9 @@ public class MainMenu extends JFrame {
         BoardView mainPanel = new BoardView(board);
 
         JFrame frame = new JFrame("Chess");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(800, 679));
-//            frame.setMaximumSize(new Dimension(800, 540));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }

@@ -27,7 +27,7 @@ public class ClickListener implements ActionListener {
             Piece picked = bw.getPickedPiece();
             board.movePiece(picked, buttonCoord.getX(), buttonCoord.getY());
             bw.setPickedPiece(-1, -1);
-            if (!State.getInstance().isWhiteOnMove()) {
+            if (State.getInstance().isWhiteOnMove()) {
                 bw.deleteButtonsOnSquaresWithoutPiece();
                 if (board.whiteInCheck()) {
                     System.out.println("Bílý je v šachu");
@@ -73,7 +73,6 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].setButton();
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
-                                game.getClient().sendToServer(game.boardToString());
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
@@ -84,7 +83,6 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].setButton();
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
-                                game.getClient().sendToServer(game.boardToString());
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
@@ -105,7 +103,7 @@ public class ClickListener implements ActionListener {
                                     squarePanels[i][j].setButton();
                                     squarePanels[i][j].validate();
                                     squarePanels[i][j].repaint();
-                                    game.getClient().sendToServer(game.boardToString());
+//                                    game.getClient().sendToServer(game.boardToString());
                                 } catch (IOException ex) {
                                     ex.printStackTrace();
                                 }
@@ -135,6 +133,7 @@ public class ClickListener implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Tento hráč není na tahu");
             }
         }
+
         bw.repaintBoard();
     }
 

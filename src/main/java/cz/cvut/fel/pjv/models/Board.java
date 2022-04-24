@@ -242,6 +242,7 @@ public class Board {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
+                    State.getInstance().reverseMove();
                     board[x][y].getPiece().Move(x,y);
                     blackPieces.remove(chosen);
                     blackPieces.add(board[x][y].getPiece());
@@ -249,6 +250,7 @@ public class Board {
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
                     this.board[x][y].setPiece(null);
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
+                    State.getInstance().reverseMove();
                     this.board[x][y].getPiece().Move(x,y);
                     whitePieces.remove(chosen);
                     whitePieces.add(board[x][y].getPiece());
@@ -272,7 +274,7 @@ public class Board {
                 return true;
             }
             // CASTLE
-            else if (chosen instanceof King && board[x][y].getPiece() instanceof Rook) {
+            else if (chosen instanceof King && board[x][y].getPiece() instanceof Rook && board[x][y].getPiece().getColor()==chosen.getColor()) {
                 if (x == 0 && y == 0) {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[0][0].getPiece();
