@@ -248,6 +248,8 @@ public class Board {
                     board[x][y].getPiece().Move(x,y);
                     blackPieces.remove(chosen);
                     blackPieces.add(board[x][y].getPiece());
+                    refillPiecesLists();
+                    return true;
                 }
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
                     this.board[x][y].setPiece(null);
@@ -256,6 +258,8 @@ public class Board {
                     this.board[x][y].getPiece().Move(x,y);
                     whitePieces.remove(chosen);
                     whitePieces.add(board[x][y].getPiece());
+                    refillPiecesLists();
+                    return true;
                 }
             }
             // EN PASSANT
