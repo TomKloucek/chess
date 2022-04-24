@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.models.Game;
 import cz.cvut.fel.pjv.view.MainMenu;
 
 import java.io.BufferedReader;
@@ -7,11 +8,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
+import java.util.UUID;
 
 public class Client {
-    PrintWriter printWriter;
-    InputStreamReader inputStreamReader;
-    BufferedReader bufferedReader;
+    public PrintWriter printWriter;
+    public InputStreamReader inputStreamReader;
+    public BufferedReader bufferedReader;
+    Socket player;
 
     //    PrintWriter printWriter;
 //    InputStreamReader inputStreamReader;
@@ -33,41 +37,26 @@ public class Client {
 //        return "server: " + serverMessage;
 //    }
     public void connectToServer() throws IOException {
-        Socket player = new Socket("localhost", 4999);
-
+        player = new Socket("localhost", 4999);
         printWriter = new PrintWriter(player.getOutputStream());
         inputStreamReader = new InputStreamReader(player.getInputStream());
         bufferedReader = new BufferedReader(inputStreamReader);
         printWriter.println("Hello I am player");
         printWriter.flush();
-        MainMenu game = new MainMenu();
-        game.showGameDialogue();
-//        Scanner sc = new Scanner(System.in);
-//        String line = null;
-//        while (!"exit".equalsIgnoreCase(line)) {
-//
-//            // reading from user
-//            line = sc.nextLine();
-//
-//            // sending the user input to server
-//            printWriter.println(line);
-//            printWriter.flush();
-//
-//            // displaying server reply
-//            System.out.println("Server replied "
-//                    + bufferedReader.readLine());
-//        }
-//
-//        // closing the connection
-//        player.close();
+        ClientListener clientListener = new ClientListener(player, printWriter, bufferedReader);
+        new Thread(clientListener).start();
     }
 
-//    public void readFromServer() throws IOException {
+
+    //    public void readFromServer() throws IOException {
 //        String serverReply;
 //        while ((serverReply = bufferedReader.readLine()) != null)
 //
 //
 //            System.out.println("Server replied " + serverReply);
 //    }
+    public void showGame(MainMenu game) throws IOException {
+        game.showGameDialogue();
+    }
 
 }

@@ -1,4 +1,5 @@
 package cz.cvut.fel.pjv.view;// Java program to illustrate the BorderLayout
+import cz.cvut.fel.pjv.Main;
 import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Game;
 import cz.cvut.fel.pjv.models.Player;
@@ -8,6 +9,8 @@ import cz.cvut.fel.pjv.server.Client;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -44,6 +47,8 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Client client = new Client();
+                    client.showGame(MainMenu.this);
+                    MainMenu.this.hideMainMenu();
                     client.connectToServer();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -97,6 +102,12 @@ public class MainMenu extends JFrame {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
+    public void hideMainMenu(){
+        frame.setVisible(false);
+    }
+    public void showMainMenu(){
+        frame.setVisible(true);
+    }
 
     public void showGameDialogue() throws IOException {
 //        ImageIcon loading = new ImageIcon("loading.gif");
@@ -125,11 +136,18 @@ public class MainMenu extends JFrame {
 
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                MainMenu.this.showMainMenu();
+            }
+        });
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(800, 679));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
+
+
 
     public void openEditor() {
         Board board = new Board();
