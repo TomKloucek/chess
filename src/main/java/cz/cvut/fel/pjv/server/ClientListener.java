@@ -9,35 +9,25 @@ import java.util.Scanner;
 
 public class ClientListener implements Runnable{
     private final Socket clientSocket;
-    public PrintWriter printWriter;
     public BufferedReader bufferedReader;
 
-    public ClientListener(Socket client, PrintWriter printWriter, BufferedReader bufferedReader){
+    public ClientListener(Socket client, BufferedReader bufferedReader){
         this.clientSocket = client;
-        this.printWriter = printWriter;
         this.bufferedReader = bufferedReader;
 
     }
+
     @Override
     public void run() {
-        Scanner sc = new Scanner(System.in);
-        String line = null;
-        while (!"exit".equalsIgnoreCase(line)) {
-
-            // reading from user
-            line = sc.nextLine();
-
-            // sending the user input to server
-            printWriter.println(line);
-            printWriter.flush();
-
-            // displaying server reply
-            try {
+        try {
+            String receivedMessage;
+            while ((receivedMessage = bufferedReader.readLine()) != null){
                 System.out.println("Server replied "
-                        + bufferedReader.readLine());
-            } catch (IOException e) {
-                e.printStackTrace();
+                        + receivedMessage);
             }
+        }
+        catch(IOException e){
+            e.printStackTrace();
         }
 
         // closing the connection
