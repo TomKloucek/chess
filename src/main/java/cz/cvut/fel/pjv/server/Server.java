@@ -46,12 +46,14 @@ public class Server {
         pointerId +=1;
         int secondPlayerId = pointerId;
 
-        ClientHandler clientSocketWhite = new ClientHandler(playerWhite);
-        new Thread(clientSocketWhite).start();
-        ClientHandler clientSocketBlack = new ClientHandler(playerBlack);
-        new Thread(clientSocketBlack).start();
+//        ClientHandler clientHandlerWhite = new ClientHandler(playerWhite);
+//        ClientHandler clientHandlerBlack = new ClientHandler(playerBlack);
+//        new Thread(clientHandlerWhite).start();
+//        new Thread(clientHandlerBlack).start();
 
-        GameRoomThread gameRoomThread = new GameRoomThread(playerWhite, playerBlack, firstPlayerId, secondPlayerId);
-        new Thread(gameRoomThread).start();
+
+        TwoClientsHandler twoClientsHandler = new TwoClientsHandler(playerWhite, playerBlack);
+        new Thread(twoClientsHandler).start();
+
     }
 }

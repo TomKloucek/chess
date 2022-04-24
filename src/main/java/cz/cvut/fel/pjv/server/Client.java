@@ -15,47 +15,34 @@ public class Client {
     public PrintWriter printWriter;
     public InputStreamReader inputStreamReader;
     public BufferedReader bufferedReader;
+    public ClientListener clientListener;
+    public ClientWriter clientWriter;
     Socket player;
 
-    //    PrintWriter printWriter;
-//    InputStreamReader inputStreamReader;
-//    BufferedReader bufferedReader;
-//    public void connectToServer() throws IOException{
-//        Socket player = new Socket("localhost", 4999);
-//        printWriter = new PrintWriter(player.getOutputStream());
-//        inputStreamReader = new InputStreamReader(player.getInputStream());
-//        bufferedReader = new BufferedReader(inputStreamReader);
-//
-//        System.out.println(receiveMessage());
-//        }
-//    public void sendMessage(String message){
-//        printWriter.println(message);
-//        printWriter.flush();
-//    }
-//    public String receiveMessage() throws IOException {
-//        String serverMessage = bufferedReader.readLine();
-//        return "server: " + serverMessage;
-//    }
+
     public void connectToServer() throws IOException {
         player = new Socket("localhost", 4999);
         printWriter = new PrintWriter(player.getOutputStream());
         inputStreamReader = new InputStreamReader(player.getInputStream());
         bufferedReader = new BufferedReader(inputStreamReader);
-        printWriter.println("Hello I am player");
-        printWriter.flush();
-        ClientListener clientListener = new ClientListener(player, printWriter, bufferedReader);
+        setClientListener();
+        setClientWriter();
+
+    }
+    public void setClientListener(){
+        clientListener = new ClientListener(player, bufferedReader);
         new Thread(clientListener).start();
+    }
+    public void setClientWriter(){
+        clientWriter = new ClientWriter(player, printWriter);
+        new Thread(clientWriter).start();
     }
 
 
-    //    public void readFromServer() throws IOException {
-//        String serverReply;
-//        while ((serverReply = bufferedReader.readLine()) != null)
-//
-//
-//            System.out.println("Server replied " + serverReply);
-//    }
-    public void showGame(MainMenu game) throws IOException {
+
+
+
+        public void showGame(MainMenu game) throws IOException {
         game.showGameDialogue();
     }
 
