@@ -97,12 +97,11 @@ public class Game {
     }
 
     public void playForAi() {
-        if (State.getInstance().isWhiteOnMove() && playerWhite instanceof AiPlayer) {
-            System.out.println("hraju +");
+        boolean turn = State.getInstance().isWhiteOnMove();
+        if (turn && playerWhite instanceof AiPlayer) {
             ((AiPlayer) playerWhite).doAMove();
         }
-        if (!State.getInstance().isWhiteOnMove() && playerBlack instanceof AiPlayer) {
-            System.out.println("hraju -");
+        if (!turn && playerBlack instanceof AiPlayer) {
             ((AiPlayer) playerBlack).doAMove();
         }
     }

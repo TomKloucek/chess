@@ -163,24 +163,26 @@ public class MainMenu extends JFrame {
 
         Player p1;
         AiPlayer p2;
+        Game game = null;
+
         if (random % 2 == 0) {
             p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
             p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.BLACK, null, board);
+            game = new Game(p1, p2, board);
         }
         else {
             p1 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
             p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.WHITE, null, board);
+            game = new Game(p2, p1, board);
         }
 
-        Game game = new Game(p1, p2, board);
         game.setMe(p1);
-
-        if (p2.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
-            game.playForAi();
-        }
 
         State.getInstance();
         State.getInstance().setGame(game);
+        if (p2.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
+            game.playForAi();
+        }
 
 
         BoardView mainPanel = new BoardView(board);
