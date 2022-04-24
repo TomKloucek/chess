@@ -51,11 +51,11 @@ public class ClickListener implements ActionListener {
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             Piece picked = bw.getPickedPiece();
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
-            /*if (game.getMe().getColor() != picked.getColor()) {
+            if (game.getMe().getColor() != picked.getColor()) {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Toto není tvoje figurka");
-            }*/
-            if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked) && !(picked instanceof  King)) {
+            }
+            else if (picked.getColor() == Color.WHITE && board.whiteInCheck() && !board.canBlockOrEscapeFromCheck(picked) && !(picked instanceof  King)) {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vás nedostane z šachu");
             }

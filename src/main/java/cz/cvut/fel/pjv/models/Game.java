@@ -95,4 +95,15 @@ public class Game {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
+
+    public void playForAi() {
+        if (State.getInstance().isWhiteOnMove() && playerWhite instanceof AiPlayer) {
+            System.out.println("hraju +");
+            ((AiPlayer) playerWhite).doAMove();
+        }
+        if (!State.getInstance().isWhiteOnMove() && playerBlack instanceof AiPlayer) {
+            System.out.println("hraju -");
+            ((AiPlayer) playerBlack).doAMove();
+        }
+    }
 }

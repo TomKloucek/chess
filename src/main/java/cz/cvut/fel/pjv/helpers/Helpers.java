@@ -9,10 +9,8 @@ import cz.cvut.fel.pjv.pieces.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 public class Helpers {
     public static String XTranslate(int x) {
@@ -27,6 +25,11 @@ public class Helpers {
             case 8 -> "h";
             default -> "";
         };
+    }
+
+    public static int randomNumber(int start, int end) {
+        Random random = new Random();
+        return random.nextInt(start,end);
     }
 
     public static int XTranslateBack(String x) {

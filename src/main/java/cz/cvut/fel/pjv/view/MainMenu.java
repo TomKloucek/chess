@@ -1,12 +1,11 @@
 package cz.cvut.fel.pjv.view;// Java program to illustrate the BorderLayout
 import cz.cvut.fel.pjv.Main;
-import cz.cvut.fel.pjv.models.Board;
-import cz.cvut.fel.pjv.models.Game;
-import cz.cvut.fel.pjv.models.Player;
-import cz.cvut.fel.pjv.models.State;
+import cz.cvut.fel.pjv.helpers.Helpers;
+import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.server.Client;
 
 import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -40,7 +39,7 @@ public class MainMenu extends JFrame {
         JButton button0 = new JButton();
         button0.setBackground(Color.black);
         button0.setForeground(Color.white);
-        button0.setText("Hra s počítačem");
+        button0.setText("Hra po síti");
         button0.setCursor(new Cursor(Cursor.HAND_CURSOR));
         button0.addActionListener(new ActionListener() {
             @Override
@@ -59,8 +58,14 @@ public class MainMenu extends JFrame {
         JButton button1 = new JButton();
         button1.setBackground(Color.white);
         button1.setForeground(Color.black);
-        button1.setText("Hra po síti");
+        button1.setText("Hra s počítačem");
         button1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openAIGame();
+            }
+        });
 
         JButton button2 = new JButton();
         button2.setBackground(Color.white);
@@ -147,15 +152,65 @@ public class MainMenu extends JFrame {
         frame.setVisible(true);
     }
 
+    public void openAIGame() {
+        Board board = new Board();
+        board.initializeBoard();
 
+        hideMainMenu();
+
+        // COLOR Pick
+        int random = Helpers.randomNumber(0,100);
+
+        Player p1;
+        AiPlayer p2;
+        if (random % 2 == 0) {
+            p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+            p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.BLACK, null, board);
+        }
+        else {
+            p1 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+            p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.WHITE, null, board);
+        }
+
+        Game game = new Game(p1, p2, board);
+        game.setMe(p1);
+
+        if (p2.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
+            game.playForAi();
+        }
+
+        State.getInstance();
+        State.getInstance().setGame(game);
+
+
+        BoardView mainPanel = new BoardView(board);
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                showMainMenu();
+            }
+        });
+        frame.getContentPane().add(mainPanel);
+        frame.setMinimumSize(new Dimension(800, 679));
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+    }
 
     public void openEditor() {
         Board board = new Board();
         board.initializeEditor();
 
+        hideMainMenu();
+
         BoardView mainPanel = new BoardView(board);
         JFrame frame = new JFrame("Chess");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                showMainMenu();
+            }
+        });
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(800, 679));
         frame.setLocationByPlatform(true);

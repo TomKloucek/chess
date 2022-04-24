@@ -33,8 +33,8 @@ public class State {
     }
 
     public void reverseMove() {
+        System.out.println("sakra");
         whiteOnMove = !whiteOnMove;
-//        System.out.println(this.game.boardToString());
     }
 
     public Game getGame() {
