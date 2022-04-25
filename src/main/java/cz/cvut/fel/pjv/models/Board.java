@@ -237,30 +237,26 @@ public class Board {
     }
     public boolean movePiece(Piece chosen, int x, int y) {
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
-        System.out.println(chosen +" " + x + " " + y);
-        System.out.println(chosen.possibleMovement(this));
         if (chosen.possibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
-                    State.getInstance().reverseMove();
                     board[x][y].getPiece().Move(x,y);
                     blackPieces.remove(chosen);
                     blackPieces.add(board[x][y].getPiece());
                     refillPiecesLists();
-                    return true;
                 }
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
                     this.board[x][y].setPiece(null);
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
-                    State.getInstance().reverseMove();
                     this.board[x][y].getPiece().Move(x,y);
                     whitePieces.remove(chosen);
                     whitePieces.add(board[x][y].getPiece());
                     refillPiecesLists();
-                    return true;
                 }
+                State.getInstance().reverseMove();
+                State.getInstance().getGame().playForAi();
             }
             // EN PASSANT
             else if(chosen instanceof Pawn && (board[x][y-1].getPiece() instanceof Pawn && board[x][y-1].getPiece().getColor() == Color.BLACK) && board[x][y].getPiece() == null) {

@@ -4,6 +4,7 @@ import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.pieces.King;
 import cz.cvut.fel.pjv.pieces.Piece;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,38 +21,44 @@ public class AiPlayer extends Player {
         this.board = board;
     }
 
-    public void doAMove() {
+    public boolean doAMove() {
         Piece chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
         boolean checked = false;
         if (getColor() == WHITE) {
             checked = board.whiteInCheck();
-        }
-        else {
+        } else {
             checked = board.blackInCheck();
+        }
+        if (checked && board.Mated(getColor())) {
+            return true;
         }
         while (chosen.possibleMovement(board).isEmpty()) {
             chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
+            if (chosen instanceof King && chosen.possibleMovement(board).isEmpty() && board.getPieces(getColor()).size() == 1) {
+                JOptionPane.showMessageDialog(null, "Remíza");
+            }
+            System.out.println(chosen + "-empty");
         }
-        Square goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0,chosen.possibleMovement(board).size()));
+        Square goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
         if (checked) {
             while (!board.canBlockOrEscapeFromCheck(chosen)) {
-                System.out.println("tady");
                 chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
             }
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(chosen);
-            System.out.println(chosen);
-            goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0,chosen.possibleMovement(board).size()));
+            goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
             if (chosen instanceof King) {
-                goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0,chosen.possibleMovement(board).size()));
-            }else {
+                goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
+            } else {
                 while (!possibleMovesToUncheck.contains(goalMove)) {
                     goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
                 }
             }
         }
         while (goalMove == null) {
-            goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0,chosen.possibleMovement(board).size()));
+            chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
+            goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
         }
-        board.movePiece(chosen, goalMove.getX()-1, goalMove.getY());
+        board.movePiece(chosen, goalMove.getX() - 1, goalMove.getY());
+        return false;
     }
 }

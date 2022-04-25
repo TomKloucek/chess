@@ -84,7 +84,6 @@ public class Game {
 
         //board.initializeBoard();
         BoardView mainPanel = new BoardView(board);
-
 //        System.out.println(game.boardToString());
 
         JFrame frame = new JFrame("Chess");
@@ -96,13 +95,14 @@ public class Game {
         frame.setVisible(true);
     }
 
-    public void playForAi() {
+    public boolean playForAi() {
         boolean turn = State.getInstance().isWhiteOnMove();
         if (turn && playerWhite instanceof AiPlayer) {
-            ((AiPlayer) playerWhite).doAMove();
+            return ((AiPlayer) playerWhite).doAMove();
         }
         if (!turn && playerBlack instanceof AiPlayer) {
-            ((AiPlayer) playerBlack).doAMove();
+            return ((AiPlayer) playerBlack).doAMove();
         }
+        return false;
     }
 }

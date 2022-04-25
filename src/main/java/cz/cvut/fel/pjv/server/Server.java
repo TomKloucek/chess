@@ -46,12 +46,6 @@ public class Server {
         pointerId +=1;
         int secondPlayerId = pointerId;
 
-//        ClientHandler clientHandlerWhite = new ClientHandler(playerWhite);
-//        ClientHandler clientHandlerBlack = new ClientHandler(playerBlack);
-//        new Thread(clientHandlerWhite).start();
-//        new Thread(clientHandlerBlack).start();
-
-
         TwoClientsHandler twoClientsHandler = new TwoClientsHandler(playerWhite, playerBlack);
         new Thread(twoClientsHandler).start();
 

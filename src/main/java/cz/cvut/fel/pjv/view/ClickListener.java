@@ -133,7 +133,6 @@ public class ClickListener implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Tento hráč není na tahu");
             }
         }
-
         bw.repaintBoard();
     }
 

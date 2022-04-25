@@ -33,7 +33,6 @@ public class State {
     }
 
     public void reverseMove() {
-        System.out.println("sakra");
         whiteOnMove = !whiteOnMove;
     }
 
