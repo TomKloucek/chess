@@ -36,6 +36,10 @@ public class State {
         whiteOnMove = !whiteOnMove;
     }
 
+    public void resetMove() {
+        whiteOnMove = true;
+    }
+
     public Game getGame() {
         return this.game;
     }

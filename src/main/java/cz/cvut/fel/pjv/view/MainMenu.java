@@ -115,8 +115,6 @@ public class MainMenu extends JFrame {
     }
 
     public void showGameDialogue() throws IOException {
-//        ImageIcon loading = new ImageIcon("loading.gif");
-//        frame.add(new JLabel("loading... ", loading, JLabel.CENTER));
 
         Board board = new Board();
 
@@ -153,6 +151,10 @@ public class MainMenu extends JFrame {
     }
 
     public void openAIGame() {
+        if (!State.getInstance().isWhiteOnMove()) {
+            State.getInstance().resetMove();
+        }
+        System.out.println("Na tahu bily"+State.getInstance().isWhiteOnMove());
         Board board = new Board();
         board.initializeBoard();
 
@@ -210,6 +212,7 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                State.getInstance().resetMove();
                 showMainMenu();
             }
         });

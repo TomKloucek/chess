@@ -33,6 +33,7 @@ public class ClickListener implements ActionListener {
                     System.out.println("Bílý je v šachu");
                     if (board.Mated(Color.WHITE)) {
                         JOptionPane.showMessageDialog(null, "Černý vyhrál");
+                        State.getInstance().resetMove();
                     }
                 }
             }
@@ -42,6 +43,7 @@ public class ClickListener implements ActionListener {
                     System.out.println("Černý je v šachu");
                     if (board.Mated(Color.BLACK)) {
                         JOptionPane.showMessageDialog(null, "Bilý vyhrál");
+                        State.getInstance().resetMove();
                     }
                 }
             }

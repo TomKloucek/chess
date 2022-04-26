@@ -278,6 +278,7 @@ public class Board {
             // CASTLE
             else if (chosen instanceof King && board[x][y].getPiece() instanceof Rook && board[x][y].getPiece().getColor()==chosen.getColor()) {
                 if (x == 0 && y == 0) {
+                    System.out.println("1");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[0][0].getPiece();
                     this.board[0][0].setPiece(null);
@@ -287,6 +288,7 @@ public class Board {
                     chosen.Move(2,0);
                 }
                 if (x == 7 && y == 0) {
+                    System.out.println("2");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[7][0].getPiece();
                     this.board[7][0].setPiece(null);
@@ -296,15 +298,17 @@ public class Board {
                     chosen.Move(6,0);
                 }
                 if (x == 0 && y == 7) {
+                    System.out.println("3");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[0][7].getPiece();
                     this.board[0][7].setPiece(null);
-                    this.board[2][7].setPiece(rook);
-                    this.board[1][7].setPiece(chosen);
-                    rook.Move(2,7);
-                    chosen.Move(1,7);
+                    this.board[3][7].setPiece(rook);
+                    this.board[2][7].setPiece(chosen);
+                    rook.Move(3,7);
+                    chosen.Move(2,7);
                 }
                 if (x == 7 && y == 7) {
+                    System.out.println("4");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[7][7].getPiece();
                     this.board[7][7].setPiece(null);
