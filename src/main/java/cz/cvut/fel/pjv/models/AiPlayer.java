@@ -67,6 +67,13 @@ public class AiPlayer extends Player {
                 chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
             }
             goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
+
+            if (board.getEveryXRayMove(board.getPieces(Helpers.getOtherColor(chosen.getColor()))).contains(board.getBoard()[chosen.getX()][chosen.getY()])
+            && !board.possibleMovesToUncheck(chosen).contains(board.getBoard()[goalMove.getX()-1][goalMove.getY()])){
+                goalMove = null;
+                chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
+            }
+
         }
         board.movePiece(chosen, goalMove.getX()-1, goalMove.getY());
         return false;
@@ -80,15 +87,17 @@ public class AiPlayer extends Player {
                     if (square != null) {
                         if (board.getEveryXRayMove(board.getPieces(Helpers.getOtherColor(chosen.getColor()))).contains(board.getBoard()[chosen.getX()][chosen.getY()])){
                             bestMoves.addAll(board.possibleMovesToUncheck(chosen));
+                            System.out.println("Best move Xray: " +bestMoves);
                         }
-
-                        else if (square.getPiece() != null) {
+                        else if (square.getPiece() != null && !board.getEveryXRayMove(board.getPieces(Helpers.getOtherColor(chosen.getColor()))).contains(board.getBoard()[chosen.getX()][chosen.getY()])) {
                             bestMoves.add(square);
+                            System.out.println("Normal Best move: "+bestMoves);
                         }
                     }
                 }
             }
         }
+        Collections.sort(bestMoves);
         if (bestMoves.isEmpty()) {
             return null;
         }
@@ -98,6 +107,7 @@ public class AiPlayer extends Player {
                 ArrayList<Object> toReturn = new ArrayList<>();
                 toReturn.add(move);
                 toReturn.add(chosen);
+                System.out.println("To return: "+ toReturn);
                 return toReturn;
             }
         }
