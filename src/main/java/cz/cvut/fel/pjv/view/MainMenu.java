@@ -11,7 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Objects;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 // class extends JFrame
 public class MainMenu extends JFrame {
@@ -63,7 +67,7 @@ public class MainMenu extends JFrame {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openAIGame();
+                openAIGame("");
             }
         });
 
@@ -145,18 +149,22 @@ public class MainMenu extends JFrame {
             }
         });
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(800, 679));
+        frame.setMinimumSize(new Dimension(800, 640));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
 
-    public void openAIGame() {
+    public void openAIGame(String boardString) {
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
         }
         System.out.println("Na tahu bily"+State.getInstance().isWhiteOnMove());
         Board board = new Board();
         board.initializeBoard();
+
+        if (!Objects.equals(boardString, "")) {
+            board.stringToBoard(boardString);
+        }
 
         hideMainMenu();
 
@@ -182,10 +190,17 @@ public class MainMenu extends JFrame {
 
         State.getInstance();
         State.getInstance().setGame(game);
+        JLabel nameWhite = null;
+        JLabel nameBlack = null;
         if (p2.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
+            nameWhite = new JLabel("AI");
+            nameBlack = new JLabel("Hrac");
             game.playForAi();
         }
-
+        else {
+            nameBlack = new JLabel("AI");
+            nameWhite = new JLabel("Hrac");
+        }
 
         BoardView mainPanel = new BoardView(board);
         JFrame frame = new JFrame("Chess");
@@ -196,9 +211,44 @@ public class MainMenu extends JFrame {
             }
         });
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(800, 679));
+        frame.setMinimumSize(new Dimension(760, 679));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+
+        JPanel gamePanel = new JPanel(new BorderLayout());
+
+        JPanel whitePlayerPanel = new JPanel(new BorderLayout());
+        JLabel timeWhite = new JLabel("Cas 1");
+        Border border = timeWhite.getBorder();
+        Border margin = new EmptyBorder(30,30,30,30);
+        timeWhite.setBorder(new CompoundBorder(border, margin));
+        timeWhite.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameWhite.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameWhite.setBorder(new CompoundBorder(border, margin));
+        whitePlayerPanel.add(nameWhite,BorderLayout.NORTH);
+        whitePlayerPanel.add(timeWhite,BorderLayout.SOUTH);
+
+        JPanel blackPlayerPanel = new JPanel(new BorderLayout());
+        JLabel timeBlack = new JLabel("Cas 2");
+        border = timeBlack.getBorder();
+        margin = new EmptyBorder(30,30,30,30);
+        timeBlack.setBorder(new CompoundBorder(border, margin));
+        timeBlack.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameBlack.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameBlack.setBorder(new CompoundBorder(border, margin));
+        blackPlayerPanel.add(nameBlack,BorderLayout.NORTH);
+        blackPlayerPanel.add(timeBlack,BorderLayout.SOUTH);
+
+        if (p1.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
+            gamePanel.add(whitePlayerPanel,BorderLayout.SOUTH);
+            gamePanel.add(blackPlayerPanel, BorderLayout.NORTH);
+        }
+        else {
+            gamePanel.add(whitePlayerPanel,BorderLayout.NORTH);
+            gamePanel.add(blackPlayerPanel, BorderLayout.SOUTH);
+        }
+        gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
+        frame.add(gamePanel, BorderLayout.EAST);
     }
 
     public void openEditor() {
@@ -220,6 +270,18 @@ public class MainMenu extends JFrame {
         frame.setMinimumSize(new Dimension(800, 679));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+
+        JPanel gamePanel = new JPanel(new BorderLayout());
+        JButton playButton = new JButton("Hraj proti AI");
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openAIGame(board.boardToString());
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+            }
+        });
+        gamePanel.add(playButton, BorderLayout.CENTER);
+        frame.add(gamePanel, BorderLayout.EAST);
     }
 }
 

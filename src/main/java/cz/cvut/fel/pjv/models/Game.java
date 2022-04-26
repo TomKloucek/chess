@@ -23,24 +23,6 @@ public class Game {
         this.board = board;
     }
 
-    public String boardToString() {
-        StringBuilder game = new StringBuilder();
-        for (int i = 7; i > -1; i--) {
-            for (int j = 0; j < 8; j++) {
-                Piece piece = this.board.getBoard()[j][i].getPiece();
-                if (piece == null) {
-                    game.append(" ");
-                }
-                else {
-                    game.append(piece);
-                }
-                game.append(",");
-            }
-        }
-        game.deleteCharAt(game.length() - 1);
-        return game.toString();
-    }
-
     public Player getMe() {
         return me;
     }
@@ -89,7 +71,7 @@ public class Game {
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(800, 679));
+        frame.setMinimumSize(new Dimension(640, 679));
 //            frame.setMaximumSize(new Dimension(800, 540));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
