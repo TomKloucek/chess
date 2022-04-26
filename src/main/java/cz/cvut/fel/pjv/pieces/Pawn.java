@@ -82,6 +82,11 @@ public class Pawn implements Piece {
         // Prida utocne metody
         possibilities.addAll(getAttackMoves(board));
 
+        for (int i = 0; i < possibilities.size(); i++) {
+            if(possibilities.get(i) == null ){
+                possibilities.remove(i);
+            }
+        }
         return possibilities;
     }
 

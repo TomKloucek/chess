@@ -43,7 +43,6 @@ public class AiPlayer extends Player {
         Square goalMove = null;
         if (checked) {
             while (!board.canBlockOrEscapeFromCheck(chosen)) {
-                System.out.println("1");
                 chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
             }
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(chosen);
@@ -52,7 +51,6 @@ public class AiPlayer extends Player {
                 goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
             } else {
                 while (!possibleMovesToUncheck.contains(goalMove)) {
-                    System.out.println("2");
                     goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
                 }
             }
@@ -63,8 +61,8 @@ public class AiPlayer extends Player {
             return false;
         }
         while (goalMove == null) {
-            System.out.println("3");
             System.out.println(chosen.possibleMovement(board));
+            System.out.println(chosen);
             if (chosen.possibleMovement(board).isEmpty()) {
                 chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
             }
