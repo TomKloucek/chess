@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.pieces.Piece;
 
-public class Square {
+public class Square implements Comparable<Square> {
     private int x,y;
     private Piece piece;
 
@@ -43,5 +43,10 @@ public class Square {
                 ", y=" + y +
                 ", piece=" + piece +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Square o) {
+        return this.getPiece().getPoints() - o.getPiece().getPoints();
     }
 }
