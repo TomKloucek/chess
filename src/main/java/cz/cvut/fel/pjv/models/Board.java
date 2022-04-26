@@ -628,6 +628,24 @@ public class Board {
         }
     }
 
+    public String boardToString() {
+        StringBuilder game = new StringBuilder();
+        for (int i = 7; i > -1; i--) {
+            for (int j = 0; j < 8; j++) {
+                Piece piece = this.board[j][i].getPiece();
+                if (piece == null) {
+                    game.append(" ");
+                }
+                else {
+                    game.append(piece);
+                }
+                game.append(",");
+            }
+        }
+        game.deleteCharAt(game.length() - 1);
+        return game.toString();
+    }
+
     public boolean canBlockOrEscapeFromCheck(Piece piece){
         if(piece instanceof King){
             if (piece.possibleMovement(this).isEmpty()){
