@@ -36,6 +36,11 @@ public class ClickListener implements ActionListener {
                         State.getInstance().resetMove();
                     }
                 }
+                else {
+                    if (board.getKing(Color.WHITE).possibleMovement(board).isEmpty() && board.getPieces(Color.WHITE).size() == 1) {
+                        JOptionPane.showMessageDialog(null, "Remíza");
+                    }
+                }
             }
             else {
                 bw.deleteButtonsOnSquaresWithoutPiece();
@@ -44,6 +49,11 @@ public class ClickListener implements ActionListener {
                     if (board.Mated(Color.BLACK)) {
                         JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                         State.getInstance().resetMove();
+                    }
+                    else {
+                        if (board.getKing(Color.BLACK).possibleMovement(board).isEmpty() && board.getPieces(Color.BLACK).size() == 1) {
+                            JOptionPane.showMessageDialog(null, "Remíza");
+                        }
                     }
                 }
             }

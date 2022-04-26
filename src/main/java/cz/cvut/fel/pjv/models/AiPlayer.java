@@ -51,6 +51,7 @@ public class AiPlayer extends Player {
                 goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
             } else {
                 while (!possibleMovesToUncheck.contains(goalMove)) {
+                    System.out.println(goalMove);
                     goalMove = chosen.possibleMovement(board).get(Helpers.randomNumber(0, chosen.possibleMovement(board).size()));
                 }
             }
@@ -60,6 +61,7 @@ public class AiPlayer extends Player {
             board.movePiece(((Piece) field.get(1)), ((Square) field.get(0)).getX()-1, ((Square) field.get(0)).getY());
             return false;
         }
+        System.out.println(goalMove);
         while (goalMove == null) {
             if (chosen.possibleMovement(board).isEmpty()) {
                 chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
@@ -76,7 +78,11 @@ public class AiPlayer extends Player {
             if (!chosen.possibleMovement(board).isEmpty()) {
                 for (Square square : chosen.possibleMovement(board)) {
                     if (square != null) {
-                        if (square.getPiece() != null) {
+                        if (board.getEveryXRayMove(board.getPieces(Helpers.getOtherColor(chosen.getColor()))).contains(board.getBoard()[chosen.getX()][chosen.getY()])){
+                            bestMoves.addAll(board.possibleMovesToUncheck(chosen));
+                        }
+
+                        else if (square.getPiece() != null) {
                             bestMoves.add(square);
                         }
                     }
@@ -84,6 +90,7 @@ public class AiPlayer extends Player {
             }
         }
         Collections.sort(bestMoves);
+        System.out.println(bestMoves);
         if (bestMoves.isEmpty()) {
             return null;
         }
