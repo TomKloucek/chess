@@ -339,7 +339,7 @@ public class Board {
 
     private Piece PromoteTo(Pawn pawn) {
         String[] options = {"Rook", "Queen", "Bishop", "Knight"};
-        int answer = JOptionPane.showOptionDialog(null, "Returns the position of your choice on the array",
+        int answer = JOptionPane.showOptionDialog(null, "Vyber si novou figurku",
                 "Click a button",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         return switch (answer) {

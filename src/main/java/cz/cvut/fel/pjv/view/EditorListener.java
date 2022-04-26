@@ -34,7 +34,7 @@ public class EditorListener implements ActionListener {
             String[] options_piece = new String[]{"Rook", "Queen", "Bishop", "Knight","Pawn"};
             String[] options_piece_king = new String[]{"Rook", "Queen", "Bishop", "Knight","Pawn","King"};
 
-            int color_choice = JOptionPane.showOptionDialog(null, "Returns the position of your choice on the array",
+            int color_choice = JOptionPane.showOptionDialog(null, "Vyber si barvu figurky",
                     "Vyber si barvu figurky",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
 
@@ -47,12 +47,12 @@ public class EditorListener implements ActionListener {
             }
             int answer;
             if (board.getKing(color) == null) {
-                answer = JOptionPane.showOptionDialog(null, "Returns the position of your choice on the array",
-                        "Vyber si figurku",
+                answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",
+                        "Vyber si barvu",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_piece_king, options_piece_king[0]);
             }
             else {
-                answer = JOptionPane.showOptionDialog(null, "Returns the position of your choice on the array",
+                answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",
                         "Vyber si figurku",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_piece, options_piece[0]);
             }
