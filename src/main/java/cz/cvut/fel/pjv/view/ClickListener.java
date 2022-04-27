@@ -62,8 +62,9 @@ public class ClickListener implements ActionListener {
             ArrayList<Square> possibleMovement = square.getPiece().possibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             Piece picked = bw.getPickedPiece();
+            System.out.println(board.boardToString());
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
-            if (game.getMe().getColor() != picked.getColor()) {
+            if (game.getMe().getColor() != picked.getColor() && board.getType() != GameType.PVP) {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Toto není tvoje figurka");
             }

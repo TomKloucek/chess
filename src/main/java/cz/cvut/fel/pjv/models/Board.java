@@ -12,10 +12,13 @@ public class Board {
     private ArrayList<Piece> whitePieces;
     private ArrayList<Piece> blackPieces;
 
-    public Board() {
+    private GameType type;
+
+    public Board(GameType type) {
         this.board = new Square[8][8];
         this.blackPieces = new ArrayList<>();
         this.whitePieces = new ArrayList<>();
+        this.type = type;
     }
 
     public ArrayList<Piece> getPieces(Color color) {
@@ -674,5 +677,9 @@ public class Board {
         ArrayList<Square> squaresToBlock = getSquaresToBlock(this.getPieces(Helpers.getOtherColor(piece.getColor())));
         ArrayList<Square> piecePossibleMovements = piece.possibleMovement(this);
         return (ArrayList<Square>) Helpers.intersection(squaresToBlock, piecePossibleMovements);
+    }
+
+    public GameType getType() {
+        return type;
     }
 }

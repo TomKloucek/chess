@@ -63,8 +63,6 @@ public class AiPlayer extends Player {
             }
         }
         while (goalMove == null) {
-            System.out.println(chosen.possibleMovement(board));
-            System.out.println(chosen);
             if (chosen.possibleMovement(board).isEmpty()) {
                 chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
             }

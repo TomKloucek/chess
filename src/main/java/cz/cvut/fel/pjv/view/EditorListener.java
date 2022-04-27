@@ -68,7 +68,6 @@ public class EditorListener implements ActionListener {
                 };
             board.putPiece(x,y,type,color);
             bw.repaintBoard();
-            board.printBoard();
             }
         else {
             JOptionPane.showMessageDialog(null, "Toto pole už nelze editovat");
