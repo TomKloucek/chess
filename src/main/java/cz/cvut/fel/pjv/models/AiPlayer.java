@@ -55,10 +55,12 @@ public class AiPlayer extends Player {
                 }
             }
         }
-        ArrayList<Object> field = getBestAiMove(board.getPieces(getColor()));
-        if (field != null) {
-            board.movePiece(((Piece) field.get(1)), ((Square) field.get(0)).getX()-1, ((Square) field.get(0)).getY());
-            return false;
+        else {
+            ArrayList<Object> field = getBestAiMove(board.getPieces(getColor()));
+            if (field != null) {
+                board.movePiece(((Piece) field.get(1)), ((Square) field.get(0)).getX() - 1, ((Square) field.get(0)).getY());
+                return false;
+            }
         }
         while (goalMove == null) {
             System.out.println(chosen.possibleMovement(board));

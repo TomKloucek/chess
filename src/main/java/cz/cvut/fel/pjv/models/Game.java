@@ -23,6 +23,14 @@ public class Game {
         this.board = board;
     }
 
+    public Player getPlayerWhite() {
+        return playerWhite;
+    }
+
+    public Player getPlayerBlack() {
+        return playerBlack;
+    }
+
     public Player getMe() {
         return me;
     }

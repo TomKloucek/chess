@@ -339,9 +339,17 @@ public class Board {
 
     private Piece PromoteTo(Pawn pawn) {
         String[] options = {"Rook", "Queen", "Bishop", "Knight"};
-        int answer = JOptionPane.showOptionDialog(null, "Vyber si novou figurku",
-                "Click a button",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        int answer;
+        if((State.getInstance().isWhiteOnMove() && State.getInstance().getGame().getPlayerWhite() instanceof AiPlayer)
+        || (!State.getInstance().isWhiteOnMove() && State.getInstance().getGame().getPlayerBlack() instanceof AiPlayer)){
+            answer = 1;
+        }
+
+        else {
+            answer = JOptionPane.showOptionDialog(null, "Vyber si novou figurku",
+                    "Click a button",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        }
         return switch (answer) {
             case 0 -> new Rook(pawn.getColor(), pawn.getX(), pawn.getY());
             case 1 -> new Queen(pawn.getColor(), pawn.getX(), pawn.getY());
