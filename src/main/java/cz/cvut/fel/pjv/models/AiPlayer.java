@@ -97,7 +97,6 @@ public class AiPlayer extends Player {
                 }
             }
         }
-        Collections.sort(bestMoves);
         if (bestMoves.isEmpty()) {
             return null;
         }
