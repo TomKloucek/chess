@@ -71,19 +71,20 @@ public class TwoClientsHandler implements Runnable {
                                 "White sent a message but not allowed %s\n", receivedMessageFromWhite);
                         printWriterWhite.println("You have to wait for Black");
                         printWriterWhite.flush();
-                    }
-                    while ((receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
-
-                        System.out.printf(
-                                " Sent from the Black client: %s\n",
-                                receivedMessageFromBlack);
-                        printWriterWhite.println(receivedMessageFromBlack);
-                        printWriterWhite.flush();
-                        listenWhite = true;
                         break;
-
                     }
+                    if(bufferedReaderBlack.ready()) {
+                        while ((receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
 
+                            System.out.printf(
+                                    " Sent from the Black client: %s\n",
+                                    receivedMessageFromBlack);
+                            printWriterWhite.println(receivedMessageFromBlack);
+                            printWriterWhite.flush();
+                            listenWhite = true;
+                            break;
+                        }
+                    }
                 }
 //                while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null
 //                ||(receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
