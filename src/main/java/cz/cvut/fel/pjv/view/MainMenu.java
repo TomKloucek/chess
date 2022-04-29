@@ -67,7 +67,7 @@ public class MainMenu extends JFrame {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openAIGame("");
+                openAIGame("", -1);
             }
         });
 
@@ -104,18 +104,19 @@ public class MainMenu extends JFrame {
         editor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openEditor();
+                openEditor("");
             }
         });
         JButton loadGame = new JButton();
         loadGame.setBackground(Color.white);
         loadGame.setForeground(Color.black);
-        loadGame.setText("Nacti hru");
+        loadGame.setText("Nacti editor ze souboru");
+        loadGame.setFont(new Font("Roboto", Font.PLAIN, 10));
         loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loadGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Nacte se hra");
+                openEditor(Helpers.importBoard());
             }
         });
         JButton settings = new JButton();
@@ -289,7 +290,7 @@ public class MainMenu extends JFrame {
         frame.add(gamePanel, BorderLayout.EAST);
     }
 
-    public void openAIGame(String boardString) {
+    public void openAIGame(String boardString, int answer) {
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
         }
@@ -309,15 +310,28 @@ public class MainMenu extends JFrame {
         AiPlayer p2;
         Game game = null;
 
-        if (random % 2 == 0) {
-            p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
-            p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.BLACK, null, board);
-            game = new Game(p1, p2, board);
+        if (answer != -1) {
+            if (answer == 0) {
+                p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+                p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.BLACK, null, board);
+                game = new Game(p1, p2, board);
+            }
+            else {
+                p1 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+                p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.WHITE, null, board);
+                game = new Game(p2, p1, board);
+            }
         }
         else {
-            p1 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
-            p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.WHITE, null, board);
-            game = new Game(p2, p1, board);
+            if (random % 2 == 0) {
+                p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+                p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.BLACK, null, board);
+                game = new Game(p1, p2, board);
+            } else {
+                p1 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+                p2 = new AiPlayer(cz.cvut.fel.pjv.models.Color.WHITE, null, board);
+                game = new Game(p2, p1, board);
+            }
         }
 
         game.setMe(p1);
@@ -385,9 +399,13 @@ public class MainMenu extends JFrame {
         frame.add(gamePanel, BorderLayout.EAST);
     }
 
-    public void openEditor() {
+    public void openEditor(String boardString) {
         Board board = new Board(GameType.SERVER);
         board.initializeEditor();
+
+        if (!Objects.equals(boardString, "")) {
+            board.stringToBoard(boardString);
+        }
 
         hideMainMenu();
 
@@ -411,8 +429,17 @@ public class MainMenu extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openAIGame(board.boardToString());
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                if (board.getKing(cz.cvut.fel.pjv.models.Color.WHITE) != null && board.getKing(cz.cvut.fel.pjv.models.Color.BLACK) != null) {
+                    String[] options_color = {"White","Black"};
+                    int answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",
+                            "Vyber si barvu",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
+                    openAIGame(board.boardToString(), answer);
+                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Nemůžete spustit hru bez dvou králů");
+                }
             }
         });
 
@@ -420,8 +447,13 @@ public class MainMenu extends JFrame {
         pvpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openPvPGame(board.boardToString());
-                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                if (board.getKing(cz.cvut.fel.pjv.models.Color.WHITE) != null && board.getKing(cz.cvut.fel.pjv.models.Color.BLACK) != null) {
+                    openPvPGame(board.boardToString());
+                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Nemůžete spustit hru bez dvou králů");
+                }
             }
         });
 
@@ -429,7 +461,7 @@ public class MainMenu extends JFrame {
         exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Magic function");
+                Helpers.exportBoard(board.boardToString());
             }
         });
 

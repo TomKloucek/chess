@@ -380,6 +380,30 @@ public class Board {
         return null;
     }
 
+    public void checkBoard() {
+        if (blackInCheck()) {
+            System.out.println("Černý je v šachu");
+            if (Mated(Color.BLACK)) {
+                JOptionPane.showMessageDialog(null, "Bilý vyhrál");
+                State.getInstance().resetMove();
+            }
+            else {
+                if (getKing(Color.BLACK).possibleMovement(this).isEmpty() && getPieces(Color.BLACK).size() == 1) {
+                    JOptionPane.showMessageDialog(null, "Remíza");
+                }
+            }
+        }
+    }
+
+    public void removePiece(Piece piece) {
+        if (piece.getColor() == Color.WHITE) {
+            whitePieces.remove(piece);
+        }
+        else {
+            blackPieces.remove(piece);
+        }
+    }
+
     public void refillPiecesLists() {
         ArrayList<Piece> whitePieces = new ArrayList<>();
         ArrayList<Piece> blackPieces = new ArrayList<>();

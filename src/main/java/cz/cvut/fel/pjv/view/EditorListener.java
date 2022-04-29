@@ -66,6 +66,9 @@ public class EditorListener implements ActionListener {
                     case 5 -> "King";
                     default -> throw new IllegalStateException("Unexpected value: " + answer);
                 };
+            if (board.getBoard()[x][y].getPiece() != null) {
+                    board.removePiece(board.getBoard()[x][y].getPiece());
+            }
             board.putPiece(x,y,type,color);
             bw.repaintBoard();
             }

@@ -9,6 +9,9 @@ import cz.cvut.fel.pjv.pieces.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -165,5 +168,37 @@ public class Helpers {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public static void exportBoard(String board) {
+        try {
+            System.out.println(board);
+            File myObj = new File("board.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            FileWriter myWriter = new FileWriter("board.txt");
+            myWriter.write(board);
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public static String importBoard() {
+        try {
+            File myObj = new File("board.txt");
+            Scanner myReader = new Scanner(myObj);
+            String returnStatement = myReader.nextLine();
+            myReader.close();
+            return returnStatement;
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return "";
     }
 }
