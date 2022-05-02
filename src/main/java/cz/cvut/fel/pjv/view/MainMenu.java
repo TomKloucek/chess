@@ -1,5 +1,4 @@
 package cz.cvut.fel.pjv.view;// Java program to illustrate the BorderLayout
-import cz.cvut.fel.pjv.Main;
 import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.server.Client;
@@ -165,7 +164,7 @@ public class MainMenu extends JFrame {
         frame.setVisible(true);
     }
 
-    public void showGameDialogue() throws IOException {
+    public void openNetworkGame() throws IOException {
 
         Board board = new Board(GameType.SERVER);
 
@@ -196,7 +195,7 @@ public class MainMenu extends JFrame {
             }
         });
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(800, 640));
+        frame.setMinimumSize(new Dimension(930, 679));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }

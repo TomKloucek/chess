@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.server;
 
-import cz.cvut.fel.pjv.models.Game;
 import cz.cvut.fel.pjv.view.MainMenu;
 
 import java.io.BufferedReader;
@@ -8,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
-import java.util.UUID;
 
 public class Client {
     public PrintWriter printWriter;
@@ -43,7 +40,7 @@ public class Client {
 
 
         public void showGame(MainMenu game) throws IOException {
-        game.showGameDialogue();
+        game.openNetworkGame();
     }
 
 }
