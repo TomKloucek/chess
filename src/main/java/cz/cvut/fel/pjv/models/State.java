@@ -21,11 +21,14 @@ public class State {
 
     public static State getInstance()
     {
-        if (_instance == null)
-        {
-            _instance = new State();
+        if (_instance == null) {
+            synchronized (State.class) {
+                if (_instance == null) {
+                    _instance = new State();
+                }
+            }
         }
-        return _instance;
+            return _instance;
     }
 
     public boolean isWhiteOnMove() {
