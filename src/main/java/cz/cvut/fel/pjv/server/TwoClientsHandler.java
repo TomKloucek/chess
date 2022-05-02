@@ -36,36 +36,55 @@ public class TwoClientsHandler implements Runnable {
             inputStreamReaderBlack = new InputStreamReader(playerBlack.getInputStream());
             bufferedReaderBlack = new BufferedReader(inputStreamReaderBlack);
 
-            String receivedMessageFromWhite;
-            String receivedMessageFromBlack;
+            printWriterWhite.println("Welcome to server White");
+            printWriterWhite.flush();
+            printWriterBlack.println("Welcome to server Black");
+            printWriterBlack.flush();
 
+            String receivedMessageFromWhite = null;
+            String receivedMessageFromBlack = null;
             while (true) {
                 if (listenWhite == true) {
-
-                    while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null) {
+                    while (!bufferedReaderWhite.ready() && bufferedReaderBlack.ready()) {
+                        receivedMessageFromBlack = bufferedReaderBlack.readLine();
                         System.out.printf(
-                                " Sent from the White client: %s\n",
-                                receivedMessageFromWhite);
-//                        printWriterWhite.println("Welcome to server White");
-                        printWriterBlack.println(receivedMessageFromWhite);
+                                "Black sent message but not allowed: %s\n", receivedMessageFromBlack);
+                        printWriterBlack.println("You have to wait for white");
                         printWriterBlack.flush();
-                        listenWhite = false;
                         break;
+                    }
+                    if (bufferedReaderWhite.ready()) {
+                        while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null) {
+                            System.out.printf(
+                                    "Sent from the White client: %s\n",
+                                    receivedMessageFromWhite);
+                            printWriterBlack.println(receivedMessageFromWhite);
+                            printWriterBlack.flush();
+                            listenWhite = false;
+                            break;
+                        }
                     }
                 } else if (listenWhite == false) {
-                    while ((receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
-
+                    while (!bufferedReaderBlack.ready() && bufferedReaderWhite.ready()) {
+                        receivedMessageFromWhite = bufferedReaderWhite.readLine();
                         System.out.printf(
-                                " Sent from the Black client: %s\n",
-                                receivedMessageFromBlack);
-//                        printWriterBlack.println("Welcome to server Black");
-                        printWriterWhite.println(receivedMessageFromBlack);
+                                "White sent a message but not allowed %s\n", receivedMessageFromWhite);
+                        printWriterWhite.println("You have to wait for Black");
                         printWriterWhite.flush();
-                        listenWhite = true;
                         break;
-
                     }
+                    if(bufferedReaderBlack.ready()) {
+                        while ((receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
 
+                            System.out.printf(
+                                    " Sent from the Black client: %s\n",
+                                    receivedMessageFromBlack);
+                            printWriterWhite.println(receivedMessageFromBlack);
+                            printWriterWhite.flush();
+                            listenWhite = true;
+                            break;
+                        }
+                    }
                 }
 //                while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null
 //                ||(receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
