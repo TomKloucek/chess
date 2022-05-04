@@ -16,8 +16,8 @@ public class BoardView extends JPanel {
         private static final String[] LETTERS = new String[]{"a", "b", "c", "d", "e", "f", "g", "h"};
         private static final int[] COORDINATES = new int[]{8,7,6,5,4,3,2,1};
 
-        Color COLOR_WHITE = new Color(255, 0, 0);
-        Color COLOR_GREEN = new Color(255, 250, 0);
+        Color COLOR_WHITE = new Color(238,238,213);
+        Color COLOR_GREEN = new Color(125,148,93);
 
         public static final int SQUARE_DIMENSION = 64;
         private Board board;

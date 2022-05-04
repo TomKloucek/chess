@@ -141,10 +141,12 @@ public class Board {
         }
     }
 
-    public void stringToBoard(String s) {
-        for (int i = 7; i > -1; i--) {
-            for (int j = 0; j < 8; j++) {
-                board[j][i] = new Square(j,i,null);
+    public void stringToBoard(String s, boolean network) {
+        if(!network) {
+            for (int i = 7; i > -1; i--) {
+                for (int j = 0; j < 8; j++) {
+                    board[j][i] = new Square(j, i, null);
+                }
             }
         }
         int counter = 0;
@@ -208,7 +210,7 @@ public class Board {
                     return new Queen(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
                 }
                 else {
-                    return new Rook(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                    return new Queen(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
                 }
             }
             else if (chars[0] == 'N') {

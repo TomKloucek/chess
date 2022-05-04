@@ -168,13 +168,15 @@ public class MainMenu extends JFrame {
     }
 
     public void openNetworkGame(String boardString, cz.cvut.fel.pjv.models.Color color) throws IOException {
-
+        if (!State.getInstance().isWhiteOnMove()) {
+            State.getInstance().resetMove();
+        }
         Board board = new Board(GameType.SERVER);
 
         board.initializeBoard();
 
         if (!Objects.equals(boardString, "")) {
-            board.stringToBoard(boardString);
+            board.stringToBoard(boardString, false);
         }
 
         Player p1;
@@ -219,7 +221,7 @@ public class MainMenu extends JFrame {
         Board board = new Board(GameType.PVP);
 
         if (!Objects.equals(boardString, "")) {
-            board.stringToBoard(boardString);
+            board.stringToBoard(boardString, false);
         }
         else {
             board.initializeBoard();
@@ -311,7 +313,7 @@ public class MainMenu extends JFrame {
 
 
         if (!Objects.equals(boardString, "")) {
-            board.stringToBoard(boardString);
+            board.stringToBoard(boardString, false);
         }
         else {
             board.initializeBoard();
@@ -420,7 +422,7 @@ public class MainMenu extends JFrame {
         board.initializeEditor();
 
         if (!Objects.equals(boardString, "")) {
-            board.stringToBoard(boardString);
+            board.stringToBoard(boardString, false);
         }
 
         hideMainMenu();
