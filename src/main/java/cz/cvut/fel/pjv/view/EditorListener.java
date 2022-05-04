@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.view;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.Square;
@@ -30,9 +31,9 @@ public class EditorListener implements ActionListener {
             int x = buttonCoord.getX();
             int y = buttonCoord.getY();
 
-            String[] options_color = {"White","Black"};
-            String[] options_piece = new String[]{"Rook", "Queen", "Bishop", "Knight","Pawn"};
-            String[] options_piece_king = new String[]{"Rook", "Queen", "Bishop", "Knight","Pawn","King"};
+            String[] options_color = {"White", "Black"};
+            String[] options_piece = new String[]{"Rook", "Queen", "Bishop", "Knight", "Pawn"};
+            String[] options_piece_king = new String[]{"Rook", "Queen", "Bishop", "Knight", "Pawn", "King"};
 
             int color_choice = JOptionPane.showOptionDialog(null, "Vyber si barvu figurky",
                     "Vyber si barvu figurky",
@@ -41,8 +42,7 @@ public class EditorListener implements ActionListener {
             Color color;
             if (color_choice == 0) {
                 color = Color.WHITE;
-            }
-            else {
+            } else {
                 color = Color.BLACK;
             }
             int answer;
@@ -50,28 +50,42 @@ public class EditorListener implements ActionListener {
                 answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",
                         "Vyber si barvu",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_piece_king, options_piece_king[0]);
-            }
-            else {
+            } else {
                 answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",
                         "Vyber si figurku",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_piece, options_piece[0]);
             }
 
             String type = switch (answer) {
-                    case 0 -> "Rook";
-                    case 1 -> "Queen";
-                    case 2 -> "Bishop";
-                    case 3 -> "Knight";
-                    case 4 -> "Pawn";
-                    case 5 -> "King";
-                    default -> throw new IllegalStateException("Unexpected value: " + answer);
-                };
+                case 0 -> "Rook";
+                case 1 -> "Queen";
+                case 2 -> "Bishop";
+                case 3 -> "Knight";
+                case 4 -> "Pawn";
+                case 5 -> "King";
+                default -> throw new IllegalStateException("Unexpected value: " + answer);
+            };
             if (board.getBoard()[x][y].getPiece() != null) {
+                if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
+                        board.getKing(Helpers.getOtherColor(color)).getAttackMovesForKingMove(board).contains(board.getBoard()[x][y])) {
+                    JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe");
+                }
+                else {
                     board.removePiece(board.getBoard()[x][y].getPiece());
+                    board.putPiece(x, y, type, color);
+                    bw.repaintBoard();
+                }
             }
-            board.putPiece(x,y,type,color);
-            bw.repaintBoard();
+            else if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
+                    board.getKing(Helpers.getOtherColor(color)).getAttackMovesForKingMove(board).contains(board.getBoard()[x][y])) {
+
+                JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe");
             }
+            else {
+                board.putPiece(x, y, type, color);
+                bw.repaintBoard();
+            }
+        }
         else {
             JOptionPane.showMessageDialog(null, "Toto pole už nelze editovat");
         }

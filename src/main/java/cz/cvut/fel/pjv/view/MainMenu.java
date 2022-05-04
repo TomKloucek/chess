@@ -217,10 +217,12 @@ public class MainMenu extends JFrame {
             State.getInstance().resetMove();
         }
         Board board = new Board(GameType.PVP);
-        board.initializeBoard();
 
         if (!Objects.equals(boardString, "")) {
             board.stringToBoard(boardString);
+        }
+        else {
+            board.initializeBoard();
         }
 
         hideMainMenu();
@@ -306,10 +308,13 @@ public class MainMenu extends JFrame {
             State.getInstance().resetMove();
         }
         Board board = new Board(GameType.PVE);
-        board.initializeBoard();
+
 
         if (!Objects.equals(boardString, "")) {
             board.stringToBoard(boardString);
+        }
+        else {
+            board.initializeBoard();
         }
 
         hideMainMenu();
@@ -442,11 +447,12 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (board.getKing(cz.cvut.fel.pjv.models.Color.WHITE) != null && board.getKing(cz.cvut.fel.pjv.models.Color.BLACK) != null) {
                     String[] options_color = {"White","Black"};
-                    int answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",
-                            "Vyber si barvu",
+                    int answer = JOptionPane.showOptionDialog(null, "Výběr barvy",
+                            "Za jakou barvu si přejete hrát?",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
                     openAIGame(board.boardToString(), answer);
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    hideMainMenu();
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Nemůžete spustit hru bez dvou králů");
@@ -460,7 +466,9 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (board.getKing(cz.cvut.fel.pjv.models.Color.WHITE) != null && board.getKing(cz.cvut.fel.pjv.models.Color.BLACK) != null) {
                     openPvPGame(board.boardToString());
+                    hideMainMenu();
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    hideMainMenu();
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Nemůžete spustit hru bez dvou králů");
