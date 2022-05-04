@@ -16,15 +16,15 @@ public class BoardView extends JPanel {
         private static final String[] LETTERS = new String[]{"a", "b", "c", "d", "e", "f", "g", "h"};
         private static final int[] COORDINATES = new int[]{8,7,6,5,4,3,2,1};
 
-        Color COLOR_WHITE = new Color(238,238,213);
-        Color COLOR_GREEN = new Color(125,148,93);
+        Color COLOR_WHITE = new Color(255, 0, 0);
+        Color COLOR_GREEN = new Color(255, 250, 0);
 
         public static final int SQUARE_DIMENSION = 64;
         private Board board;
         private boolean boardReversed;
         private JLayeredPane boardLayeredPane;
         private JPanel boardPanel;
-        private SquareView[][] squarePanels;
+        public SquareView[][] squarePanels;
 
         private Piece pickedPiece;
 
@@ -124,4 +124,32 @@ public class BoardView extends JPanel {
             boardPanel.add(squarePanels[f][r]);
         }
 
+        public void reinitializeSquarePanels() {
+            squarePanels = new SquareView[8][8];
+            if (boardReversed) {
+                for (int r = 0; r < 8; r ++) {
+                    for (int f = 7; f >= 0; f--) {
+                        squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this,false);
+                        squarePanels[f][r].setPreferredSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+                        squarePanels[f][r].setSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+                        squarePanels[f][r].setBackground(f % 2 == r % 2 ? COLOR_GREEN : COLOR_WHITE);
+                        boardPanel.add(squarePanels[f][r]);
+                    }
+                }
+            } else {
+                for (int r = 7; r >= 0; r --) {
+                    for (int f = 0; f < 8; f++) {
+                        squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this,false);
+                        squarePanels[f][r].setPreferredSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+                        squarePanels[f][r].setSize(new Dimension(SQUARE_DIMENSION, SQUARE_DIMENSION));
+                        squarePanels[f][r].setBackground(f % 2 == r % 2 ? COLOR_GREEN : COLOR_WHITE);
+                        boardPanel.add(squarePanels[f][r]);
+                    }
+                }
+            }
+        }
+
+    public Board getBoard() {
+        return board;
     }
+}
