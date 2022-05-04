@@ -52,6 +52,7 @@ public class MainMenu extends JFrame {
                 try {
                     Client client = new Client();
                     MainMenu.this.hideMainMenu();
+                    State.getInstance().setClient(client);
                     if (State.getInstance().getLogin() == null) {
                         State.getInstance().setLogin();
                     }
