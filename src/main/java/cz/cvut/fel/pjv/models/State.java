@@ -11,6 +11,8 @@ public class State {
     private boolean end;
     private Game game;
 
+    private long startTime;
+
     private Client client;
 
     private MainMenu guiRef;
@@ -21,6 +23,7 @@ public class State {
 
     public void setGame(Game game) {
         this.game = game;
+        this.startTime = System.currentTimeMillis();
     }
 
     public boolean isRunning() {
@@ -39,9 +42,15 @@ public class State {
             return _instance;
     }
 
+
     public MainMenu getGuiRef() {
         return guiRef;
     }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
 
     public void setGuiRef(MainMenu guiRef) {
         this.guiRef = guiRef;

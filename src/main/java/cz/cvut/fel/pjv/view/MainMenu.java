@@ -395,7 +395,7 @@ public class MainMenu extends JFrame {
         whitePlayerPanel.add(timeWhite,BorderLayout.SOUTH);
 
         JPanel blackPlayerPanel = new JPanel(new BorderLayout());
-        JLabel timeBlack = new JLabel("Cas 2");
+        JLabel timeBlack = new JLabel(getMinutesLeft()+":" +getSecondsLeft());
         border = timeBlack.getBorder();
         margin = new EmptyBorder(30,30,30,30);
         timeBlack.setBorder(new CompoundBorder(border, margin));
@@ -494,6 +494,19 @@ public class MainMenu extends JFrame {
 
     public BoardView getBw() {
         return bw;
+    }
+
+    public long getSecondsLeft() {
+        long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
+        long elapsedSeconds = 600 - (elapsedTime / 1000);
+        long secondsLeft = elapsedSeconds % 60;
+        return secondsLeft;
+    }
+
+    public long getMinutesLeft() {
+        long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
+        long elapsedSeconds = 600 - (elapsedTime / 1000);
+        return elapsedSeconds / 60;
     }
 }
 
