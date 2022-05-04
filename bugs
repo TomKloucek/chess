@@ -1,2 +1,8 @@
-Po tom co figurka zablokuje sach, se muze dal hybat
-RENTGEN
+reakce na odpojení hráče
+lepší export, teď je to jen jeden soubor, není možné jich mít více
+systematický refactoring tříd
+hodiny
+fungujicí login - aby u hráče byl správný login i v onlinu
+statistika her - na serveru se bude ukládat ke každému jménu statistika vyhrané/prohrané
+posledních 10 odehraných her - s kaýdou že ji můžeme procházet tam a zpátky
+tlačítko forfeit, když se nám bude chtít
