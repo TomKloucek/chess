@@ -51,8 +51,10 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Client client = new Client();
-                    State.getInstance().setClient(client);
                     MainMenu.this.hideMainMenu();
+                    if (State.getInstance().getLogin() == null) {
+                        State.getInstance().setLogin();
+                    }
                     client.connectToServer();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -195,7 +197,6 @@ public class MainMenu extends JFrame {
         }
         game.setMe(p1);
 
-        State.getInstance();
         State.getInstance().setGame(game);
 
         BoardView mainPanel = new BoardView(board);

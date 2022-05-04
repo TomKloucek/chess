@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.models.State;
 import cz.cvut.fel.pjv.view.MainMenu;
 
 import java.io.BufferedReader;
@@ -24,7 +25,6 @@ public class Client {
         bufferedReader = new BufferedReader(inputStreamReader);
         setClientListener();
         setClientWriter();
-
     }
     public void setClientListener(){
         clientListener = new ClientListener(player, bufferedReader);

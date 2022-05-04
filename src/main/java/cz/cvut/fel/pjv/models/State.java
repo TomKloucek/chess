@@ -4,9 +4,11 @@ import cz.cvut.fel.pjv.server.Client;
 import cz.cvut.fel.pjv.view.BoardView;
 import cz.cvut.fel.pjv.view.MainMenu;
 
+import javax.swing.*;
+
 public class State {
     private static State _instance;
-
+    private String login = null;
     private boolean whiteOnMove;
     private boolean end;
     private Game game;
@@ -14,6 +16,14 @@ public class State {
     private Client client;
 
     private MainMenu guiRef;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin() {
+        this.login = JOptionPane.showInputDialog("Zadej svoje herni jmeno:");
+    }
 
     public State() {
         this.whiteOnMove = true;

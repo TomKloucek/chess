@@ -53,7 +53,6 @@ public class Game {
 
     public void updateGame(String boardString) {
         board.stringToBoard(boardString, true);
-//        State.getInstance().getGuiRef().getBw().reinitializeSquarePanels();
         State.getInstance().getGuiRef().getBw().repaintBoard();
         State.getInstance().reverseMove();
     }
