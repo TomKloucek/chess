@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.models.State;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;

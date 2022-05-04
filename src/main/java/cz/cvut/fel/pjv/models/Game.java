@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.models;
 import cz.cvut.fel.pjv.pieces.Piece;
 import cz.cvut.fel.pjv.server.Client;
 import cz.cvut.fel.pjv.view.BoardView;
+import cz.cvut.fel.pjv.view.MainMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,14 +40,6 @@ public class Game {
         this.me = me;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public boolean playForAi() {
         boolean turn = State.getInstance().isWhiteOnMove();
         if (turn && playerWhite instanceof AiPlayer) {
@@ -56,5 +49,11 @@ public class Game {
             return ((AiPlayer) playerBlack).doAMove();
         }
         return false;
+    }
+
+    public void updateGame(String boardString) {
+        board.stringToBoard(boardString);
+        State.getInstance().getGuiRef().getBw().repaintBoard();
+        State.getInstance().reverseMove();
     }
 }

@@ -1,11 +1,19 @@
 package cz.cvut.fel.pjv.models;
 
+import cz.cvut.fel.pjv.server.Client;
+import cz.cvut.fel.pjv.view.BoardView;
+import cz.cvut.fel.pjv.view.MainMenu;
+
 public class State {
     private static State _instance;
 
     private boolean whiteOnMove;
     private boolean end;
     private Game game;
+
+    private Client client;
+
+    private MainMenu guiRef;
 
     public State() {
         this.whiteOnMove = true;
@@ -31,6 +39,14 @@ public class State {
             return _instance;
     }
 
+    public MainMenu getGuiRef() {
+        return guiRef;
+    }
+
+    public void setGuiRef(MainMenu guiRef) {
+        this.guiRef = guiRef;
+    }
+
     public boolean isWhiteOnMove() {
         return whiteOnMove;
     }
@@ -45,5 +61,13 @@ public class State {
 
     public Game getGame() {
         return this.game;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

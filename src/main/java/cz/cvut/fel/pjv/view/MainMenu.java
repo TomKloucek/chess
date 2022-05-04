@@ -20,6 +20,8 @@ import javax.swing.border.EmptyBorder;
 public class MainMenu extends JFrame {
     JFrame frame;
 
+    private BoardView bw;
+
     public MainMenu() {
         frame = new JFrame();
         BorderLayout borderLayout = new BorderLayout();
@@ -49,7 +51,7 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Client client = new Client();
-                    client.showGame(MainMenu.this);
+                    State.getInstance().setClient(client);
                     MainMenu.this.hideMainMenu();
                     client.connectToServer();
                 } catch (IOException ex) {
@@ -156,6 +158,7 @@ public class MainMenu extends JFrame {
 
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        State.getInstance().setGuiRef(this);
     }
     public void hideMainMenu(){
         frame.setVisible(false);
@@ -164,28 +167,37 @@ public class MainMenu extends JFrame {
         frame.setVisible(true);
     }
 
-    public void openNetworkGame() throws IOException {
+    public void openNetworkGame(String boardString, cz.cvut.fel.pjv.models.Color color) throws IOException {
 
         Board board = new Board(GameType.SERVER);
 
-        Player p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
-        Player p2 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
-        Game game = new Game(p1, p2, board);
+        board.initializeBoard();
 
-        cz.cvut.fel.pjv.models.Color color = cz.cvut.fel.pjv.models.Color.WHITE;
+        if (!Objects.equals(boardString, "")) {
+            board.stringToBoard(boardString);
+        }
+
+        Player p1;
+        Player p2;
+        Game game = null;
 
         if (color == cz.cvut.fel.pjv.models.Color.WHITE) {
-            game.setMe(p1);
+            p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+            p2 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+            game = new Game(p1, p2, board);
         }
         else {
-            game.setMe(p2);
+            p1 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+            p2 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+            game = new Game(p2, p1, board);
         }
+        game.setMe(p1);
 
         State.getInstance();
         State.getInstance().setGame(game);
 
-        board.initializeBoard();
         BoardView mainPanel = new BoardView(board);
+        this.bw = mainPanel;
 
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -468,6 +480,10 @@ public class MainMenu extends JFrame {
         gamePanel.add(pvpButton, BorderLayout.NORTH);
         gamePanel.add(exportButton, BorderLayout.SOUTH);
         frame.add(gamePanel, BorderLayout.EAST);
+    }
+
+    public BoardView getBw() {
+        return bw;
     }
 }
 

@@ -36,9 +36,9 @@ public class TwoClientsHandler implements Runnable {
             inputStreamReaderBlack = new InputStreamReader(playerBlack.getInputStream());
             bufferedReaderBlack = new BufferedReader(inputStreamReaderBlack);
 
-            printWriterWhite.println("Welcome to server White");
+            printWriterWhite.println("White");
             printWriterWhite.flush();
-            printWriterBlack.println("Welcome to server Black");
+            printWriterBlack.println("Black");
             printWriterBlack.flush();
 
             String receivedMessageFromWhite = null;

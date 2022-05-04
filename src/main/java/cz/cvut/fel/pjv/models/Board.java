@@ -268,7 +268,6 @@ public class Board {
                 this.board[x][y].setPiece(chosen);
                 board[x][y].getPiece().Move(x,y);
                 refillPiecesLists();
-                return true;
             }
             else if(chosen instanceof Pawn && (board[x][y+1].getPiece() instanceof Pawn && board[x][y+1].getPiece().getColor() == Color.WHITE) && board[x][y].getPiece() == null) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
@@ -276,12 +275,10 @@ public class Board {
                 this.board[x][y].setPiece(chosen);
                 board[x][y].getPiece().Move(x,y);
                 refillPiecesLists();
-                return true;
             }
             // CASTLE
             else if (chosen instanceof King && board[x][y].getPiece() instanceof Rook && board[x][y].getPiece().getColor()==chosen.getColor()) {
                 if (x == 0 && y == 0) {
-                    System.out.println("1");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[0][0].getPiece();
                     this.board[0][0].setPiece(null);
@@ -291,7 +288,6 @@ public class Board {
                     chosen.Move(2,0);
                 }
                 if (x == 7 && y == 0) {
-                    System.out.println("2");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[7][0].getPiece();
                     this.board[7][0].setPiece(null);
@@ -301,7 +297,6 @@ public class Board {
                     chosen.Move(6,0);
                 }
                 if (x == 0 && y == 7) {
-                    System.out.println("3");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[0][7].getPiece();
                     this.board[0][7].setPiece(null);
@@ -311,7 +306,6 @@ public class Board {
                     chosen.Move(2,7);
                 }
                 if (x == 7 && y == 7) {
-                    System.out.println("4");
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
                     Rook rook = (Rook )this.board[7][7].getPiece();
                     this.board[7][7].setPiece(null);
@@ -330,14 +324,17 @@ public class Board {
                 refillPiecesLists();
                 State.getInstance().reverseMove();
                 State.getInstance().getGame().playForAi();
-                return true;
             }
+            if (this.getType() == GameType.SERVER) {
+                State.getInstance().getClient().printWriter.println(this.boardToString());
+                State.getInstance().getClient().printWriter.flush();
+            }
+            return true;
         }
         else {
             System.out.println("Nezadal jsi spravne hodnoty");
             return false;
         }
-        return false;
     }
 
     private Piece PromoteTo(Pawn pawn) {
