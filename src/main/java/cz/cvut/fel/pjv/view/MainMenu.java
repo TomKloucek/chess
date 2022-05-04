@@ -57,7 +57,8 @@ public class MainMenu extends JFrame {
                     }
                     client.connectToServer();
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(null,"Bohužel jsme nenašli žádný dostupný server, zkuste to prosím později");
+                    showMainMenu();
                 }
             }
         });
