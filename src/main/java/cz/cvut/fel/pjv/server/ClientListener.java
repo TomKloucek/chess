@@ -30,18 +30,17 @@ public class ClientListener implements Runnable{
             String receivedMessage;
             JDialog dialog = openLoadingDialogue();
             while ((receivedMessage = bufferedReader.readLine()) != null){
-                System.out.println(receivedMessage);
                 if (receivedMessage.equals("White")) {
                     closeLoadingDialogue(dialog);
                     State.getInstance().getGuiRef().openNetworkGame("", Color.WHITE);
-                    System.out.println("Jsem bilej");
                 }
                 else  if (receivedMessage.equals("Black")) {
                     closeLoadingDialogue(dialog);
                     State.getInstance().getGuiRef().openNetworkGame("", Color.BLACK);
-                    System.out.println("Jsem cernej");
-                }
-                else {
+               // } else if (receivedMessage.contains("login")) {
+                 //   State.getInstance().getGuiRef().setOpponentLogin(receivedMessage.split(":")[1]);
+                } else {
+                    System.out.println(receivedMessage);
                     State.getInstance().getGame().updateGame(receivedMessage);
                 }
             }

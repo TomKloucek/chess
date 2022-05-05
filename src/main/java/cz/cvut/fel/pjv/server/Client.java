@@ -32,10 +32,12 @@ public class Client {
     }
     public void setClientWriter(){
         clientWriter = new ClientWriter(player, printWriter);
-        //new Thread(clientWriter).start();
     }
 
     public void sendBoard(String board) {
         printWriter.println(board);
+    }
+    public void sendLogin() {
+        printWriter.println("login:"+State.getInstance().getLogin());
     }
 }

@@ -86,27 +86,6 @@ public class TwoClientsHandler implements Runnable {
                         }
                     }
                 }
-//                while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null
-//                ||(receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
-//                    receivedMessageFromBlack = bufferedReaderBlack.readLine();
-//
-//
-//                        System.out.printf(
-//                                " Sent from the White client: %s\n",
-//                                receivedMessageFromWhite);
-//                        printWriterWhite.println("Welcome to server White");
-//                        printWriterWhite.flush();
-//
-//
-//
-//                        System.out.printf(
-//                                " Sent from the Black client: %s\n",
-//                                receivedMessageFromBlack);
-//                        printWriterBlack.println("Welcome to server Black");
-//                        printWriterBlack.flush();
-//
-//                }
-
             }
         }
         catch(IOException e){

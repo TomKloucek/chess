@@ -151,15 +151,20 @@ public class Board {
         }
         int counter = 0;
         String[] boardArray = s.split(",");
-        for (int i = 7; i > -1; i--) {
-            for (int j = 0; j < 8; j++) {
-                Piece piece = pieceFromString(boardArray[counter]);
-                if (piece != null) {
-                    putPiece(piece);
+        try {
+            for (int i = 7; i > -1; i--) {
+                for (int j = 0; j < 8; j++) {
+                    Piece piece = pieceFromString(boardArray[counter]);
+                    if (piece != null) {
+                        putPiece(piece);
+                    }
+                    board[j][i].setPiece(piece);
+                    counter++;
                 }
-                board[j][i].setPiece(piece);
-                counter++;
             }
+        }catch (Exception e) {
+            //JOptionPane.showMessageDialog(null,"Tady se nám něco nepovedlo");
+            e.printStackTrace();
         }
     }
 

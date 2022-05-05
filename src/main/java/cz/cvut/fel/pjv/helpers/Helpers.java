@@ -7,6 +7,7 @@ import cz.cvut.fel.pjv.models.State;
 import cz.cvut.fel.pjv.pieces.*;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -170,34 +171,24 @@ public class Helpers {
         }
     }
 
-    public static void exportBoard(String board) {
-        try {
-            System.out.println(board);
-            File myObj = new File("board.txt");
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-            FileWriter myWriter = new FileWriter("board.txt");
+    public static void exportBoard(String board) throws IOException {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            FileWriter myWriter = new FileWriter(file.getAbsolutePath());
             myWriter.write(board);
             myWriter.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
     }
 
-    public static String importBoard() {
-        try {
-            File myObj = new File("board.txt");
-            Scanner myReader = new Scanner(myObj);
+    public static String importBoard() throws FileNotFoundException {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            Scanner myReader = new Scanner(file);
             String returnStatement = myReader.nextLine();
             myReader.close();
             return returnStatement;
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
         return "";
     }

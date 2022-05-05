@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 import javax.swing.*;
@@ -19,6 +20,12 @@ import javax.swing.border.EmptyBorder;
 // class extends JFrame
 public class MainMenu extends JFrame {
     JFrame frame;
+
+    private JLabel nameWhite;
+    private JLabel nameBlack;
+
+    private Player p1;
+    private Player p2;
 
     private BoardView bw;
 
@@ -57,6 +64,7 @@ public class MainMenu extends JFrame {
                         State.getInstance().setLogin();
                     }
                     client.connectToServer();
+                    //client.sendLogin();
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null,"Bohužel jsme nenašli žádný dostupný server, zkuste to prosím později");
                     showMainMenu();
@@ -121,7 +129,11 @@ public class MainMenu extends JFrame {
         loadGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openEditor(Helpers.importBoard());
+                try {
+                    openEditor(Helpers.importBoard());
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null,"Bohužel se nám nepodařilo hru načíst");
+                }
             }
         });
         JButton settings = new JButton();
@@ -183,8 +195,6 @@ public class MainMenu extends JFrame {
             board.stringToBoard(boardString, false);
         }
 
-        Player p1;
-        Player p2;
         Game game = null;
 
         if (color == cz.cvut.fel.pjv.models.Color.WHITE) {
@@ -215,6 +225,50 @@ public class MainMenu extends JFrame {
         frame.setMinimumSize(new Dimension(930, 679));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+
+        JPanel gamePanel = new JPanel(new BorderLayout());
+
+        if (p1.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
+            nameWhite = new JLabel(State.getInstance().getLogin());
+            nameBlack = new JLabel("Hrac 2");
+        }
+        else {
+            nameWhite = new JLabel("Hrac 2");
+            nameBlack = new JLabel(State.getInstance().getLogin());
+        }
+
+        JPanel whitePlayerPanel = new JPanel(new BorderLayout());
+        JLabel timeWhite = new JLabel("Cas 1");
+        Border border = timeWhite.getBorder();
+        Border margin = new EmptyBorder(30,30,30,30);
+        timeWhite.setBorder(new CompoundBorder(border, margin));
+        timeWhite.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameWhite.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameWhite.setBorder(new CompoundBorder(border, margin));
+        whitePlayerPanel.add(nameWhite,BorderLayout.NORTH);
+        whitePlayerPanel.add(timeWhite,BorderLayout.SOUTH);
+
+        JPanel blackPlayerPanel = new JPanel(new BorderLayout());
+        JLabel timeBlack = new JLabel("Cas 2");
+        border = timeBlack.getBorder();
+        margin = new EmptyBorder(30,30,30,30);
+        timeBlack.setBorder(new CompoundBorder(border, margin));
+        timeBlack.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameBlack.setFont(new Font("Roboto", Font.PLAIN, 20));
+        nameBlack.setBorder(new CompoundBorder(border, margin));
+        blackPlayerPanel.add(nameBlack,BorderLayout.NORTH);
+        blackPlayerPanel.add(timeBlack,BorderLayout.SOUTH);
+
+        if (p1.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
+            gamePanel.add(whitePlayerPanel,BorderLayout.SOUTH);
+            gamePanel.add(blackPlayerPanel, BorderLayout.NORTH);
+        }
+        else {
+            gamePanel.add(whitePlayerPanel,BorderLayout.NORTH);
+            gamePanel.add(blackPlayerPanel, BorderLayout.SOUTH);
+        }
+        gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
+        frame.add(gamePanel, BorderLayout.EAST);
     }
 
     public void openPvPGame(String boardString) {
@@ -235,8 +289,6 @@ public class MainMenu extends JFrame {
         // COLOR Pick
         int random = Helpers.randomNumber(0,100);
 
-        Player p1;
-        Player p2;
         Game game = null;
 
         if (random % 2 == 0) {
@@ -485,7 +537,11 @@ public class MainMenu extends JFrame {
         exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Helpers.exportBoard(board.boardToString());
+                try {
+                    Helpers.exportBoard(board.boardToString());
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null,"Bohužel se nám nepodařilo hru uložit");
+                }
             }
         });
 
@@ -510,6 +566,15 @@ public class MainMenu extends JFrame {
         long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
         long elapsedSeconds = 600 - (elapsedTime / 1000);
         return elapsedSeconds / 60;
+    }
+
+    public void setOpponentLogin(String login) {
+        if (p1.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
+            nameBlack.setText(login);
+        }
+        else {
+            nameWhite.setText(login);
+        }
     }
 }
 
