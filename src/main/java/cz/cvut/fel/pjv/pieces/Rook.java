@@ -7,7 +7,7 @@ import cz.cvut.fel.pjv.models.Square;
 
 import java.util.ArrayList;
 
-public class Rook implements Piece {
+public class Rook implements IPiece {
     private final int points;
     private final Color color;
     private int x;
@@ -184,7 +184,7 @@ public class Rook implements Piece {
     public ArrayList<Square> getXRayedMoves(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
         ArrayList<Square> betweenKingAndPiece = new ArrayList<>();
-        Piece king = board.getKing(Helpers.getOtherColor(this.color));
+        IPiece king = board.getKing(Helpers.getOtherColor(this.color));
         // UP
         for (int i = this.getY()+1; i < 8; i++) {
             if (board.getBoard()[this.getX()][i].getPiece() != null && board.getBoard()[this.getX()][i].getPiece() != this) {

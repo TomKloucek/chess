@@ -2,12 +2,10 @@ package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.pieces.King;
-import cz.cvut.fel.pjv.pieces.Piece;
+import cz.cvut.fel.pjv.pieces.IPiece;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
 
 import static cz.cvut.fel.pjv.models.Color.WHITE;
@@ -17,14 +15,14 @@ public class AiPlayer extends Player {
     private Board board;
     private Random random;
 
-    public AiPlayer(Color color, ArrayList<Piece> pieces, Board board) {
-        super(color, pieces);
+    public AiPlayer(Color color, ArrayList<IPiece> IPieces, Board board) {
+        super(color, IPieces);
         this.random = new Random();
         this.board = board;
     }
 
     public boolean doAMove() {
-        Piece chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
+        IPiece chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
         boolean checked = false;
         if (getColor() == WHITE) {
             checked = board.whiteInCheck();
@@ -58,7 +56,7 @@ public class AiPlayer extends Player {
         else {
             ArrayList<Object> field = getBestAiMove(board.getPieces(getColor()));
             if (field != null) {
-                board.movePiece(((Piece) field.get(1)), ((Square) field.get(0)).getX() - 1, ((Square) field.get(0)).getY());
+                board.movePiece(((IPiece) field.get(1)), ((Square) field.get(0)).getX() - 1, ((Square) field.get(0)).getY());
                 return false;
             }
         }
@@ -79,9 +77,9 @@ public class AiPlayer extends Player {
         return false;
     }
 
-    public ArrayList<Object> getBestAiMove(ArrayList<Piece> pieces) {
+    public ArrayList<Object> getBestAiMove(ArrayList<IPiece> IPieces) {
         ArrayList<Square> bestMoves = new ArrayList<>();
-        for (Piece chosen : pieces) {
+        for (IPiece chosen : IPieces) {
             if (!chosen.possibleMovement(board).isEmpty()) {
                 for (Square square : chosen.possibleMovement(board)) {
                     if (square != null) {
@@ -101,7 +99,7 @@ public class AiPlayer extends Player {
             return null;
         }
         Square move = bestMoves.get(0);
-        for (Piece chosen : pieces) {
+        for (IPiece chosen : IPieces) {
             if (chosen.possibleMovement(board).contains(move)) {
                 ArrayList<Object> toReturn = new ArrayList<>();
                 toReturn.add(move);

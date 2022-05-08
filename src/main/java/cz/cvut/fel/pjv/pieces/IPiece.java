@@ -6,7 +6,7 @@ import cz.cvut.fel.pjv.models.Square;
 
 import java.util.ArrayList;
 
-public interface Piece {
+public interface IPiece {
 
     public int getPoints();
     public Color getColor();

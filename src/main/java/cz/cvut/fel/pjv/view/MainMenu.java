@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.view;// Java program to illustrate the BorderLayout
 import cz.cvut.fel.pjv.helpers.Helpers;
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.server.Client;
 
@@ -21,6 +22,8 @@ import javax.swing.border.EmptyBorder;
 public class MainMenu extends JFrame {
     JFrame frame;
 
+    JFrame  settingsFrame = null;
+
     private JLabel nameWhite;
     private JLabel nameBlack;
 
@@ -30,6 +33,16 @@ public class MainMenu extends JFrame {
     private BoardView bw;
 
     public MainMenu() {
+        try {
+            BoardView.readColors();
+        } catch (Exception e) {
+            Logger.log(MainMenu.class, "Constructor", e.getMessage());
+            try {
+                Helpers.writeColors();
+            } catch (Exception ex) {
+                Logger.log(MainMenu.class, "Constructor", ex.getMessage());
+            }
+        }
         frame = new JFrame();
         BorderLayout borderLayout = new BorderLayout();
         FlowLayout flowLayoutCenter = new FlowLayout(FlowLayout.CENTER);
@@ -66,6 +79,7 @@ public class MainMenu extends JFrame {
                     client.connectToServer();
                     //client.sendLogin();
                 } catch (IOException ex) {
+                    Logger.log(MainMenu.class, "Constructor",ex.getMessage());
                     JOptionPane.showMessageDialog(null,"Bohužel jsme nenašli žádný dostupný server, zkuste to prosím později");
                     showMainMenu();
                 }
@@ -132,6 +146,7 @@ public class MainMenu extends JFrame {
                 try {
                     openEditor(Helpers.importBoard());
                 } catch (FileNotFoundException ex) {
+                    Logger.log(MainMenu.class, "Constructor",ex.getMessage());
                     JOptionPane.showMessageDialog(null,"Bohužel se nám nepodařilo hru načíst");
                 }
             }
@@ -144,7 +159,10 @@ public class MainMenu extends JFrame {
         settings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Nastaveni");
+                if (settingsFrame == null) {
+                    setUpSettings();
+                }
+                openSettings();
             }
         });
 
@@ -540,6 +558,7 @@ public class MainMenu extends JFrame {
                 try {
                     Helpers.exportBoard(board.boardToString());
                 } catch (IOException ex) {
+                    Logger.log(MainMenu.class, "openEditor",ex.getMessage());
                     JOptionPane.showMessageDialog(null,"Bohužel se nám nepodařilo hru uložit");
                 }
             }
@@ -575,6 +594,61 @@ public class MainMenu extends JFrame {
         else {
             nameWhite.setText(login);
         }
+    }
+
+    public void setUpSettings() {
+        this.settingsFrame = new JFrame("Nastavení");
+        settingsFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        settingsFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                showMainMenu();
+            }
+        });
+        settingsFrame.setMinimumSize(new Dimension(760, 679));
+        settingsFrame.setLocationByPlatform(true);
+
+        JPanel settingsPanel = new JPanel(new FlowLayout());
+
+        JButton selectColorWhite = new JButton();
+        selectColorWhite.setForeground(State.getInstance().getBlack());
+        selectColorWhite.setBackground(State.getInstance().getWhite());
+        selectColorWhite.setText("Policka bile barvy");
+        selectColorWhite.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectColorWhite.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                State.getInstance().setWhite(JColorChooser.showDialog(null,"Vyber barvu",State.getInstance().getWhite()));
+                try {
+                    Helpers.writeColors();
+                } catch (Exception error) {
+                    Logger.log(MainMenu.class, "Vyber barev", error.getMessage());
+                }
+            }
+        });
+
+        JButton selectColorBlack = new JButton();
+        selectColorBlack.setForeground(State.getInstance().getWhite());
+        selectColorBlack.setBackground(State.getInstance().getBlack());
+        selectColorBlack.setText("Policka cerne barvy");
+        selectColorBlack.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectColorBlack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                State.getInstance().setBlack(JColorChooser.showDialog(null,"Vyber barvu",State.getInstance().getBlack()));
+                try {
+                    Helpers.writeColors();
+                } catch (Exception error) {
+                    Logger.log(MainMenu.class, "Vyber barev", error.getMessage());
+                }
+            }
+        });
+        settingsPanel.add(selectColorWhite,FlowLayout.LEFT);
+        settingsPanel.add(selectColorBlack,FlowLayout.CENTER);
+        settingsFrame.getContentPane().add(settingsPanel);
+    }
+
+    public void openSettings() {
+        settingsFrame.setVisible(true);
     }
 }
 

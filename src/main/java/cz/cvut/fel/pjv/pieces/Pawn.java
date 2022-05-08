@@ -7,7 +7,7 @@ import cz.cvut.fel.pjv.models.Square;
 
 import java.util.ArrayList;
 
-public class Pawn implements Piece {
+public class Pawn implements IPiece {
     private final int points;
     private final Color color;
     private int x;

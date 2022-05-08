@@ -5,10 +5,13 @@ import cz.cvut.fel.pjv.view.BoardView;
 import cz.cvut.fel.pjv.view.MainMenu;
 
 import javax.swing.*;
+import java.awt.Color;
 
 public class State {
     private static State _instance;
     private String login = null;
+    private Color white;
+    private Color black;
     private boolean whiteOnMove;
     private boolean end;
     private Game game;
@@ -34,6 +37,28 @@ public class State {
     public void setGame(Game game) {
         this.game = game;
         this.startTime = System.currentTimeMillis();
+    }
+
+    public Color getWhite() {
+        if (white == null) {
+            white = new Color(238,238,213);
+        }
+        return white;
+    }
+
+    public void setWhite(Color color) {
+        this.white = color;
+    }
+
+    public Color getBlack() {
+        if (black == null) {
+            black = new Color(125,148,93);
+        }
+        return black;
+    }
+
+    public void setBlack(Color color) {
+        this.black = color;
     }
 
     public boolean isRunning() {

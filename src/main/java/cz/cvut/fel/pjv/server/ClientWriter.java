@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.State;
 
 import java.io.BufferedReader;
@@ -38,6 +39,7 @@ public class ClientWriter implements Runnable{
         try {
             clientSocket.close();
         } catch (IOException e) {
+            Logger.log(ClientWriter.class, "run",e.getMessage());
             e.printStackTrace();
         }
     }

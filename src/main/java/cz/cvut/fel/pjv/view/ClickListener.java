@@ -1,9 +1,11 @@
 package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.pieces.King;
-import cz.cvut.fel.pjv.pieces.Piece;
+import cz.cvut.fel.pjv.pieces.IPiece;
+import cz.cvut.fel.pjv.server.ClientListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,7 +27,7 @@ public class ClickListener implements ActionListener {
         SquareView[][] squarePanels = bw.getSquarePanels();
         ButtonCoord buttonCoord = (ButtonCoord) e.getSource();
         if (squarePanels[buttonCoord.getX()][buttonCoord.getY()].getDot() != null) {
-            Piece picked = bw.getPickedPiece();
+            IPiece picked = bw.getPickedPiece();
             System.out.println("picked:"+picked);
             board.movePiece(picked, buttonCoord.getX(), buttonCoord.getY());
             bw.setPickedPiece(-1, -1);
@@ -63,7 +65,7 @@ public class ClickListener implements ActionListener {
         else {
             ArrayList<Square> possibleMovement = square.getPiece().possibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
-            Piece picked = bw.getPickedPiece();
+            IPiece picked = bw.getPickedPiece();
             System.out.println("picked else:"+picked);
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
             if (game.getMe().getColor() != picked.getColor() && board.getType() != GameType.PVP) {
@@ -90,6 +92,7 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
                             } catch (IOException ex) {
+                                Logger.log(ClickListener.class, "actionPerformed",ex.getMessage());
                                 ex.printStackTrace();
                             }
                         }
@@ -100,6 +103,7 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
                             } catch (IOException ex) {
+                                Logger.log(ClickListener.class, "actionPerformed",ex.getMessage());
                                 ex.printStackTrace();
                             }
                         } else {
@@ -124,7 +128,7 @@ public class ClickListener implements ActionListener {
                                     squarePanels[i][j].repaint();
                                 } catch (IOException ex) {
                                     ex.printStackTrace();
-                                    System.out.println("chyba");
+                                    Logger.log(ClickListener.class, "actionPerformed",ex.getMessage());
                                 }
                             } else {
                                 squarePanels[i][j].setButton();
@@ -140,6 +144,7 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].validate();
                                 squarePanels[i][j].repaint();
                             } catch (IOException ex) {
+                                Logger.log(ClickListener.class, "actionPerformed",ex.getMessage());
                                 System.out.println("chyba");
                                 ex.printStackTrace();
                             }

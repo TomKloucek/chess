@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.helpers;
 
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.Square;
@@ -15,6 +16,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+
+import static java.awt.Color.white;
 
 public class Helpers {
     public static String XTranslate(int x) {
@@ -103,49 +106,49 @@ public class Helpers {
     }
 
     public static Image getPieceImage(Square square, Board board) {
-        Piece piece = square.getPiece();
-        if (piece == null) {
+        IPiece IPiece = square.getPiece();
+        if (IPiece == null) {
             return null;
         }
         try {
-            if (piece instanceof Pawn) {
-                if (piece.getColor() == Color.WHITE) {
+            if (IPiece instanceof Pawn) {
+                if (IPiece.getColor() == Color.WHITE) {
                     return ImageIO.read(new File("resources/pieces/white_pawn.png"));
                 } else {
                     return ImageIO.read(new File("resources/pieces/black_pawn.png"));
                 }
             }
-            if (piece instanceof Knight) {
-                if (piece.getColor() == Color.WHITE) {
+            if (IPiece instanceof Knight) {
+                if (IPiece.getColor() == Color.WHITE) {
                     return ImageIO.read(new File("resources/pieces/white_knight.png"));
                 } else {
                     return ImageIO.read(new File("resources/pieces/black_knight.png"));
                 }
             }
-            if (piece instanceof Bishop) {
-                if (piece.getColor() == Color.WHITE) {
+            if (IPiece instanceof Bishop) {
+                if (IPiece.getColor() == Color.WHITE) {
                     return ImageIO.read(new File("resources/pieces/white_bishop.png"));
                 } else {
 
                     return ImageIO.read(new File("resources/pieces/black_bishop.png"));
                 }
             }
-            if (piece instanceof Rook) {
-                if (piece.getColor() == Color.WHITE) {
+            if (IPiece instanceof Rook) {
+                if (IPiece.getColor() == Color.WHITE) {
                     return ImageIO.read(new File("resources/pieces/white_rook.png"));
                 } else {
                     return ImageIO.read(new File("resources/pieces/black_rook.png"));
                 }
             }
-            if (piece instanceof Queen) {
-                if (piece.getColor() == Color.WHITE) {
+            if (IPiece instanceof Queen) {
+                if (IPiece.getColor() == Color.WHITE) {
                     return ImageIO.read(new File("resources/pieces/white_queen.png"));
                 } else {
                     return ImageIO.read(new File("resources/pieces/black_queen.png"));
                 }
             }
-            if (piece instanceof King) {
-                if (piece.getColor() == Color.WHITE) {
+            if (IPiece instanceof King) {
+                if (IPiece.getColor() == Color.WHITE) {
                     if (State.getInstance().isWhiteOnMove() && board.whiteInCheck()) {
 
                         return ImageIO.read(new File("resources/pieces/white_king_in_check.png"));
@@ -166,6 +169,7 @@ public class Helpers {
             }
         }
         catch (Exception e) {
+            Logger.log(Helpers.class, "getPieceImage","Nepovedlo se najit obrazek");
             System.out.println(e.getMessage());
             return null;
         }
@@ -191,5 +195,14 @@ public class Helpers {
             return returnStatement;
         }
         return "";
+    }
+
+    public static void writeColors() throws IOException {
+            File file = new File("client.txt");
+            FileWriter myWriter = new FileWriter(file.getAbsolutePath());
+            java.awt.Color white = State.getInstance().getWhite();
+            java.awt.Color black = State.getInstance().getBlack();
+            myWriter.write("Color:"+ white.getRed()+","+white.getGreen() + "," + white.getBlue() + ":" + black.getRed() + "," + black.getGreen() + "," + black.getBlue());
+            myWriter.close();
     }
 }

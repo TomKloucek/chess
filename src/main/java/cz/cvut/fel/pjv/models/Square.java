@@ -1,15 +1,15 @@
 package cz.cvut.fel.pjv.models;
 
-import cz.cvut.fel.pjv.pieces.Piece;
+import cz.cvut.fel.pjv.pieces.IPiece;
 
 public class Square implements Comparable<Square> {
     private int x,y;
-    private Piece piece;
+    private IPiece IPiece;
 
-    public Square(int x, int y,Piece piece) {
+    public Square(int x, int y, IPiece IPiece) {
         this.x = x;
         this.y = y;
-        this.piece = piece;
+        this.IPiece = IPiece;
     }
 
     public int getX() {
@@ -28,12 +28,12 @@ public class Square implements Comparable<Square> {
         this.y = y;
     }
 
-    public void setPiece(Piece piece) {
-        this.piece = piece;
+    public void setPiece(IPiece IPiece) {
+        this.IPiece = IPiece;
     }
 
-    public Piece getPiece() {
-        return piece;
+    public IPiece getPiece() {
+        return IPiece;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Square implements Comparable<Square> {
         return "Square{" +
                 "x=" + x +
                 ", y=" + y +
-                ", piece=" + piece +
+                ", piece=" + IPiece +
                 '}';
     }
 

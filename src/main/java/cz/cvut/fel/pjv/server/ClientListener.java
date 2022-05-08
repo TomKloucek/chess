@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.State;
 
@@ -46,6 +47,7 @@ public class ClientListener implements Runnable{
             }
         }
         catch(IOException e){
+            Logger.log(ClientListener.class,"run","Nastal problem pri prijimani informaci od serveru");
             e.printStackTrace();
         }
 
@@ -53,6 +55,7 @@ public class ClientListener implements Runnable{
         try {
             clientSocket.close();
         } catch (IOException e) {
+            Logger.log(ClientListener.class, "run","Nastala chyba pri uzavirani socketu");
             e.printStackTrace();
         }
     }

@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.loggers.Logger;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -29,6 +31,7 @@ public class Server {
 
             } catch (IOException e) {
                 System.err.println("Accept failed.");
+                Logger.log(Server.class, "handleServer", "Klient nebyl přijmut");
                 System.exit(1);
             }
         }

@@ -1,16 +1,16 @@
 package cz.cvut.fel.pjv.models;
 
-import cz.cvut.fel.pjv.pieces.Piece;
+import cz.cvut.fel.pjv.pieces.IPiece;
 
 import java.util.ArrayList;
 
 public class Player {
     private Color color;
-    private ArrayList<Piece> pieces;
+    private ArrayList<IPiece> IPieces;
 
-    public Player(Color color, ArrayList<Piece> pieces) {
+    public Player(Color color, ArrayList<IPiece> IPieces) {
         this.color = color;
-        this.pieces = pieces;
+        this.IPieces = IPieces;
     }
 
     public Color getColor() {
@@ -21,11 +21,11 @@ public class Player {
         this.color = color;
     }
 
-    public ArrayList<Piece> getPieces() {
-        return pieces;
+    public ArrayList<IPiece> getPieces() {
+        return IPieces;
     }
 
-    public void setPieces(ArrayList<Piece> pieces) {
-        this.pieces = pieces;
+    public void setPieces(ArrayList<IPiece> IPieces) {
+        this.IPieces = IPieces;
     }
 }

@@ -1,23 +1,26 @@
 package cz.cvut.fel.pjv.view;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.State;
-import cz.cvut.fel.pjv.pieces.Piece;
+import cz.cvut.fel.pjv.pieces.IPiece;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class BoardView extends JPanel {
         private static final int SQUARE_HEIGHT_WIDTH = 64;
         private static final String[] LETTERS = new String[]{"a", "b", "c", "d", "e", "f", "g", "h"};
         private static final int[] COORDINATES = new int[]{8,7,6,5,4,3,2,1};
 
-        Color COLOR_WHITE = new Color(238,238,213);
-        Color COLOR_GREEN = new Color(125,148,93);
+        Color COLOR_WHITE;
+        Color COLOR_GREEN;
 
         public static final int SQUARE_DIMENSION = 64;
         private Board board;
@@ -26,7 +29,7 @@ public class BoardView extends JPanel {
         private JPanel boardPanel;
         public SquareView[][] squarePanels;
 
-        private Piece pickedPiece;
+        private IPiece pickedIPiece;
 
         public BoardView(Board board) {
             super(new BorderLayout());
@@ -34,6 +37,23 @@ public class BoardView extends JPanel {
             if (State.getInstance().getGame() != null && State.getInstance().getGame().getMe().getColor() == cz.cvut.fel.pjv.models.Color.BLACK) {
                 boardReversed = true;
             }
+
+            try {
+                BoardView.readColors();
+            }
+            catch (Exception e) {
+                Logger.log(BoardView.class,"Constructor read colors", e.getMessage());
+            }
+
+            COLOR_WHITE = State.getInstance().getWhite();
+            COLOR_GREEN = State.getInstance().getBlack();
+
+            try {
+                Helpers.writeColors();
+            } catch(Exception e) {
+                Logger.log(BoardView.class, "Constructor", e.getMessage());
+            }
+
             initializeBoardLayeredPane();
             initializeSquares();
         }
@@ -52,18 +72,18 @@ public class BoardView extends JPanel {
             this.add(boardLayeredPane, BorderLayout.CENTER);
         }
 
-    public Piece getPickedPiece() {
-        return pickedPiece;
+    public IPiece getPickedPiece() {
+        return pickedIPiece;
     }
 
     public void setPickedPiece(int x, int y) {
          if (x == -1 && y == -1) {
-             this.pickedPiece = null;
+             this.pickedIPiece = null;
              this.restoreBoard();
              this.repaintBoard();
          }
          else {
-             this.pickedPiece = board.pickPiece(x, y);
+             this.pickedIPiece = board.pickPiece(x, y);
          }
     }
 
@@ -151,5 +171,28 @@ public class BoardView extends JPanel {
 
     public Board getBoard() {
         return board;
+    }
+
+    public static void readColors() throws Exception {
+        try {
+            File client = new File("client.txt");
+            Scanner clientReader = new Scanner(client);
+            while (clientReader.hasNextLine()) {
+                String data = clientReader.nextLine();
+                if (data.contains("Color")) {
+                    String[] values = data.split(":");
+                    String[] white = values[1].split(",");
+                    String[] black = values[2].split(",");
+                    System.out.println(Arrays.toString(white));
+                    System.out.println(Arrays.toString(black));
+                    State.getInstance().setWhite(new Color(Integer.parseInt(white[0].trim()),Integer.parseInt(white[1].trim()),Integer.parseInt(white[2].trim())));
+                    State.getInstance().setBlack(new Color(Integer.parseInt(black[0].trim()),Integer.parseInt(black[1].trim()),Integer.parseInt(black[2].trim())));
+                    System.out.println("hej");
+                }
+            }
+            clientReader.close();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 }

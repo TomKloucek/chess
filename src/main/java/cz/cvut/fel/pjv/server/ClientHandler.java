@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.server;
 
 import cz.cvut.fel.pjv.Main;
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.view.MainMenu;
 
 import java.io.BufferedReader;
@@ -41,6 +42,7 @@ public class ClientHandler implements Runnable {
             printWriter.flush();
         }
     } catch (IOException e) {
+        Logger.log(ClientHandler.class, "run","Pri behu klienta nastala chyba");
         e.printStackTrace();
     }
     }

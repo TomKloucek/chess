@@ -7,7 +7,7 @@ import cz.cvut.fel.pjv.models.Square;
 
 import java.util.ArrayList;
 
-public class Queen implements Piece {
+public class Queen implements IPiece {
     private final int points;
     private final Color color;
     private int x;
@@ -302,7 +302,7 @@ public class Queen implements Piece {
     public ArrayList<Square> getXRayedMoves(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
         ArrayList<Square> betweenKingAndPiece = new ArrayList<>();
-        Piece king = board.getKing(Helpers.getOtherColor(this.color));
+        IPiece king = board.getKing(Helpers.getOtherColor(this.color));
         // RIGHT UP
         for (int i = 1; i < 8; i++) {
             if (board.getBoard()[Helpers.checkSquareCoordinates(this.getX(),i, this.getY(),i, "x")][Helpers.checkSquareCoordinates(this.getX(),+i, this.getY(),i, "y")].getPiece() != null

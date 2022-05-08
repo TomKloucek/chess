@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.loggers.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -89,6 +91,7 @@ public class TwoClientsHandler implements Runnable {
             }
         }
         catch(IOException e){
+            Logger.log(ClientHandler.class, "run",e.getMessage());
             e.printStackTrace();
         }
     }

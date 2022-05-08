@@ -1,13 +1,6 @@
 package cz.cvut.fel.pjv.models;
 
-import cz.cvut.fel.pjv.pieces.Piece;
 import cz.cvut.fel.pjv.server.Client;
-import cz.cvut.fel.pjv.view.BoardView;
-import cz.cvut.fel.pjv.view.MainMenu;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Scanner;
 
 public class Game {
     private Player playerWhite;
