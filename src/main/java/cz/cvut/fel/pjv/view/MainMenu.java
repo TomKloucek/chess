@@ -162,6 +162,7 @@ public class MainMenu extends JFrame {
                 if (settingsFrame == null) {
                     setUpSettings();
                 }
+                hideMainMenu();
                 openSettings();
             }
         });
@@ -236,6 +237,11 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                try {
+                    State.getInstance().getClient().disconnectFromServer();
+                } catch (IOException ex) {
+                    Logger.log(MainMenu.class,"Open network game", ex.getMessage());
+                }
                 MainMenu.this.showMainMenu();
             }
         });
@@ -371,6 +377,7 @@ public class MainMenu extends JFrame {
         blackPlayerPanel.add(nameBlack,BorderLayout.NORTH);
         blackPlayerPanel.add(timeBlack,BorderLayout.SOUTH);
 
+        State.getInstance().setupPlayersTimes();
 
         int delay = 500; //milliseconds
         ActionListener taskPerformer = new ActionListener() {
@@ -660,14 +667,14 @@ public class MainMenu extends JFrame {
         JPanel settingsPanel = new JPanel(new FlowLayout());
 
         JButton selectColorWhite = new JButton();
-        selectColorWhite.setForeground(State.getInstance().getBlack());
-        selectColorWhite.setBackground(State.getInstance().getWhite());
         selectColorWhite.setText("Policka bile barvy");
         selectColorWhite.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectColorWhite.setSize(100,50);
         selectColorWhite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 State.getInstance().setWhite(JColorChooser.showDialog(null,"Vyber barvu",State.getInstance().getWhite()));
+                setUpColorButtons(selectColorWhite,null);
                 try {
                     Helpers.writeColors();
                 } catch (Exception error) {
@@ -677,14 +684,14 @@ public class MainMenu extends JFrame {
         });
 
         JButton selectColorBlack = new JButton();
-        selectColorBlack.setForeground(State.getInstance().getWhite());
-        selectColorBlack.setBackground(State.getInstance().getBlack());
         selectColorBlack.setText("Policka cerne barvy");
         selectColorBlack.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectColorBlack.setSize(50,50);
         selectColorBlack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 State.getInstance().setBlack(JColorChooser.showDialog(null,"Vyber barvu",State.getInstance().getBlack()));
+                setUpColorButtons(selectColorWhite,selectColorBlack);
                 try {
                     Helpers.writeColors();
                 } catch (Exception error) {
@@ -692,13 +699,40 @@ public class MainMenu extends JFrame {
                 }
             }
         });
+        JButton selectGameLength = new JButton();
+        selectGameLength.setText("Zmenit delku hry");
+        selectGameLength.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectGameLength.setSize(50,50);
+        selectGameLength.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String[] options_color = {"1","3","5","10","30"};
+                int answer = JOptionPane.showOptionDialog(null, "Delka hry",
+                        "Delka hry",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
+                State.getInstance().setGameLength(answer);
+            }
+        });
+
+        setUpColorButtons(selectColorWhite,selectColorBlack);
+
         settingsPanel.add(selectColorWhite,FlowLayout.LEFT);
         settingsPanel.add(selectColorBlack,FlowLayout.CENTER);
+        settingsPanel.add(selectGameLength,FlowLayout.RIGHT);
         settingsFrame.getContentPane().add(settingsPanel);
     }
 
     public void openSettings() {
         settingsFrame.setVisible(true);
+    }
+
+    public void setUpColorButtons(JButton white, JButton black) {
+        if (black != null) {
+            black.setForeground(State.getInstance().getWhite());
+            black.setBackground(State.getInstance().getBlack());
+        }
+        white.setForeground(State.getInstance().getBlack());
+        white.setBackground(State.getInstance().getWhite());
     }
 }
 
