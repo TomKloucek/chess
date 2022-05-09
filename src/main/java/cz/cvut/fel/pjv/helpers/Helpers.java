@@ -205,4 +205,14 @@ public class Helpers {
             myWriter.write("Color:"+ white.getRed()+","+white.getGreen() + "," + white.getBlue() + ":" + black.getRed() + "," + black.getGreen() + "," + black.getBlue());
             myWriter.close();
     }
+
+    public static long getGameLength(int value) {
+        return switch (value) {
+            case 0 -> 60;
+            case 1 -> 180;
+            case 2 -> 300;
+            case 4 -> 1800;
+            default -> 600;
+        };
+    }
 }

@@ -1,7 +1,7 @@
 package cz.cvut.fel.pjv.models;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.server.Client;
-import cz.cvut.fel.pjv.view.BoardView;
 import cz.cvut.fel.pjv.view.MainMenu;
 
 import javax.swing.*;
@@ -13,8 +13,9 @@ public class State {
     private Color white;
     private Color black;
     private boolean whiteOnMove;
-    private boolean end;
     private Game game;
+
+    private int gameLength;
 
     private long startTime;
 
@@ -66,10 +67,6 @@ public class State {
 
     public void setBlack(Color color) {
         this.black = color;
-    }
-
-    public boolean isRunning() {
-        return !end;
     }
 
     public static State getInstance()
@@ -126,8 +123,7 @@ public class State {
         if (timeOfMoveStart == 0) {
             long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
             long elapsedSeconds = timeLeft - (elapsedTime / 1000);
-            long secondsLeft = elapsedSeconds % 60;
-            return secondsLeft;
+            return elapsedSeconds % 60;
         } else {
             long elapsedTime = System.currentTimeMillis() - timeOfMoveStart;
             long elapsedSeconds = timeLeft - (elapsedTime / 1000);
@@ -168,5 +164,14 @@ public class State {
 
     public long getTimeLeftBlack() {
         return timeLeftBlack;
+    }
+
+    public void setGameLength(int gameLength) {
+        this.gameLength = gameLength;
+    }
+
+    public void setupPlayersTimes() {
+        this.timeLeftBlack = Helpers.getGameLength(this.gameLength);
+        this.timeLeftWhite = Helpers.getGameLength(this.gameLength);
     }
 }

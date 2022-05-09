@@ -23,7 +23,7 @@ public class BoardView extends JPanel {
         Color COLOR_GREEN;
 
         public static final int SQUARE_DIMENSION = 64;
-        private Board board;
+        private final Board board;
         private boolean boardReversed;
         private JLayeredPane boardLayeredPane;
         private JPanel boardPanel;
