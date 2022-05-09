@@ -18,6 +18,13 @@ public class State {
 
     private long startTime;
 
+    private long timeOfMoveStart = 0;
+
+    private long timeLeftWhite = 600;
+
+    private long timeLeftBlack = 600;
+
+
     private Client client;
 
     private MainMenu guiRef;
@@ -113,5 +120,53 @@ public class State {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public long getSecondsLeft(long timeLeft) {
+        if (timeOfMoveStart == 0) {
+            long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
+            long elapsedSeconds = timeLeft - (elapsedTime / 1000);
+            long secondsLeft = elapsedSeconds % 60;
+            return secondsLeft;
+        } else {
+            long elapsedTime = System.currentTimeMillis() - timeOfMoveStart;
+            long elapsedSeconds = timeLeft - (elapsedTime / 1000);
+            long secondsLeft = elapsedSeconds % 60;
+            System.out.println(getTimeLeftWhite());
+            return secondsLeft;
+        }
+    }
+
+    public long getMinutesLeft(long timeLeft) {
+        if (timeOfMoveStart == 0) {
+            long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
+            long elapsedSeconds = timeLeft - (elapsedTime / 1000);
+            return elapsedSeconds / 60;
+        } else {
+            long elapsedTime = System.currentTimeMillis() - timeOfMoveStart;
+            long elapsedSeconds = timeLeft - (elapsedTime / 1000);
+            return elapsedSeconds / 60;
+
+        }
+    }
+
+    public void setTimeOfMoveStart(long timeOfMoveStart) {
+        this.timeOfMoveStart = timeOfMoveStart;
+    }
+
+    public void setTimeLeftWhite(long timeLeftWhite) {
+        this.timeLeftWhite = timeLeftWhite;
+    }
+
+    public long getTimeLeftWhite() {
+        return timeLeftWhite;
+    }
+
+    public void setTimeLeftBlack(long timeLeftBlack) {
+        this.timeLeftBlack = timeLeftBlack;
+    }
+
+    public long getTimeLeftBlack() {
+        return timeLeftBlack;
     }
 }
