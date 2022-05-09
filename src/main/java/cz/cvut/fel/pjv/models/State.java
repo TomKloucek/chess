@@ -132,7 +132,6 @@ public class State {
             long elapsedTime = System.currentTimeMillis() - timeOfMoveStart;
             long elapsedSeconds = timeLeft - (elapsedTime / 1000);
             long secondsLeft = elapsedSeconds % 60;
-            System.out.println(getTimeLeftWhite());
             return secondsLeft;
         }
     }
@@ -168,5 +167,11 @@ public class State {
 
     public long getTimeLeftBlack() {
         return timeLeftBlack;
+    }
+
+    public void resetTimers(){
+        setTimeLeftWhite(600);
+        setTimeLeftBlack(600);
+        setTimeOfMoveStart(0);
     }
 }

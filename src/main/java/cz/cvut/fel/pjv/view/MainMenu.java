@@ -290,6 +290,7 @@ public class MainMenu extends JFrame {
     }
 
     public void openPvPGame(String boardString) {
+        State.getInstance().resetTimers();
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
         }
@@ -332,11 +333,7 @@ public class MainMenu extends JFrame {
         BoardView mainPanel = new BoardView(board);
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                showMainMenu();
-            }
-        });
+
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(760, 679));
         frame.setLocationByPlatform(true);
@@ -345,12 +342,10 @@ public class MainMenu extends JFrame {
         JPanel gamePanel = new JPanel(new BorderLayout());
 
         JPanel whitePlayerPanel = new JPanel(new BorderLayout());
+
         long startMinutesLeftWhite = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
         long startSecondsLeftWhite = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-
         JLabel timeWhite = new JLabel(startMinutesLeftWhite+ ":" + startSecondsLeftWhite);
-
-
 
         Border border = timeWhite.getBorder();
         Border margin = new EmptyBorder(30,30,30,30);
@@ -362,10 +357,11 @@ public class MainMenu extends JFrame {
         whitePlayerPanel.add(timeWhite,BorderLayout.SOUTH);
 
         JPanel blackPlayerPanel = new JPanel(new BorderLayout());
+
         long startMinutesLeftBlack = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
         long startSecondsLeftBlack = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-
         JLabel timeBlack = new JLabel(startMinutesLeftBlack+ ":" + startSecondsLeftBlack);
+
         border = timeBlack.getBorder();
         margin = new EmptyBorder(30,30,30,30);
         timeBlack.setBorder(new CompoundBorder(border, margin));
@@ -376,7 +372,7 @@ public class MainMenu extends JFrame {
         blackPlayerPanel.add(timeBlack,BorderLayout.SOUTH);
 
 
-        int delay = 1000; //milliseconds
+        int delay = 500; //milliseconds
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if(State.getInstance().isWhiteOnMove()) {
@@ -391,7 +387,15 @@ public class MainMenu extends JFrame {
                 }
             }
         };
-        new Timer(delay, taskPerformer).start();
+        Timer timer = new Timer(delay, taskPerformer);
+        timer.start();
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                showMainMenu();
+                timer.stop();
+            }
+        });
 
         if (p1.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
             gamePanel.add(whitePlayerPanel,BorderLayout.SOUTH);
@@ -406,6 +410,7 @@ public class MainMenu extends JFrame {
     }
 
     public void openAIGame(String boardString, int answer) {
+        State.getInstance().resetTimers();
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
         }
@@ -471,11 +476,7 @@ public class MainMenu extends JFrame {
         BoardView mainPanel = new BoardView(board);
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                showMainMenu();
-            }
-        });
+
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(760, 679));
         frame.setLocationByPlatform(true);
@@ -484,7 +485,11 @@ public class MainMenu extends JFrame {
         JPanel gamePanel = new JPanel(new BorderLayout());
 
         JPanel whitePlayerPanel = new JPanel(new BorderLayout());
-        JLabel timeWhite = new JLabel("Cas 1");
+
+        long startMinutesLeftWhite = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
+        long startSecondsLeftWhite = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+        JLabel timeWhite = new JLabel(startMinutesLeftWhite+ ":" + startSecondsLeftWhite);
+
         Border border = timeWhite.getBorder();
         Border margin = new EmptyBorder(30,30,30,30);
         timeWhite.setBorder(new CompoundBorder(border, margin));
@@ -495,7 +500,37 @@ public class MainMenu extends JFrame {
         whitePlayerPanel.add(timeWhite,BorderLayout.SOUTH);
 
         JPanel blackPlayerPanel = new JPanel(new BorderLayout());
-        JLabel timeBlack = new JLabel("Cas");
+
+        long startMinutesLeftBlack = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
+        long startSecondsLeftBlack = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+        JLabel timeBlack = new JLabel(startMinutesLeftBlack+ ":" + startSecondsLeftBlack);
+
+        int delay = 500; //milliseconds
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if(State.getInstance().isWhiteOnMove()) {
+                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
+                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+                    timeWhite.setText(minutesLeft + ":" + secondsLeft);
+                }
+                else {
+                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
+                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+                    timeBlack.setText(minutesLeft + ":" + secondsLeft);
+                }
+            }
+        };
+        Timer timer = new Timer(delay, taskPerformer);
+        timer.start();
+
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                showMainMenu();
+                timer.stop();
+            }
+        });
+
         border = timeBlack.getBorder();
         margin = new EmptyBorder(30,30,30,30);
         timeBlack.setBorder(new CompoundBorder(border, margin));

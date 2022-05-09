@@ -348,7 +348,6 @@ public class Board {
                 long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
                 State.getInstance().setTimeLeftBlack(minutesLeft*60+secondsLeft);
             }
-
             State.getInstance().setTimeOfMoveStart(System.currentTimeMillis());
             return true;
         }
