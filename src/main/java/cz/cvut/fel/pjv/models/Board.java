@@ -335,21 +335,6 @@ public class Board {
                 State.getInstance().getClient().printWriter.println(this.boardToString());
                 State.getInstance().getClient().printWriter.flush();
             }
-
-            if(this.type != GameType.SERVER) {
-                if (!State.getInstance().isWhiteOnMove()) {
-                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
-                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-                    State.getInstance().setTimeLeftWhite(minutesLeft * 60 + secondsLeft);
-                    System.out.println("ahoj1");
-                } else {
-                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
-                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-                    State.getInstance().setTimeLeftBlack(minutesLeft * 60 + secondsLeft);
-                    System.out.println("ahoj2");
-                }
-                State.getInstance().setTimeOfMoveStart(System.currentTimeMillis());
-            }
             return true;
         }
         else {

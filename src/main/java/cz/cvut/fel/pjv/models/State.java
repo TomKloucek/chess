@@ -101,6 +101,16 @@ public class State {
 
     public void reverseMove() {
         whiteOnMove = !whiteOnMove;
+        if (!State.getInstance().isWhiteOnMove()) {
+            long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
+            long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+            State.getInstance().setTimeLeftWhite(minutesLeft * 60 + secondsLeft);
+        } else {
+            long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
+            long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+            State.getInstance().setTimeLeftBlack(minutesLeft * 60 + secondsLeft);
+        }
+        State.getInstance().setTimeOfMoveStart(System.currentTimeMillis());
     }
 
     public void resetMove() {
