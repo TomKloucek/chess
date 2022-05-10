@@ -267,7 +267,7 @@ public class MainMenu extends JFrame {
 
         long startMinutesLeftWhite = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
         long startSecondsLeftWhite = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-        JLabel timeWhite = new JLabel(startMinutesLeftWhite+ ":" + startSecondsLeftWhite);
+        JLabel timeWhite = new JLabel(Helpers.formatTime(startMinutesLeftWhite,startSecondsLeftWhite));
 
         Border border = timeWhite.getBorder();
         Border margin = new EmptyBorder(30,30,30,30);
@@ -282,7 +282,7 @@ public class MainMenu extends JFrame {
 
         long startMinutesLeftBlack = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
         long startSecondsLeftBlack = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-        JLabel timeBlack = new JLabel(startMinutesLeftBlack+ ":" + startSecondsLeftBlack);
+        JLabel timeBlack = new JLabel(Helpers.formatTime(startMinutesLeftBlack,startSecondsLeftBlack));
 
         border = timeBlack.getBorder();
         margin = new EmptyBorder(30,30,30,30);
@@ -299,12 +299,12 @@ public class MainMenu extends JFrame {
                 if(State.getInstance().isWhiteOnMove()) {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-                    timeWhite.setText(minutesLeft + ":" + secondsLeft);
+                    timeWhite.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
                 else {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-                    timeBlack.setText(minutesLeft + ":" + secondsLeft);
+                    timeBlack.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
             }
         };
@@ -393,7 +393,7 @@ public class MainMenu extends JFrame {
 
         long startMinutesLeftWhite = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
         long startSecondsLeftWhite = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-        JLabel timeWhite = new JLabel(startMinutesLeftWhite+ ":" + startSecondsLeftWhite);
+        JLabel timeWhite = new JLabel(Helpers.formatTime(startMinutesLeftWhite,startSecondsLeftWhite));
 
         Border border = timeWhite.getBorder();
         Border margin = new EmptyBorder(30,30,30,30);
@@ -408,7 +408,7 @@ public class MainMenu extends JFrame {
 
         long startMinutesLeftBlack = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
         long startSecondsLeftBlack = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-        JLabel timeBlack = new JLabel(startMinutesLeftBlack+ ":" + startSecondsLeftBlack);
+        JLabel timeBlack = new JLabel(Helpers.formatTime(startMinutesLeftBlack,startSecondsLeftBlack));
 
         border = timeBlack.getBorder();
         margin = new EmptyBorder(30,30,30,30);
@@ -427,12 +427,12 @@ public class MainMenu extends JFrame {
                 if(State.getInstance().isWhiteOnMove()) {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-                    timeWhite.setText(minutesLeft + ":" + secondsLeft);
+                    timeWhite.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
                 else {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-                    timeBlack.setText(minutesLeft + ":" + secondsLeft);
+                    timeBlack.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
             }
         };
@@ -537,7 +537,7 @@ public class MainMenu extends JFrame {
 
         long startMinutesLeftWhite = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
         long startSecondsLeftWhite = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-        JLabel timeWhite = new JLabel(startMinutesLeftWhite+ ":" + startSecondsLeftWhite);
+        JLabel timeWhite = new JLabel(Helpers.formatTime(startMinutesLeftWhite,startSecondsLeftWhite));
 
         Border border = timeWhite.getBorder();
         Border margin = new EmptyBorder(30,30,30,30);
@@ -552,7 +552,7 @@ public class MainMenu extends JFrame {
 
         long startMinutesLeftBlack = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
         long startSecondsLeftBlack = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-        JLabel timeBlack = new JLabel(startMinutesLeftBlack+ ":" + startSecondsLeftBlack);
+        JLabel timeBlack = new JLabel(Helpers.formatTime(startMinutesLeftBlack,startSecondsLeftBlack));
 
         int delay = 500; //milliseconds
         ActionListener taskPerformer = new ActionListener() {
@@ -560,12 +560,12 @@ public class MainMenu extends JFrame {
                 if(State.getInstance().isWhiteOnMove()) {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-                    timeWhite.setText(minutesLeft + ":" + secondsLeft);
+                    timeWhite.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
                 else {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-                    timeBlack.setText(minutesLeft + ":" + secondsLeft);
+                    timeBlack.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
             }
         };

@@ -215,4 +215,22 @@ public class Helpers {
             default -> 600;
         };
     }
+
+    public static String formatTime(long minutes, long seconds) {
+        String result = "";
+        if (minutes < 10) {
+            result += String.format("%02d", minutes);
+        }
+        else {
+            result += minutes;
+        }
+        result += ":";
+        if (seconds < 10) {
+            result += String.format("%02d", seconds);
+        }
+        else {
+            result += seconds;
+        }
+        return result;
+    }
 }
