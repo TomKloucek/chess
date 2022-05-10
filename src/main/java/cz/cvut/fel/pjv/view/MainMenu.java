@@ -33,6 +33,11 @@ public class MainMenu extends JFrame {
     private BoardView bw;
 
     public MainMenu() {
+//        try {
+//            UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         try {
             BoardView.readColors();
         } catch (Exception e) {
@@ -237,11 +242,11 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                try {
-                    State.getInstance().getClient().disconnectFromServer();
-                } catch (IOException ex) {
-                    Logger.log(MainMenu.class,"Open network game", ex.getMessage());
-                }
+//                try {
+//                    State.getInstance().getClient().disconnectFromServer();
+//                } catch (IOException ex) {
+//                    Logger.log(MainMenu.class,"Open network game", ex.getMessage());
+//                }
                 MainMenu.this.showMainMenu();
             }
         });

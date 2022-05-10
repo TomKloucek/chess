@@ -175,8 +175,8 @@ public class State {
     }
 
     public void resetTimers(){
-        setTimeLeftWhite(600);
-        setTimeLeftBlack(600);
+        setTimeLeftWhite(Helpers.getGameLength(this.gameLength));
+        setTimeLeftBlack(Helpers.getGameLength(this.gameLength));
         setTimeOfMoveStart(0);
     }
 }
