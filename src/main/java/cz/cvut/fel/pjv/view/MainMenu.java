@@ -33,11 +33,11 @@ public class MainMenu extends JFrame {
     private BoardView bw;
 
     public MainMenu() {
-//        try {
-//            UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             BoardView.readColors();
         } catch (Exception e) {
@@ -208,6 +208,7 @@ public class MainMenu extends JFrame {
     }
 
     public void openNetworkGame(String boardString, cz.cvut.fel.pjv.models.Color color) throws IOException {
+        State.getInstance().resetTimers();
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
         }
@@ -233,23 +234,19 @@ public class MainMenu extends JFrame {
         }
         game.setMe(p1);
 
+
+
         State.getInstance().setGame(game);
+
+        State.getInstance().setTimeLeftWhite(600);
+        State.getInstance().setTimeLeftBlack(600);
 
         BoardView mainPanel = new BoardView(board);
         this.bw = mainPanel;
 
         JFrame frame = new JFrame("Chess");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-//                try {
-//                    State.getInstance().getClient().disconnectFromServer();
-//                } catch (IOException ex) {
-//                    Logger.log(MainMenu.class,"Open network game", ex.getMessage());
-//                }
-                MainMenu.this.showMainMenu();
-            }
-        });
+
         frame.getContentPane().add(mainPanel);
         frame.setMinimumSize(new Dimension(930, 679));
         frame.setLocationByPlatform(true);
@@ -267,7 +264,11 @@ public class MainMenu extends JFrame {
         }
 
         JPanel whitePlayerPanel = new JPanel(new BorderLayout());
-        JLabel timeWhite = new JLabel("Cas 1");
+
+        long startMinutesLeftWhite = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
+        long startSecondsLeftWhite = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+        JLabel timeWhite = new JLabel(startMinutesLeftWhite+ ":" + startSecondsLeftWhite);
+
         Border border = timeWhite.getBorder();
         Border margin = new EmptyBorder(30,30,30,30);
         timeWhite.setBorder(new CompoundBorder(border, margin));
@@ -278,7 +279,11 @@ public class MainMenu extends JFrame {
         whitePlayerPanel.add(timeWhite,BorderLayout.SOUTH);
 
         JPanel blackPlayerPanel = new JPanel(new BorderLayout());
-        JLabel timeBlack = new JLabel("Cas 2");
+
+        long startMinutesLeftBlack = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
+        long startSecondsLeftBlack = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+        JLabel timeBlack = new JLabel(startMinutesLeftBlack+ ":" + startSecondsLeftBlack);
+
         border = timeBlack.getBorder();
         margin = new EmptyBorder(30,30,30,30);
         timeBlack.setBorder(new CompoundBorder(border, margin));
@@ -287,6 +292,38 @@ public class MainMenu extends JFrame {
         nameBlack.setBorder(new CompoundBorder(border, margin));
         blackPlayerPanel.add(nameBlack,BorderLayout.NORTH);
         blackPlayerPanel.add(timeBlack,BorderLayout.SOUTH);
+
+        int delay = 500; //milliseconds
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if(State.getInstance().isWhiteOnMove()) {
+                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
+                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+                    timeWhite.setText(minutesLeft + ":" + secondsLeft);
+                }
+                else {
+                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
+                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+                    timeBlack.setText(minutesLeft + ":" + secondsLeft);
+                }
+            }
+        };
+        Timer timer = new Timer(delay, taskPerformer);
+        timer.start();
+
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+//                try {
+//                    State.getInstance().getClient().disconnectFromServer();
+//                } catch (IOException ex) {
+//                    Logger.log(MainMenu.class,"Open network game", ex.getMessage());
+//                }
+
+                timer.stop();
+                MainMenu.this.showMainMenu();
+            }
+        });
 
         if (p1.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
             gamePanel.add(whitePlayerPanel,BorderLayout.SOUTH);

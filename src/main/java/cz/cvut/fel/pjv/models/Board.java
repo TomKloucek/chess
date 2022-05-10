@@ -12,7 +12,6 @@ public class Board {
     private Square[][] board;
     private ArrayList<IPiece> whiteIPieces;
     private ArrayList<IPiece> blackIPieces;
-
     private GameType type;
 
     public Board(GameType type) {
@@ -254,7 +253,7 @@ public class Board {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 if (y == 0 && chosen.getColor() == Color.BLACK) {
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
-                    board[x][y].getPiece().Move(x,y);
+                    board[x][y].getPiece().Move(x, y);
                     blackIPieces.remove(chosen);
                     blackIPieces.add(board[x][y].getPiece());
                     refillPiecesLists();
@@ -262,7 +261,7 @@ public class Board {
                 if (y == 7 && chosen.getColor() == Color.WHITE) {
                     this.board[x][y].setPiece(null);
                     board[x][y].setPiece(PromoteTo((Pawn) chosen));
-                    this.board[x][y].getPiece().Move(x,y);
+                    this.board[x][y].getPiece().Move(x, y);
                     whiteIPieces.remove(chosen);
                     whiteIPieces.add(board[x][y].getPiece());
                     refillPiecesLists();
@@ -271,62 +270,60 @@ public class Board {
                 State.getInstance().getGame().playForAi();
             }
             // EN PASSANT
-            else if(chosen instanceof Pawn && (board[x][y-1].getPiece() instanceof Pawn && board[x][y-1].getPiece().getColor() == Color.BLACK) && board[x][y].getPiece() == null) {
+            else if (chosen instanceof Pawn && (board[x][y - 1].getPiece() instanceof Pawn && board[x][y - 1].getPiece().getColor() == Color.BLACK) && board[x][y].getPiece() == null) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
-                this.board[x][y-1].setPiece(null);
+                this.board[x][y - 1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
-                board[x][y].getPiece().Move(x,y);
+                board[x][y].getPiece().Move(x, y);
                 refillPiecesLists();
-            }
-            else if(chosen instanceof Pawn && (board[x][y+1].getPiece() instanceof Pawn && board[x][y+1].getPiece().getColor() == Color.WHITE) && board[x][y].getPiece() == null) {
+            } else if (chosen instanceof Pawn && (board[x][y + 1].getPiece() instanceof Pawn && board[x][y + 1].getPiece().getColor() == Color.WHITE) && board[x][y].getPiece() == null) {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
-                this.board[x][y+1].setPiece(null);
+                this.board[x][y + 1].setPiece(null);
                 this.board[x][y].setPiece(chosen);
-                board[x][y].getPiece().Move(x,y);
+                board[x][y].getPiece().Move(x, y);
                 refillPiecesLists();
             }
             // CASTLE
-            else if (chosen instanceof King && board[x][y].getPiece() instanceof Rook && board[x][y].getPiece().getColor()==chosen.getColor()) {
+            else if (chosen instanceof King && board[x][y].getPiece() instanceof Rook && board[x][y].getPiece().getColor() == chosen.getColor()) {
                 if (x == 0 && y == 0) {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
-                    Rook rook = (Rook )this.board[0][0].getPiece();
+                    Rook rook = (Rook) this.board[0][0].getPiece();
                     this.board[0][0].setPiece(null);
                     this.board[3][0].setPiece(rook);
                     this.board[2][0].setPiece(chosen);
-                    rook.Move(3,0);
-                    chosen.Move(2,0);
+                    rook.Move(3, 0);
+                    chosen.Move(2, 0);
                 }
                 if (x == 7 && y == 0) {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
-                    Rook rook = (Rook )this.board[7][0].getPiece();
+                    Rook rook = (Rook) this.board[7][0].getPiece();
                     this.board[7][0].setPiece(null);
                     this.board[5][0].setPiece(rook);
                     this.board[6][0].setPiece(chosen);
-                    rook.Move(5,0);
-                    chosen.Move(6,0);
+                    rook.Move(5, 0);
+                    chosen.Move(6, 0);
                 }
                 if (x == 0 && y == 7) {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
-                    Rook rook = (Rook )this.board[0][7].getPiece();
+                    Rook rook = (Rook) this.board[0][7].getPiece();
                     this.board[0][7].setPiece(null);
                     this.board[3][7].setPiece(rook);
                     this.board[2][7].setPiece(chosen);
-                    rook.Move(3,7);
-                    chosen.Move(2,7);
+                    rook.Move(3, 7);
+                    chosen.Move(2, 7);
                 }
                 if (x == 7 && y == 7) {
                     this.board[chosen.getX()][chosen.getY()].setPiece(null);
-                    Rook rook = (Rook )this.board[7][7].getPiece();
+                    Rook rook = (Rook) this.board[7][7].getPiece();
                     this.board[7][7].setPiece(null);
                     this.board[5][7].setPiece(rook);
                     this.board[6][7].setPiece(chosen);
-                    rook.Move(5,7);
-                    chosen.Move(6,7);
+                    rook.Move(5, 7);
+                    chosen.Move(6, 7);
                 }
                 State.getInstance().reverseMove();
                 State.getInstance().getGame().playForAi();
-            }
-            else {
+            } else {
                 this.board[chosen.getX()][chosen.getY()].setPiece(null);
                 this.board[x][y].setPiece(chosen);
                 chosen.Move(x, y);
@@ -338,17 +335,21 @@ public class Board {
                 State.getInstance().getClient().printWriter.println(this.boardToString());
                 State.getInstance().getClient().printWriter.flush();
             }
-            if(!State.getInstance().isWhiteOnMove()){
-                long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
-                long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
-                State.getInstance().setTimeLeftWhite(minutesLeft*60+secondsLeft);
+
+            if(this.type != GameType.SERVER) {
+                if (!State.getInstance().isWhiteOnMove()) {
+                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
+                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+                    State.getInstance().setTimeLeftWhite(minutesLeft * 60 + secondsLeft);
+                    System.out.println("ahoj1");
+                } else {
+                    long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
+                    long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+                    State.getInstance().setTimeLeftBlack(minutesLeft * 60 + secondsLeft);
+                    System.out.println("ahoj2");
+                }
+                State.getInstance().setTimeOfMoveStart(System.currentTimeMillis());
             }
-            else{
-                long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
-                long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
-                State.getInstance().setTimeLeftBlack(minutesLeft*60+secondsLeft);
-            }
-            State.getInstance().setTimeOfMoveStart(System.currentTimeMillis());
             return true;
         }
         else {
