@@ -521,10 +521,16 @@ public class MainMenu extends JFrame {
         State.getInstance().setGame(game);
         JLabel nameWhite = null;
         JLabel nameBlack = null;
+        boolean end = false;
+        if (fromEditor) {
+            end = checkWin(board);
+        }
         if (p2.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
             nameWhite = new JLabel("AI");
             nameBlack = new JLabel("Hrac");
-            game.playForAi();
+            if (!end) {
+                game.playForAi();
+            }
         }
         else {
             nameBlack = new JLabel("AI");
@@ -608,9 +614,8 @@ public class MainMenu extends JFrame {
         }
         gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
         frame.add(gamePanel, BorderLayout.EAST);
-
-        if (fromEditor) {
-            checkWin(board);
+        if (end) {
+            timer.stop();
         }
     }
 
@@ -790,7 +795,7 @@ public class MainMenu extends JFrame {
         white.setBackground(State.getInstance().getWhite());
     }
 
-    public void checkWin(Board board) {
+    public boolean checkWin(Board board) {
         System.out.println(board.getPieces(cz.cvut.fel.pjv.models.Color.BLACK));
         System.out.println(board.getPieces(cz.cvut.fel.pjv.models.Color.WHITE));
             if (board.whiteInCheck()) {
@@ -798,6 +803,7 @@ public class MainMenu extends JFrame {
                 if (board.Mated(cz.cvut.fel.pjv.models.Color.WHITE)) {
                     JOptionPane.showMessageDialog(null, "Černý vyhrál");
                     State.getInstance().resetMove();
+                    return true;
                 }
             }
             if (board.blackInCheck()) {
@@ -805,8 +811,10 @@ public class MainMenu extends JFrame {
                 if (board.Mated(cz.cvut.fel.pjv.models.Color.BLACK)) {
                     JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                     State.getInstance().resetMove();
+                    return true;
                 }
             }
+            return false;
         }
 
         public void closeGameFrame() {
