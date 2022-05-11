@@ -528,8 +528,11 @@ public class MainMenu extends JFrame {
         if (p2.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
             nameWhite = new JLabel("AI");
             nameBlack = new JLabel("Hrac");
-            if (!end) {
+            if (!end && !board.blackInCheck()) {
                 game.playForAi();
+            }
+            else {
+               State.getInstance().reverseMove();
             }
         }
         else {
@@ -634,7 +637,6 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                State.getInstance().resetMove();
                 showMainMenu();
             }
         });
@@ -796,8 +798,6 @@ public class MainMenu extends JFrame {
     }
 
     public boolean checkWin(Board board) {
-        System.out.println(board.getPieces(cz.cvut.fel.pjv.models.Color.BLACK));
-        System.out.println(board.getPieces(cz.cvut.fel.pjv.models.Color.WHITE));
             if (board.whiteInCheck()) {
                 System.out.println("Bílý je v šachu");
                 if (board.Mated(cz.cvut.fel.pjv.models.Color.WHITE)) {

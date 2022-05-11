@@ -23,6 +23,7 @@ public class ClickListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Game game = State.getInstance().getGame();
+        System.out.println("26"+State.getInstance().isWhiteOnMove());
         SquareView[][] squarePanels = bw.getSquarePanels();
         ButtonCoord buttonCoord = (ButtonCoord) e.getSource();
         if (squarePanels[buttonCoord.getX()][buttonCoord.getY()].getDot() != null) {
@@ -147,6 +148,7 @@ public class ClickListener implements ActionListener {
                 }
             }
             else {
+                System.out.println("151"+State.getInstance().isWhiteOnMove());
                 JOptionPane.showMessageDialog(null, "Tento hráč není na tahu");
             }
         }
