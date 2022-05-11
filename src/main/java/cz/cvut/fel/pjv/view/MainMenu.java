@@ -314,11 +314,11 @@ public class MainMenu extends JFrame {
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-//                try {
-//                    State.getInstance().getClient().disconnectFromServer();
-//                } catch (IOException ex) {
-//                    Logger.log(MainMenu.class,"Open network game", ex.getMessage());
-//                }
+                try {
+                    State.getInstance().getClient().disconnectFromServer();
+                } catch (IOException ex) {
+                    Logger.log(MainMenu.class,"Unable to disconnect client from server", ex.getMessage());
+                }
 
                 timer.stop();
                 MainMenu.this.showMainMenu();
@@ -802,6 +802,6 @@ public class MainMenu extends JFrame {
                 }
             }
         }
-    }
+}
 
 

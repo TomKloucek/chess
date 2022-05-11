@@ -40,4 +40,10 @@ public class Client {
     public void sendLogin() {
         printWriter.println("login:"+State.getInstance().getLogin());
     }
+
+    public void disconnectFromServer() throws IOException {
+        System.out.println(player);
+        player.close();
+        System.out.println("Player is closed = "+ player.isClosed());
+    }
 }

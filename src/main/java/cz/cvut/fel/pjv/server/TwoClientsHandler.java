@@ -45,8 +45,23 @@ public class TwoClientsHandler implements Runnable {
 
             String receivedMessageFromWhite = null;
             String receivedMessageFromBlack = null;
+            int firstChar;
+            String  firstLetter = null;
             while (true) {
                 if (listenWhite == true) {
+                    firstChar = inputStreamReaderWhite.read();
+                    System.out.println((char)firstChar);
+                    if(firstChar != -1){
+                        firstLetter = Character.toString(firstChar);
+                    }
+                    else {
+                        System.out.println("Bily odpojen");
+                        printWriterBlack.println("OneOfPlayersDisconnected");
+                        printWriterBlack.flush();
+                        break;
+                    }
+
+
                     while (!bufferedReaderWhite.ready() && bufferedReaderBlack.ready()) {
                         receivedMessageFromBlack = bufferedReaderBlack.readLine();
                         System.out.printf(
@@ -59,14 +74,27 @@ public class TwoClientsHandler implements Runnable {
                         while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null) {
                             System.out.printf(
                                     "Sent from the White client: %s\n",
-                                    receivedMessageFromWhite);
-                            printWriterBlack.println(receivedMessageFromWhite);
+                                    firstLetter+receivedMessageFromWhite);
+                            printWriterBlack.println(firstLetter+receivedMessageFromWhite);
                             printWriterBlack.flush();
                             listenWhite = false;
                             break;
                         }
                     }
                 } else if (listenWhite == false) {
+                    firstChar = inputStreamReaderBlack.read();
+                    System.out.println((char)firstChar);
+                    if(firstChar != -1){
+                        firstLetter = Character.toString(firstChar);
+                    }
+                    else {
+                        System.out.println("Cerny odpojen");
+                        printWriterWhite.println("OneOfPlayersDisconnected");
+                        printWriterWhite.flush();
+                        break;
+                    }
+
+
                     while (!bufferedReaderBlack.ready() && bufferedReaderWhite.ready()) {
                         receivedMessageFromWhite = bufferedReaderWhite.readLine();
                         System.out.printf(
@@ -80,8 +108,8 @@ public class TwoClientsHandler implements Runnable {
 
                             System.out.printf(
                                     " Sent from the Black client: %s\n",
-                                    receivedMessageFromBlack);
-                            printWriterWhite.println(receivedMessageFromBlack);
+                                    firstLetter+receivedMessageFromBlack);
+                            printWriterWhite.println(firstLetter+receivedMessageFromBlack);
                             printWriterWhite.flush();
                             listenWhite = true;
                             break;

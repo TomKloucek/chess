@@ -40,7 +40,13 @@ public class ClientListener implements Runnable{
                     State.getInstance().getGuiRef().openNetworkGame("", Color.BLACK);
                // } else if (receivedMessage.contains("login")) {
                  //   State.getInstance().getGuiRef().setOpponentLogin(receivedMessage.split(":")[1]);
-                } else {
+                }
+                else if (receivedMessage.equals("OneOfPlayersDisconnected")){
+                    System.out.println("Ano dostal jsem");
+                    State.getInstance().getGuiRef().showMainMenu();
+                    JOptionPane.showMessageDialog(null,"Bohužel se Váš protihráč odpojil ze hry");
+                }
+                else {
                     System.out.println(receivedMessage);
                     State.getInstance().getGame().updateGame(receivedMessage);
                 }
