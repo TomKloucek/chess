@@ -24,6 +24,8 @@ public class MainMenu extends JFrame {
 
     JFrame  settingsFrame = null;
 
+    JFrame game = null;
+
     private JLabel nameWhite;
     private JLabel nameBlack;
 
@@ -245,6 +247,7 @@ public class MainMenu extends JFrame {
         this.bw = mainPanel;
 
         JFrame frame = new JFrame("Chess");
+        this.game = frame;
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
@@ -380,6 +383,7 @@ public class MainMenu extends JFrame {
 
         BoardView mainPanel = new BoardView(board);
         JFrame frame = new JFrame("Chess");
+        this.game = frame;
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
@@ -459,6 +463,8 @@ public class MainMenu extends JFrame {
 
         if (fromEditor) {
             checkWin(board);
+            timer.stop();
+            hideMainMenu();
         }
     }
 
@@ -801,6 +807,11 @@ public class MainMenu extends JFrame {
                     State.getInstance().resetMove();
                 }
             }
+        }
+
+        public void closeGameFrame() {
+        this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
+
         }
 }
 

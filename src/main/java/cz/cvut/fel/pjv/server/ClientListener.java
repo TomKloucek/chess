@@ -44,6 +44,7 @@ public class ClientListener implements Runnable{
                 else if (receivedMessage.equals("OneOfPlayersDisconnected")){
                     System.out.println("Ano dostal jsem");
                     State.getInstance().getGuiRef().showMainMenu();
+                    State.getInstance().getGuiRef().closeGameFrame();
                     JOptionPane.showMessageDialog(null,"Bohužel se Váš protihráč odpojil ze hry");
                 }
                 else {
