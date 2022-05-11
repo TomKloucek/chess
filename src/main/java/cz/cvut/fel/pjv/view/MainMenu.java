@@ -99,7 +99,7 @@ public class MainMenu extends JFrame {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openAIGame("", -1);
+                openAIGame("", -1, false);
             }
         });
 
@@ -111,7 +111,7 @@ public class MainMenu extends JFrame {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openPvPGame("");
+                openPvPGame("", false);
             }
         });
 
@@ -337,7 +337,7 @@ public class MainMenu extends JFrame {
         frame.add(gamePanel, BorderLayout.EAST);
     }
 
-    public void openPvPGame(String boardString) {
+    public void openPvPGame(String boardString, boolean fromEditor) {
         State.getInstance().resetTimers();
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
@@ -456,15 +456,18 @@ public class MainMenu extends JFrame {
         }
         gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
         frame.add(gamePanel, BorderLayout.EAST);
+
+        if (fromEditor) {
+            checkWin(board);
+        }
     }
 
-    public void openAIGame(String boardString, int answer) {
+    public void openAIGame(String boardString, int answer, boolean fromEditor) {
         State.getInstance().resetTimers();
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
         }
         Board board = new Board(GameType.PVE);
-
 
         if (!Objects.equals(boardString, "")) {
             board.stringToBoard(boardString, false);
@@ -599,6 +602,10 @@ public class MainMenu extends JFrame {
         }
         gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
         frame.add(gamePanel, BorderLayout.EAST);
+
+        if (fromEditor) {
+            checkWin(board);
+        }
     }
 
     public void openEditor(String boardString) {
@@ -636,7 +643,7 @@ public class MainMenu extends JFrame {
                     int answer = JOptionPane.showOptionDialog(null, "Výběr barvy",
                             "Za jakou barvu si přejete hrát?",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
-                    openAIGame(board.boardToString(), answer);
+                    openAIGame(board.boardToString(), answer, true);
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
                     hideMainMenu();
                 }
@@ -651,7 +658,7 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (board.getKing(cz.cvut.fel.pjv.models.Color.WHITE) != null && board.getKing(cz.cvut.fel.pjv.models.Color.BLACK) != null) {
-                    openPvPGame(board.boardToString());
+                    openPvPGame(board.boardToString(), true);
                     hideMainMenu();
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
                     hideMainMenu();
@@ -776,6 +783,25 @@ public class MainMenu extends JFrame {
         white.setForeground(State.getInstance().getBlack());
         white.setBackground(State.getInstance().getWhite());
     }
-}
+
+    public void checkWin(Board board) {
+        System.out.println(board.getPieces(cz.cvut.fel.pjv.models.Color.BLACK));
+        System.out.println(board.getPieces(cz.cvut.fel.pjv.models.Color.WHITE));
+            if (board.whiteInCheck()) {
+                System.out.println("Bílý je v šachu");
+                if (board.Mated(cz.cvut.fel.pjv.models.Color.WHITE)) {
+                    JOptionPane.showMessageDialog(null, "Černý vyhrál");
+                    State.getInstance().resetMove();
+                }
+            }
+            if (board.blackInCheck()) {
+                System.out.println("Černý je v šachu");
+                if (board.Mated(cz.cvut.fel.pjv.models.Color.BLACK)) {
+                    JOptionPane.showMessageDialog(null, "Bilý vyhrál");
+                    State.getInstance().resetMove();
+                }
+            }
+        }
+    }
 
 
