@@ -23,12 +23,10 @@ public class ClickListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Game game = State.getInstance().getGame();
-        System.out.println("clicked");
         SquareView[][] squarePanels = bw.getSquarePanels();
         ButtonCoord buttonCoord = (ButtonCoord) e.getSource();
         if (squarePanels[buttonCoord.getX()][buttonCoord.getY()].getDot() != null) {
             IPiece picked = bw.getPickedPiece();
-            System.out.println("picked:"+picked);
             board.movePiece(picked, buttonCoord.getX(), buttonCoord.getY());
             bw.setPickedPiece(-1, -1);
             if (State.getInstance().isWhiteOnMove()) {
@@ -66,7 +64,6 @@ public class ClickListener implements ActionListener {
             ArrayList<Square> possibleMovement = square.getPiece().possibleMovement(board);
             bw.setPickedPiece(buttonCoord.getX(),buttonCoord.getY());
             IPiece picked = bw.getPickedPiece();
-            System.out.println("picked else:"+picked);
             ArrayList<Square> possibleMovesToUncheck = board.possibleMovesToUncheck(picked);
             if (game.getMe().getColor() != picked.getColor() && board.getType() != GameType.PVP) {
                 bw.setPickedPiece(-1,-1);
@@ -82,7 +79,6 @@ public class ClickListener implements ActionListener {
             }
             else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE && board.whiteInCheck() || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK
             && board.blackInCheck()) {
-                System.out.println("delam tecky");
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         if (picked instanceof King && possibleMovement.contains(squarePanels[i][j].getSquare())){
@@ -114,14 +110,11 @@ public class ClickListener implements ActionListener {
                 }
             }
             else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK) {
-                System.out.println("delam tecky 2");
-                System.out.println(squarePanels);
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         if(board.getEveryXRayMove(board.getPieces(Helpers.getOtherColor(picked.getColor()))).contains(square)){
                             if(possibleMovesToUncheck.contains(squarePanels[i][j].getSquare())) {
                                 try {
-                                    System.out.println("tecka");
                                     squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
                                     squarePanels[i][j].setButton();
                                     squarePanels[i][j].validate();
@@ -136,9 +129,7 @@ public class ClickListener implements ActionListener {
                             }
                         }
                         else if (possibleMovement.contains(squarePanels[i][j].getSquare())) {
-                            System.out.println("hej");
                             try {
-                                System.out.println("tecka");
                                 squarePanels[i][j].setDot(ImageIO.read(new File("resources/dot.png")));
                                 squarePanels[i][j].setButton();
                                 squarePanels[i][j].validate();

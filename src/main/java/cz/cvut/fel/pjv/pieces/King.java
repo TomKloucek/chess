@@ -83,7 +83,6 @@ public class King implements IPiece {
             } else {
                 if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + 1][this.getY()])) {
                     possibilities.add(board.getBoard()[this.getX() + 1][this.getY()]);
-                    System.out.println("pridal jsem:" + this.getX() + 1 + " - " + (this.getY()) );
                 }
             }
         }
@@ -93,14 +92,12 @@ public class King implements IPiece {
                 if (board.getBoard()[this.getX() - 1][this.getY()].getPiece().getColor() != this.getColor()) {
                     if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
                         possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
-                        System.out.println("pridal jsem:" + (this.getX() - 1) + " - " + (this.getY()) );
                     }
                 }
 
             } else {
                 if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() - 1][this.getY()])) {
                     possibilities.add(board.getBoard()[this.getX() - 1][this.getY()]);
-                    System.out.println("pridal jsem:" + (this.getX() - 1) + " - " + (this.getY()) );
                 }
             }
         }
@@ -111,14 +108,12 @@ public class King implements IPiece {
                     if (board.getBoard()[this.getX() + i][this.getY() - 1].getPiece() != null) {
                         if (board.getBoard()[this.getX() + i][this.getY() - 1].getPiece().getColor() != this.getColor()) {
                             if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
-                                System.out.println("pridal jsem:" + (this.getX() + i) + " - " + (this.getY()-1) );
                                 possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
                             }
                         }
                     } else {
                         if (!board.getEveryPossibleMovesWithCover(board.getPieces(Helpers.getOtherColor(this.getColor()))).contains(board.getBoard()[this.getX() + i][this.getY() - 1])) {
                             possibilities.add(board.getBoard()[this.getX() + i][this.getY() - 1]);
-                            System.out.println("pridal jsem:" + (this.getX() + i) + " - " + (this.getY()-1) );
                         }
                     }
                 }

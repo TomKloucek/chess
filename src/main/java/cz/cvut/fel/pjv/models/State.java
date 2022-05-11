@@ -161,7 +161,6 @@ public class State {
 
     public void setTimeLeftWhite(long timeLeftWhite) {
         this.timeLeftWhite = timeLeftWhite;
-        System.out.println("Nastavuji bileho");
     }
 
     public long getTimeLeftWhite() {
@@ -170,7 +169,6 @@ public class State {
 
     public void setTimeLeftBlack(long timeLeftBlack) {
         this.timeLeftBlack = timeLeftBlack;
-        System.out.println("Nastavuji cerneho");
     }
 
     public long getTimeLeftBlack() {

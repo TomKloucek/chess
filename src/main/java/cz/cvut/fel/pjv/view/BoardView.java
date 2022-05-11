@@ -187,7 +187,6 @@ public class BoardView extends JPanel {
                     System.out.println(Arrays.toString(black));
                     State.getInstance().setWhite(new Color(Integer.parseInt(white[0].trim()),Integer.parseInt(white[1].trim()),Integer.parseInt(white[2].trim())));
                     State.getInstance().setBlack(new Color(Integer.parseInt(black[0].trim()),Integer.parseInt(black[1].trim()),Integer.parseInt(black[2].trim())));
-                    System.out.println("hej");
                 }
             }
             clientReader.close();
