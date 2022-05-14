@@ -1,10 +1,11 @@
 package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
+import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.Square;
-import cz.cvut.fel.pjv.pieces.*;
+import cz.cvut.fel.pjv.models.pieces.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,38 +56,37 @@ public class EditorListener implements ActionListener {
                         "Vyber si figurku",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_piece, options_piece[0]);
             }
-
-            String type = switch (answer) {
-                case 0 -> "Rook";
-                case 1 -> "Queen";
-                case 2 -> "Bishop";
-                case 3 -> "Knight";
-                case 4 -> "Pawn";
-                case 5 -> "King";
-                default -> throw new IllegalStateException("Unexpected value: " + answer);
-            };
-            if (board.getBoard()[x][y].getPiece() != null) {
-                if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
+            try {
+                String type = switch (answer) {
+                    case 0 -> "Rook";
+                    case 1 -> "Queen";
+                    case 2 -> "Bishop";
+                    case 3 -> "Knight";
+                    case 4 -> "Pawn";
+                    case 5 -> "King";
+                    default -> throw new IllegalStateException("Unexpected value: " + answer);
+                };
+                if (board.getBoard()[x][y].getPiece() != null) {
+                    if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
+                            board.getKing(Helpers.getOtherColor(color)).getAttackMovesForKingMove(board).contains(board.getBoard()[x][y])) {
+                        JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe");
+                    } else {
+                        board.removePiece(board.getBoard()[x][y].getPiece());
+                        board.putPiece(x, y, type, color);
+                        bw.repaintBoard();
+                    }
+                } else if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
                         board.getKing(Helpers.getOtherColor(color)).getAttackMovesForKingMove(board).contains(board.getBoard()[x][y])) {
+
                     JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe");
-                }
-                else {
-                    board.removePiece(board.getBoard()[x][y].getPiece());
+                } else {
                     board.putPiece(x, y, type, color);
                     bw.repaintBoard();
                 }
+            } catch (Exception ex) {
+                Logger.log(Board.class, "actionPerformed", "Hrac vybral policko ale ne figurku");
             }
-            else if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
-                    board.getKing(Helpers.getOtherColor(color)).getAttackMovesForKingMove(board).contains(board.getBoard()[x][y])) {
-
-                JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe");
-            }
-            else {
-                board.putPiece(x, y, type, color);
-                bw.repaintBoard();
-            }
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "Toto pole už nelze editovat");
         }
     }

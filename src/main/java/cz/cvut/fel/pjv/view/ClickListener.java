@@ -3,9 +3,8 @@ package cz.cvut.fel.pjv.view;
 import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.*;
-import cz.cvut.fel.pjv.pieces.King;
-import cz.cvut.fel.pjv.pieces.IPiece;
-import cz.cvut.fel.pjv.server.ClientListener;
+import cz.cvut.fel.pjv.models.pieces.King;
+import cz.cvut.fel.pjv.models.pieces.IPiece;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

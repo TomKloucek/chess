@@ -5,7 +5,7 @@ import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.Square;
 import cz.cvut.fel.pjv.models.State;
-import cz.cvut.fel.pjv.pieces.*;
+import cz.cvut.fel.pjv.models.pieces.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,8 +16,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
-
-import static java.awt.Color.white;
 
 public class Helpers {
     public static String XTranslate(int x) {

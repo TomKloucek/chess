@@ -4,13 +4,11 @@ import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.State;
-import cz.cvut.fel.pjv.pieces.IPiece;
+import cz.cvut.fel.pjv.models.pieces.IPiece;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 

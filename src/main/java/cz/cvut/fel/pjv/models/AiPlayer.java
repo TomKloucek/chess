@@ -1,13 +1,11 @@
 package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
-import cz.cvut.fel.pjv.pieces.IPiece;
-import cz.cvut.fel.pjv.pieces.King;
+import cz.cvut.fel.pjv.models.pieces.IPiece;
+import cz.cvut.fel.pjv.models.pieces.King;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
 
 import static cz.cvut.fel.pjv.models.Color.WHITE;

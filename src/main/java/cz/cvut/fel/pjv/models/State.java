@@ -101,7 +101,6 @@ public class State {
 
     public void reverseMove() {
         whiteOnMove = !whiteOnMove;
-        System.out.println("parada");
         if (!State.getInstance().isWhiteOnMove()) {
             long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
             long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
@@ -115,7 +114,6 @@ public class State {
     }
 
     public void resetMove() {
-        System.out.println("superparada");
         whiteOnMove = true;
     }
 

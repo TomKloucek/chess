@@ -1,6 +1,6 @@
 package cz.cvut.fel.pjv.models;
 
-import cz.cvut.fel.pjv.pieces.IPiece;
+import cz.cvut.fel.pjv.models.pieces.IPiece;
 
 import java.util.ArrayList;
 

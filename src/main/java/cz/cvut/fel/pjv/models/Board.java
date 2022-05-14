@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.loggers.Logger;
-import cz.cvut.fel.pjv.pieces.*;
+import cz.cvut.fel.pjv.models.pieces.*;
 
 import javax.swing.*;
 import java.util.ArrayList;

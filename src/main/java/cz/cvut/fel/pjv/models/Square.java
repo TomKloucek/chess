@@ -1,6 +1,6 @@
 package cz.cvut.fel.pjv.models;
 
-import cz.cvut.fel.pjv.pieces.IPiece;
+import cz.cvut.fel.pjv.models.pieces.IPiece;
 
 public class Square implements Comparable<Square> {
     private int x,y;
