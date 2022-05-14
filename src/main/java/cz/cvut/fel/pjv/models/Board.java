@@ -24,8 +24,7 @@ public class Board {
     public ArrayList<IPiece> getPieces(Color color) {
         if (color == Color.WHITE) {
             return whiteIPieces;
-        }
-        else {
+        } else {
             return blackIPieces;
         }
     }
@@ -37,65 +36,62 @@ public class Board {
     public void initializeEditor() {
         for (int i = 7; i > -1; i--) {
             for (int j = 0; j < 8; j++) {
-                board[j][i] = new Square(j,i,null);
+                board[j][i] = new Square(j, i, null);
             }
         }
     }
 
-    public void initializeBoard(){
+    public void initializeBoard() {
 
         for (int i = 7; i > -1; i--) {
             for (int j = 0; j < 8; j++) {
-                board[j][i] = new Square(j,i,null);
+                board[j][i] = new Square(j, i, null);
             }
         }
 
         // WHITE PLAYER
-        putPiece(0,0,"Rook",Color.WHITE);
-        putPiece(1,0,"Knight",Color.WHITE);
-        putPiece(2,0,"Bishop",Color.WHITE);
-        putPiece(3,0,"Queen",Color.WHITE);
-        putPiece(4,0,"King",Color.WHITE);
-        putPiece(5,0,"Bishop",Color.WHITE);
-        putPiece(6,0,"Knight",Color.WHITE);
-        putPiece(7,0,"Rook",Color.WHITE);
+        putPiece(0, 0, "Rook", Color.WHITE);
+        putPiece(1, 0, "Knight", Color.WHITE);
+        putPiece(2, 0, "Bishop", Color.WHITE);
+        putPiece(3, 0, "Queen", Color.WHITE);
+        putPiece(4, 0, "King", Color.WHITE);
+        putPiece(5, 0, "Bishop", Color.WHITE);
+        putPiece(6, 0, "Knight", Color.WHITE);
+        putPiece(7, 0, "Rook", Color.WHITE);
 
         for (int i = 0; i < 8; i++) {
-            putPiece(i,1,"Pawn",Color.WHITE);
+            putPiece(i, 1, "Pawn", Color.WHITE);
         }
 
         // BLACK PLAYER
         for (int i = 0; i < 8; i++) {
-            putPiece(i,6,"Pawn",Color.BLACK);
+            putPiece(i, 6, "Pawn", Color.BLACK);
         }
 
-        putPiece(0,7,"Rook",Color.BLACK);
-        putPiece(1,7,"Knight",Color.BLACK);
-        putPiece(2,7,"Bishop",Color.BLACK);
-        putPiece(3,7,"Queen",Color.BLACK);
-        putPiece(4,7,"King",Color.BLACK);
-        putPiece(5,7,"Bishop",Color.BLACK);
-        putPiece(6,7,"Knight",Color.BLACK);
-        putPiece(7,7,"Rook",Color.BLACK);
+        putPiece(0, 7, "Rook", Color.BLACK);
+        putPiece(1, 7, "Knight", Color.BLACK);
+        putPiece(2, 7, "Bishop", Color.BLACK);
+        putPiece(3, 7, "Queen", Color.BLACK);
+        putPiece(4, 7, "King", Color.BLACK);
+        putPiece(5, 7, "Bishop", Color.BLACK);
+        putPiece(6, 7, "Knight", Color.BLACK);
+        putPiece(7, 7, "Rook", Color.BLACK);
     }
 
-    public void printBoard(){
+    public void printBoard() {
         System.out.println("---------------------------------------------------------");
         for (int i = 7; i > -1; i--) {
             for (int j = 0; j < 8; j++) {
                 if (board[j][i].getPiece() != null) {
                     if (j == 0) {
-                        System.out.print("| "+board[j][i].getPiece()+" |");
+                        System.out.print("| " + board[j][i].getPiece() + " |");
+                    } else {
+                        System.out.print(" " + board[j][i].getPiece() + " |");
                     }
-                    else {
-                        System.out.print(" "+board[j][i].getPiece()+" |");
-                    }
-                }
-                else {
+                } else {
                     if (j == 0) {
                         System.out.print("|     |");
-                    }
-                    else {
+                    } else {
                         System.out.print("      |");
                     }
                 }
@@ -116,8 +112,7 @@ public class Board {
         };
         if (color == Color.WHITE) {
             whiteIPieces.add(IPiece);
-        }
-        else {
+        } else {
             blackIPieces.add(IPiece);
         }
         board[x][y].setPiece(IPiece);
@@ -126,23 +121,21 @@ public class Board {
     public void putPiece(IPiece IPiece) {
         if (IPiece.getColor() == Color.WHITE) {
             whiteIPieces.add(IPiece);
-        }
-        else {
+        } else {
             blackIPieces.add(IPiece);
         }
     }
 
     public IPiece pickPiece(int x, int y) {
-        if (this.board[x][y].getPiece() == null){
+        if (this.board[x][y].getPiece() == null) {
             return null;
-        }
-        else {
+        } else {
             return this.board[x][y].getPiece();
         }
     }
 
     public void stringToBoard(String s, boolean network) {
-        if(!network) {
+        if (!network) {
             for (int i = 7; i > -1; i--) {
                 for (int j = 0; j < 8; j++) {
                     board[j][i] = new Square(j, i, null);
@@ -162,9 +155,9 @@ public class Board {
                     counter++;
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             //JOptionPane.showMessageDialog(null,"Tady se nám něco nepovedlo");
-            Logger.log(Board.class, "stringToBoard","Nepodarilo se prevest string do boardu");
+            Logger.log(Board.class, "stringToBoard", "Nepodarilo se prevest string do boardu");
             e.printStackTrace();
         }
     }
@@ -176,63 +169,59 @@ public class Board {
             return null;
         }
         if (chars.length == 3) {
-            int y = Character.getNumericValue(chars[2])-1;
+            int y = Character.getNumericValue(chars[2]) - 1;
+            if (y > 7 || Helpers.XTranslateBack(String.valueOf(chars[1])) == -1) {
+                return null;
+            }
             if (chars[0] == 'W') {
-                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])),y,true);
+                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])), y, true);
+            } else {
+                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])), y, true);
             }
-            else {
-                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])),y,true);
+        } else if ((chars[0] == 'W' || chars[0] == 'B') && chars[3] == 'X') {
+            int y = Character.getNumericValue(chars[2]) - 1;
+            if (y > 7 || Helpers.XTranslateBack(String.valueOf(chars[1])) == -1) {
+                return null;
             }
-        }
-        else if ((chars[0] == 'W' || chars[0] == 'B') && chars[3] == 'X') {
-            int y = Character.getNumericValue(chars[2])-1;
             if (chars[0] == 'W') {
-                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])),y,false);
+                return new Pawn(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[1])), y, false);
+            } else {
+                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])), y, false);
             }
-            else {
-                return new Pawn(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[1])),y,false);
+        } else {
+            int y = Character.getNumericValue(chars[3]) - 1;
+            if (y > 7 || Helpers.XTranslateBack(String.valueOf(chars[2])) == -1) {
+                return null;
             }
-        }
-        else {
-            int y = Character.getNumericValue(chars[3])-1;
             if (chars[0] == 'K') {
                 if (chars[1] == 'W') {
-                    return new King(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                    return new King(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
+                } else {
+                    return new King(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
                 }
-                else {
-                    return new King(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
-                }
-            }
-            else if (chars[0] == 'R') {
+            } else if (chars[0] == 'R') {
                 if (chars[1] == 'W') {
-                    return new Rook(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                    return new Rook(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
+                } else {
+                    return new Rook(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
                 }
-                else {
-                    return new Rook(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
-                }
-            }
-            else if (chars[0] == 'Q') {
+            } else if (chars[0] == 'Q') {
                 if (chars[1] == 'W') {
-                    return new Queen(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                    return new Queen(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
+                } else {
+                    return new Queen(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
                 }
-                else {
-                    return new Queen(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
-                }
-            }
-            else if (chars[0] == 'N') {
+            } else if (chars[0] == 'N') {
                 if (chars[1] == 'W') {
-                    return new Knight(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                    return new Knight(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
+                } else {
+                    return new Knight(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
                 }
-                else {
-                    return new Knight(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
-                }
-            }
-            else if (chars[0] == 'B') {
+            } else if (chars[0] == 'B') {
                 if (chars[1] == 'W') {
-                    return new Bishop(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
-                }
-                else {
-                    return new Bishop(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])),y);
+                    return new Bishop(Color.WHITE, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
+                } else {
+                    return new Bishop(Color.BLACK, Helpers.XTranslateBack(String.valueOf(chars[2])), y);
                 }
             }
         }
@@ -241,11 +230,12 @@ public class Board {
 
     public void setMotionToPawns(ArrayList<IPiece> IPieces, IPiece chosen) {
         for (IPiece IPiece : IPieces) {
-            if (chosen != IPiece && IPiece instanceof Pawn){
+            if (chosen != IPiece && IPiece instanceof Pawn) {
                 ((Pawn) IPiece).movedTwoSquares = false;
             }
         }
     }
+
     public boolean movePiece(IPiece chosen, int x, int y) {
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
         if (chosen.possibleMovement(this).contains(board[x][y])) {
@@ -336,8 +326,7 @@ public class Board {
                 State.getInstance().getClient().printWriter.flush();
             }
             return true;
-        }
-        else {
+        } else {
             System.out.println("Nezadal jsi spravne hodnoty");
             return false;
         }
@@ -346,12 +335,10 @@ public class Board {
     private IPiece PromoteTo(Pawn pawn) {
         String[] options = {"Rook", "Queen", "Bishop", "Knight"};
         int answer;
-        if((State.getInstance().isWhiteOnMove() && State.getInstance().getGame().getPlayerWhite() instanceof AiPlayer)
-        || (!State.getInstance().isWhiteOnMove() && State.getInstance().getGame().getPlayerBlack() instanceof AiPlayer)){
+        if ((State.getInstance().isWhiteOnMove() && State.getInstance().getGame().getPlayerWhite() instanceof AiPlayer)
+                || (!State.getInstance().isWhiteOnMove() && State.getInstance().getGame().getPlayerBlack() instanceof AiPlayer)) {
             answer = 1;
-        }
-
-        else {
+        } else {
             answer = JOptionPane.showOptionDialog(null, "Vyber si novou figurku",
                     "Click a button",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
@@ -372,8 +359,7 @@ public class Board {
                     return IPiece;
                 }
             }
-        }
-        else {
+        } else {
             for (IPiece IPiece : this.getPieces(Color.BLACK)) {
                 if (IPiece.getPoints() == Integer.MAX_VALUE) {
                     return IPiece;
@@ -389,8 +375,7 @@ public class Board {
             if (Mated(Color.BLACK)) {
                 JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                 State.getInstance().resetMove();
-            }
-            else {
+            } else {
                 if (getKing(Color.BLACK).possibleMovement(this).isEmpty() && getPieces(Color.BLACK).size() == 1) {
                     JOptionPane.showMessageDialog(null, "Remíza");
                 }
@@ -401,8 +386,7 @@ public class Board {
     public void removePiece(IPiece IPiece) {
         if (IPiece.getColor() == Color.WHITE) {
             whiteIPieces.remove(IPiece);
-        }
-        else {
+        } else {
             blackIPieces.remove(IPiece);
         }
     }
@@ -410,14 +394,13 @@ public class Board {
     public void refillPiecesLists() {
         ArrayList<IPiece> whiteIPieces = new ArrayList<>();
         ArrayList<IPiece> blackIPieces = new ArrayList<>();
-        for (int r = 7; r >= 0; r --) {
+        for (int r = 7; r >= 0; r--) {
             for (int f = 0; f < 8; f++) {
                 IPiece IPiece = board[f][r].getPiece();
                 if (IPiece != null) {
                     if (IPiece.getColor() == Color.WHITE) {
                         whiteIPieces.add(IPiece);
-                    }
-                    else {
+                    } else {
                         blackIPieces.add(IPiece);
                     }
                 }
@@ -434,6 +417,7 @@ public class Board {
         }
         return moves;
     }
+
     public ArrayList<Square> getEveryPossibleMovesWithCover(ArrayList<IPiece> IPieces) {
         ArrayList<Square> moves = new ArrayList<>();
         for (IPiece IPiece : IPieces) {
@@ -441,16 +425,16 @@ public class Board {
         }
         return moves;
     }
+
     public ArrayList<Square> getEveryXRayMove(ArrayList<IPiece> IPieces) {
         ArrayList<Square> moves = new ArrayList<>();
         for (IPiece IPiece : IPieces) {
-            if (IPiece instanceof Queen){
+            if (IPiece instanceof Queen) {
                 moves.addAll(((Queen) IPiece).getXRayedMoves(this));
             }
-            if (IPiece instanceof Rook){
+            if (IPiece instanceof Rook) {
                 moves.addAll(((Rook) IPiece).getXRayedMoves(this));
-            }
-            else if(IPiece instanceof Bishop){
+            } else if (IPiece instanceof Bishop) {
                 moves.addAll(((Bishop) IPiece).getXRayedMoves(this));
             }
 
@@ -467,7 +451,7 @@ public class Board {
                     squaresToBlock.add(this.board[IPiece.getX()][IPiece.getY()]);
                 }
             } else if (IPiece instanceof Bishop) {
-                if (IPiece.possibleMovement(this).contains(kingSquare) || ((Bishop) IPiece).getXRayedMoves(this).size() !=0) {
+                if (IPiece.possibleMovement(this).contains(kingSquare) || ((Bishop) IPiece).getXRayedMoves(this).size() != 0) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(IPiece.getColor())).getX(), getKing(Helpers.getOtherColor(IPiece.getColor())).getY()};
                     int[] bishopPosition = {IPiece.getX(), IPiece.getY()};
                     int x = IPiece.getX();
@@ -505,7 +489,7 @@ public class Board {
                     }
                 }
             } else if (IPiece instanceof Rook) {
-                if (IPiece.possibleMovement(this).contains(kingSquare) || ((Rook) IPiece).getXRayedMoves(this).size() !=0) {
+                if (IPiece.possibleMovement(this).contains(kingSquare) || ((Rook) IPiece).getXRayedMoves(this).size() != 0) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(IPiece.getColor())).getX(), getKing(Helpers.getOtherColor(IPiece.getColor())).getY()};
                     int[] rookPosition = {IPiece.getX(), IPiece.getY()};
                     int x = IPiece.getX();
@@ -539,9 +523,8 @@ public class Board {
                     }
                 }
 
-            }
-            else if (IPiece instanceof Queen){
-                if (IPiece.possibleMovement(this).contains(kingSquare) || ((Queen) IPiece).getXRayedMoves(this).size() !=0) {
+            } else if (IPiece instanceof Queen) {
+                if (IPiece.possibleMovement(this).contains(kingSquare) || ((Queen) IPiece).getXRayedMoves(this).size() != 0) {
                     int[] kingPosition = {getKing(Helpers.getOtherColor(IPiece.getColor())).getX(), getKing(Helpers.getOtherColor(IPiece.getColor())).getY()};
                     int[] queenPosition = {IPiece.getX(), IPiece.getY()};
                     int x = IPiece.getX();
@@ -566,15 +549,13 @@ public class Board {
                             y--;
                         }
                         while (x == kingPosition[0] && y != kingPosition[1]);
-                    }
-                    else if (kingPosition[0] > queenPosition[0] && kingPosition[1] == queenPosition[1]){
+                    } else if (kingPosition[0] > queenPosition[0] && kingPosition[1] == queenPosition[1]) {
                         do {
                             squaresToBlock.add(this.board[x][y]);
                             x++;
                         }
                         while (x != kingPosition[0] && y == kingPosition[1]);
-                    }
-                    else if (kingPosition[0] > queenPosition[0] && kingPosition[1] > queenPosition[1]) {
+                    } else if (kingPosition[0] > queenPosition[0] && kingPosition[1] > queenPosition[1]) {
 
                         do {
                             squaresToBlock.add(this.board[x][y]);
@@ -606,11 +587,10 @@ public class Board {
                         while (x != kingPosition[0] && y != kingPosition[1]);
                     }
                 }
-                }
             }
+        }
         return squaresToBlock;
     }
-
 
 
     public boolean whiteInCheck() {
@@ -630,16 +610,17 @@ public class Board {
                     return false;
                 }
             }
-        }
-        else {
+            return whiteInCheck();
+        } else {
             for (IPiece IPiece : blackIPieces) {
                 if (canBlockOrEscapeFromCheck(IPiece)) {
                     return false;
                 }
             }
+            return blackInCheck();
         }
-        return true;
     }
+
 
     public boolean inCheck() {
         if (blackInCheck()) {
