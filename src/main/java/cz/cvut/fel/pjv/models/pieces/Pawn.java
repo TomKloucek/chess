@@ -60,7 +60,7 @@ public class Pawn implements IPiece {
         return y;
     }
 
-     public boolean getmovedTwoSquares() {
+     public boolean getMovedTwoSquares() {
         return movedTwoSquares;
     }
 
