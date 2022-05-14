@@ -7,6 +7,7 @@ import cz.cvut.fel.pjv.models.GameType;
 import cz.cvut.fel.pjv.models.Square;
 import cz.cvut.fel.pjv.models.pieces.IPiece;
 import cz.cvut.fel.pjv.models.pieces.King;
+import cz.cvut.fel.pjv.models.pieces.Knight;
 import cz.cvut.fel.pjv.models.pieces.Pawn;
 import cz.cvut.fel.pjv.models.pieces.Rook;
 import cz.cvut.fel.pjv.view.BoardView;
@@ -106,14 +107,7 @@ public class UnitTests {
         Assertions.assertEquals(expectedCountOfWhitePieces, resultCountOfWhitePieces);
         Assertions.assertEquals(expectedCountOfBlackPieces, resultCountOfBlackPieces);
     }
-    public void PieceFromString() {
-    }
 
-    public void boardToString() {
-    }
-
-    public void FormatTimeTest() {
-    }
     @ParameterizedTest(name = "Vytvoreni figurky se souradnicemi x:{1} a y:{2}")
     @CsvSource({"RBa3,0,2,BLACK","Wb5,1,4,WHITE"})
     public void pieceFromStringBasic_Test(String piece, int x, int y, String color) {
@@ -166,9 +160,18 @@ public class UnitTests {
         Pawn evaluatedPawn = (Pawn) listWithPawns.get(0);
         boolean result = evaluatedPawn.getMovedTwoSquares();
         Assertions.assertEquals(expectedResult, result);
+        verify(mockedBoard, times(1)).setMotionToPawns(listWithPawns, chosen);
     }
-
-    public void generateAllPossibleWays(int x, int y) {
+    @Test
+    public void PieceFromString_KnightOnX6Y4_TranslatedPiece() {
+        //ARRANGE
+        Board mockedBoard = mock(Board.class);
+        Knight expectedKnight = new Knight(Color.WHITE, 6, 4);
+        when(mockedBoard.pieceFromString("NWg3")).thenReturn(expectedKnight);
+        //ACT
+        Knight resultKnight = (Knight)mockedBoard.pieceFromString("NWg3");
+        //ASSERT
+        Assertions.assertEquals(expectedKnight, resultKnight);
     }
 
 }
