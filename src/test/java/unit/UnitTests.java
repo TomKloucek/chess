@@ -6,6 +6,7 @@ import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.GameType;
 import cz.cvut.fel.pjv.models.Square;
 import cz.cvut.fel.pjv.models.pieces.IPiece;
+import cz.cvut.fel.pjv.models.pieces.Knight;
 import cz.cvut.fel.pjv.models.pieces.Pawn;
 import cz.cvut.fel.pjv.models.pieces.Rook;
 import org.junit.Test;
@@ -116,13 +117,21 @@ public class UnitTests {
         Pawn evaluatedPawn = (Pawn) listWithPawns.get(0);
         boolean result = evaluatedPawn.getMovedTwoSquares();
         Assertions.assertEquals(expectedResult, result);
+        verify(mockedBoard, times(1)).setMotionToPawns(listWithPawns, chosen);
     }
-        public void putPiece() {
+    @Test
+    public void PieceFromString_KnightOnX6Y4_TranslatedPiece() {
+        //ARRANGE
+        Board mockedBoard = mock(Board.class);
+        Knight expectedKnight = new Knight(Color.WHITE, 6, 4);
+        when(mockedBoard.pieceFromString("NWg3")).thenReturn(expectedKnight);
+        //ACT
+        Knight resultKnight = (Knight)mockedBoard.pieceFromString("NWg3");
+        //ASSERT
+        Assertions.assertEquals(expectedKnight, resultKnight);
     }
 
 
-    public void generateAllPossibleWays(int x, int y) {
-    }
 
     public void getPieceImage(Square square, Board board) {
     }
