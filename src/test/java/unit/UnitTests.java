@@ -87,14 +87,14 @@ public class UnitTests {
         //ACT
         try (MockedConstruction<Pawn> pawnsExpected = mockConstruction(Pawn.class)) {
             // ACT
-            board.initializeBoard();
+            board.initializeEditor();
 
             // ASSERT
             Assertions.assertEquals(0,pawnsExpected.constructed().size());
         }
         try (MockedConstruction<King> kingsExpected = mockConstruction(King.class)) {
             // ACT
-            board.initializeBoard();
+            board.initializeEditor();
 
             // ASSERT
             Assertions.assertEquals(0,kingsExpected.constructed().size());
@@ -172,6 +172,7 @@ public class UnitTests {
         Knight resultKnight = (Knight)mockedBoard.pieceFromString("NWg3");
         //ASSERT
         Assertions.assertEquals(expectedKnight, resultKnight);
+        verify(mockedBoard, times(1)).pieceFromString("NWg3");
     }
 
 }
