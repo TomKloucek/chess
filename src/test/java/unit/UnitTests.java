@@ -6,13 +6,19 @@ import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.GameType;
 import cz.cvut.fel.pjv.models.Square;
 import cz.cvut.fel.pjv.models.pieces.IPiece;
+import cz.cvut.fel.pjv.models.pieces.King;
 import cz.cvut.fel.pjv.models.pieces.Pawn;
 import cz.cvut.fel.pjv.models.pieces.Rook;
+import cz.cvut.fel.pjv.view.BoardView;
+import cz.cvut.fel.pjv.view.MainMenu;
+import cz.cvut.fel.pjv.view.SquareView;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.MockedConstruction;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
@@ -49,7 +55,14 @@ public class UnitTests {
         int expectedPointsOnSquareX5Y7 = 3;
 
         //ACT
-        board.initializeBoard();
+        try (MockedConstruction<Pawn> pawnsExpected = mockConstruction(Pawn.class)) {
+            // ACT
+            board.initializeBoard();
+
+            // ASSERT
+            Assertions.assertEquals(16,pawnsExpected.constructed().size());
+        }
+
 
         //ASSERT
         int resultCountOfWhitePieces = board.getPieces(Color.WHITE).size();
@@ -61,7 +74,37 @@ public class UnitTests {
         Assertions.assertEquals(expectedCountOfBlackPieces, resultCountOfBlackPieces);
         Assertions.assertEquals(expectedPointsOnSquareX3Y0, resultPointsOnSquareX3Y0);
         Assertions.assertEquals(expectedPointsOnSquareX5Y7, resultPointsOnSquareX5Y7);
+    }
 
+    @Test
+    public void InitializeBoard_InitializeNewEditor(){
+        //ARRANGE
+        Board board = new Board(GameType.PVP);
+        int expectedCountOfWhitePieces = 0;
+        int expectedCountOfBlackPieces = 0;
+
+        //ACT
+        try (MockedConstruction<Pawn> pawnsExpected = mockConstruction(Pawn.class)) {
+            // ACT
+            board.initializeBoard();
+
+            // ASSERT
+            Assertions.assertEquals(0,pawnsExpected.constructed().size());
+        }
+        try (MockedConstruction<King> kingsExpected = mockConstruction(King.class)) {
+            // ACT
+            board.initializeBoard();
+
+            // ASSERT
+            Assertions.assertEquals(0,kingsExpected.constructed().size());
+        }
+
+        //ASSERT
+        int resultCountOfWhitePieces = board.getPieces(Color.WHITE).size();
+        int resultCountOfBlackPieces = board.getPieces(Color.BLACK).size();
+
+        Assertions.assertEquals(expectedCountOfWhitePieces, resultCountOfWhitePieces);
+        Assertions.assertEquals(expectedCountOfBlackPieces, resultCountOfBlackPieces);
     }
     public void PieceFromString() {
     }
@@ -76,8 +119,10 @@ public class UnitTests {
     public void pieceFromStringBasic_Test(String piece, int x, int y, String color) {
         Board board = new Board(GameType.PVP);
 
+
         IPiece figure = board.pieceFromString(piece);
         if (figure instanceof Rook) {
+
             Rook rook = new Rook(Color.valueOf(color),x,y);
             Assertions.assertEquals(rook.toString(),figure.toString());
         }
@@ -88,13 +133,18 @@ public class UnitTests {
     }
 
     @ParameterizedTest(name = "Vytvoreni figurky s nesmyslne zadanym stringem vrati null")
-    @CsvSource({"RBx9","null"})
+    @CsvSource({"RBx11","RBa9","RBk5"})
     public void pieceFromStringWithDangerousInputs_Test(String piece) {
         Board board = new Board(GameType.PVP);
 
-        IPiece figure = board.pieceFromString(piece);
+        try (MockedConstruction<Rook> rooksExpected = mockConstruction(Rook.class)) {
+            // ACT
+            IPiece figure = board.pieceFromString(piece);
 
-        Assertions.assertEquals(null, figure);
+            // ASSERT
+            Assertions.assertEquals(0,rooksExpected.constructed().size());
+        }
+
     }
 
     public void setMotionToPawns(ArrayList<IPiece> IPieces, IPiece chosen) {
@@ -117,14 +167,8 @@ public class UnitTests {
         boolean result = evaluatedPawn.getMovedTwoSquares();
         Assertions.assertEquals(expectedResult, result);
     }
-        public void putPiece() {
-    }
-
 
     public void generateAllPossibleWays(int x, int y) {
-    }
-
-    public void getPieceImage(Square square, Board board) {
     }
 
 }
