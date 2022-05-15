@@ -129,6 +129,7 @@ public class BoardView extends JPanel {
         }
     }
 
+
         private void initializeSingleSquarePanel(int f, int r) {
             if (board.getPieces(cz.cvut.fel.pjv.models.Color.WHITE).isEmpty()) {
                 squarePanels[f][r] = new SquareView(new GridLayout(1, 1),board.getBoard()[f][r],board, this,true);

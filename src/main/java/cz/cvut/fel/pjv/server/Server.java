@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.server;
 
 import cz.cvut.fel.pjv.loggers.Logger;
+import cz.cvut.fel.pjv.models.State;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -24,7 +25,7 @@ public class Server {
                 waiting.add(clientSocket);
 
                 if (waiting.size() % 2 == 0) {
-                    handlePVPGame(waiting.get(0), waiting.get(1), pointerId);
+                    handlePVPGame(waiting.get(0), waiting.get(1));
                     waiting.remove(0);
                     waiting.remove(0);
                 }
@@ -39,15 +40,9 @@ public class Server {
 
     }
 
-    public void handleAiGame(Socket player) throws IOException {
-        ClientHandler clientSocket = new ClientHandler(player);
-        new Thread(clientSocket).start();
-    }
 
-    public void handlePVPGame(Socket playerWhite, Socket playerBlack, int pointerId) throws IOException {
-        int firstPlayerId = pointerId;
-        pointerId +=1;
-        int secondPlayerId = pointerId;
+    public void handlePVPGame(Socket playerWhite, Socket playerBlack) throws IOException {
+
 
         TwoClientsHandler twoClientsHandler = new TwoClientsHandler(playerWhite, playerBlack);
         new Thread(twoClientsHandler).start();

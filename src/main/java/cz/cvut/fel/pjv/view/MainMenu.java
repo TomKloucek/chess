@@ -302,11 +302,27 @@ public class MainMenu extends JFrame {
                 if(State.getInstance().isWhiteOnMove()) {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+                    if(minutesLeft <= 0 && secondsLeft <= 0){
+                        timeWhite.setText(Helpers.formatTime(0,0));
+                        int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel  čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+                        if(answer == 0 || answer == -1){
+                            closeGameFrame();
+                            showMainMenu();
+                        }
+                    }
                     timeWhite.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
                 else {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+                    if(minutesLeft <= 0 && secondsLeft <= 0){
+                        timeBlack.setText(Helpers.formatTime(0,0));
+                        int answer = JOptionPane.showConfirmDialog(null, "Bílý vyhrál, černému došel čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+                        if(answer == 0 || answer == -1){
+                            closeGameFrame();
+                            showMainMenu();
+                        }
+                    }
                     timeBlack.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
             }
@@ -431,11 +447,27 @@ public class MainMenu extends JFrame {
                 if(State.getInstance().isWhiteOnMove()) {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+                    if(minutesLeft <= 0 && secondsLeft <= 0){
+                        timeWhite.setText(Helpers.formatTime(0,0));
+                        int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel  čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+                        if(answer == 0 || answer == -1){
+                            closeGameFrame();
+                            showMainMenu();
+                        }
+                    }
                     timeWhite.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
                 else {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+                    if(minutesLeft <= 0 && secondsLeft <= 0){
+                        timeBlack.setText(Helpers.formatTime(0,0));
+                        int answer = JOptionPane.showConfirmDialog(null, " Bílý vyhrál, černému došel čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+                        if(answer == 0 || answer == -1){
+                            closeGameFrame();
+                            showMainMenu();
+                        }
+                    }
                     timeBlack.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
             }
@@ -542,6 +574,7 @@ public class MainMenu extends JFrame {
 
         BoardView mainPanel = new BoardView(board);
         JFrame frame = new JFrame("Chess");
+        this.game = frame;
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
@@ -578,11 +611,27 @@ public class MainMenu extends JFrame {
                 if(State.getInstance().isWhiteOnMove()) {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftWhite());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
+                    if(minutesLeft <= 0 && secondsLeft <= 0){
+                        timeWhite.setText(Helpers.formatTime(0,0));
+                        int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel  čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+                        if(answer == 0 || answer == -1){
+                            closeGameFrame();
+                            showMainMenu();
+                        }
+                    }
                     timeWhite.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
                 else {
                     long minutesLeft = State.getInstance().getMinutesLeft(State.getInstance().getTimeLeftBlack());
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftBlack());
+                    if(minutesLeft <= 0 && secondsLeft <= 0){
+                        timeBlack.setText(Helpers.formatTime(0,0));
+                        int answer = JOptionPane.showConfirmDialog(null, "Bílý vyhrál, černému došel čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+                        if(answer == 0 || answer == -1){
+                            closeGameFrame();
+                            showMainMenu();
+                        }
+                    }
                     timeBlack.setText(Helpers.formatTime(minutesLeft,secondsLeft));
                 }
             }

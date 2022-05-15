@@ -20,6 +20,7 @@ public class TwoClientsHandler implements Runnable {
     private BufferedReader bufferedReaderBlack;
 
     private boolean listenWhite = true;
+    private boolean listenForLogin = true;
 
 
     public TwoClientsHandler(Socket playerWhite, Socket playerBlack) {
@@ -49,6 +50,7 @@ public class TwoClientsHandler implements Runnable {
             String  firstLetter = null;
             while (true) {
                 if (listenWhite == true) {
+
                     firstChar = inputStreamReaderWhite.read();
                     System.out.println((char)firstChar);
                     if(firstChar != -1){
@@ -72,13 +74,41 @@ public class TwoClientsHandler implements Runnable {
                     }
                     if (bufferedReaderWhite.ready()) {
                         while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null) {
-                            System.out.printf(
-                                    "Sent from the White client: %s\n",
-                                    firstLetter+receivedMessageFromWhite);
-                            printWriterBlack.println(firstLetter+receivedMessageFromWhite);
-                            printWriterBlack.flush();
-                            listenWhite = false;
-                            break;
+                            if(receivedMessageFromWhite.contains("login")){
+                                System.out.println("W"+receivedMessageFromWhite);
+                                System.out.println("test");
+                                printWriterBlack.println("W"+receivedMessageFromWhite);
+                                printWriterBlack.flush();
+                                receivedMessageFromBlack = bufferedReaderBlack.readLine();
+                                if (receivedMessageFromBlack.contains("login")){
+                                    System.out.println("B"+receivedMessageFromBlack);
+                                    printWriterWhite.println("B"+receivedMessageFromBlack);
+                                    printWriterWhite.flush();
+                                }
+
+                            }
+                            else {
+                                if(listenForLogin == true){
+                                    System.out.printf(
+                                            "Sent from the White client: %s\n",
+                                            receivedMessageFromWhite);
+                                    printWriterBlack.println(receivedMessageFromWhite);
+                                    printWriterBlack.flush();
+                                    listenWhite = false;
+                                    listenForLogin = false;
+                                    break;
+                                }
+                                else {
+                                    System.out.printf(
+                                            "Sent from the White client: %s\n",
+                                            firstLetter+receivedMessageFromWhite);
+                                    printWriterBlack.println(firstLetter + receivedMessageFromWhite);
+                                    printWriterBlack.flush();
+                                    listenWhite = false;
+                                    break;
+                                }
+
+                            }
                         }
                     }
                 } else if (listenWhite == false) {
@@ -106,20 +136,20 @@ public class TwoClientsHandler implements Runnable {
                     if(bufferedReaderBlack.ready()) {
                         while ((receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
 
-                            System.out.printf(
-                                    " Sent from the Black client: %s\n",
-                                    firstLetter+receivedMessageFromBlack);
-                            printWriterWhite.println(firstLetter+receivedMessageFromBlack);
-                            printWriterWhite.flush();
-                            listenWhite = true;
-                            break;
+                                System.out.printf(
+                                        " Sent from the Black client: %s\n",
+                                        firstLetter+receivedMessageFromBlack);
+                                printWriterWhite.println(firstLetter+receivedMessageFromBlack);
+                                printWriterWhite.flush();
+                                listenWhite = true;
+                                break;
                         }
                     }
                 }
             }
         }
         catch(IOException e){
-            Logger.log(ClientHandler.class, "run",e.getMessage());
+            Logger.log(TwoClientsHandler.class, "run",e.getMessage());
             e.printStackTrace();
         }
     }

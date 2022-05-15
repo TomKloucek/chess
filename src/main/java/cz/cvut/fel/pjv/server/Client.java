@@ -1,7 +1,6 @@
 package cz.cvut.fel.pjv.server;
 
 import cz.cvut.fel.pjv.models.State;
-import cz.cvut.fel.pjv.view.MainMenu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +12,7 @@ public class Client {
     public PrintWriter printWriter;
     public InputStreamReader inputStreamReader;
     public BufferedReader bufferedReader;
-    public ClientListener clientListener;
-    public ClientWriter clientWriter;
+    public ClientHandler clientListener;
     Socket player;
 
 
@@ -23,16 +21,13 @@ public class Client {
         printWriter = new PrintWriter(player.getOutputStream());
         inputStreamReader = new InputStreamReader(player.getInputStream());
         bufferedReader = new BufferedReader(inputStreamReader);
-        setClientListener();
-        setClientWriter();
+        setClientHandler();
     }
-    public void setClientListener(){
-        clientListener = new ClientListener(player, bufferedReader);
+    public void setClientHandler(){
+        clientListener = new ClientHandler(player, bufferedReader, printWriter);
         new Thread(clientListener).start();
     }
-    public void setClientWriter(){
-        clientWriter = new ClientWriter(player, printWriter);
-    }
+
 
     public void sendBoard(String board) {
         printWriter.println(board);
