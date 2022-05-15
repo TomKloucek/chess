@@ -204,4 +204,15 @@ public class UnitTests {
         verify(mockedBoard, times(1)).pieceFromString("NWg3");
     }
 
+    @Test
+    @ParameterizedTest(name = "Vytvoreni figurky s nesmyslne zadanym stringem vrati null")
+    @CsvSource({"-5,0","6,5","1,6"})
+    public void checkSquareCoordinates_Test(int addition, int expected){
+        int i = addition;
+        int x = 5;
+        int y = 5;
+
+        Assertions.assertEquals(expected,Helpers.checkSquareCoordinates(x,i, y,i, "x"));
+    }
+
 }
