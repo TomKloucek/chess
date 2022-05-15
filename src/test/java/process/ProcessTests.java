@@ -1,5 +1,6 @@
 package process;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.models.pieces.King;
 import cz.cvut.fel.pjv.models.pieces.Pawn;
@@ -85,14 +86,6 @@ public class ProcessTests {
 
         int expectedNumberOfBlackPieces = board.getPieces(Color.BLACK).size();
         Assertions.assertEquals(0,expectedNumberOfBlackPieces);
-
-        // Zadna figurka na nove boarde nesmi byt v checku
-        Assertions.assertFalse(board.whiteInCheck());
-        Assertions.assertFalse(board.blackInCheck());
-
-        // Zadny z hracu nesmi byt v matu na po inicializaci boardy
-        Assertions.assertFalse(board.Mated(Color.WHITE));
-        Assertions.assertFalse(board.Mated(Color.BLACK));
     }
 
     @Test
@@ -144,7 +137,7 @@ public class ProcessTests {
         boolean result = board.Mated(colorOfKing);
         //ASSERT
         Assertions.assertEquals(expectedResult, result);
-        String expectedResultString = "RBa8,NBb8,BBc8,QBd8,KBe8,BBf8,NBg8,RBh8,Ba7X,Bb7X,Bc7X,Bd7X,Be7X,Bf7X,Bg7X,Bh7X, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,Wa2X,Wb2X,Wc2X,Wd2X,We2X,Wf2X,Wg2X,Wh2X,RWa1,NWb1,BWc1,QWd1,KWe1,BWf1,NWg1,RWh1";
+        String expectedResultString = "RBa8,NBb8,BBc8,QBd8,KBe8,BBf8,NBg8,RBh8,Ba7X,Bb7X,Bc7X,Bd7X,Be7X,Bf7X,Bg7X,Bh7X, , , , , , , , , , , , , , , , , , , , , , , , , , , ,NBd3, , , , ,Wa2X,Wb2X,Wc2X,Wd2X,We2X,Wf2X,Wg2X,Wh2X,RWa1,NWb1,BWc1,QWd1,KWe1,BWf1,NWg1,RWh1";
         Assertions.assertEquals(expectedResultString,board.boardToString());
     }
 
@@ -154,20 +147,43 @@ public class ProcessTests {
         Board board = new Board(GameType.PVP);
         board.initializeBoard();
         board.stringToBoard("RBa8, ,BBc8,QBd8,KBe8,BBf8,NBg8,RBh8,Ba7X,Bb7X,Bc7X, , ,Bf7X,Bg7X,Bh7X, , ,NBc6,Bd6X, , , , , , , , ,Be5 , , , , , , , , , ,Wg4X, , , , , , ,NWf3, , ,Wa2X,Wb2X,Wc2X,Wd2X,We2X,Wf2X,BWg2,Wh2X,RWa1,NWb1,BWc1,QWd1,KWe1, , ,RWh1", false);
+        Game game = null;
+
+        int random = Helpers.randomNumber(0,100);
+
+        Player p1,p2;
+        if (random % 2 == 0) {
+            p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+            p2 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+            game = new Game(p1, p2, board);
+        }
+        else {
+            p1 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+            p2 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+            game = new Game(p2, p1, board);
+        }
+
+        game.setMe(p1);
+
+        State.getInstance().setGame(game);
+
 
         Square withKing = board.getBoard()[4][0];
         Square withRook = board.getBoard()[7][0];
 
+        System.out.println(withKing.getPiece());
+        System.out.println(withRook.getPiece());
+
         Assertions.assertTrue(board.getKing(Color.WHITE).possibleMovement(board).contains(withRook));
 
         // CASTLE
-        board.movePiece(board.pickPiece(withKing.getX(), withKing.getY()),7,0 );
+        board.movePiece(withKing.getPiece(),7,0 );
 
         Assertions.assertTrue(board.getBoard()[6][0].getPiece() instanceof King);
         Assertions.assertTrue(board.getBoard()[6][0].getPiece().getColor() == Color.WHITE);
 
         Assertions.assertTrue(board.getBoard()[5][0].getPiece() instanceof Rook);
-        Assertions.assertTrue(board.getBoard()[5][0].getPiece().getColor() == Color.BLACK);
+        Assertions.assertTrue(board.getBoard()[5][0].getPiece().getColor() == Color.WHITE);
     }
 
     @Test
