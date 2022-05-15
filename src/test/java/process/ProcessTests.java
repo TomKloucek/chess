@@ -119,7 +119,7 @@ public class ProcessTests {
         //ASSERT
 
         Assertions.assertEquals(expectedResult, result);
-        String expectedResultString = "RBa8,NBb8,BBc8,QBd8,KBe8,BBf8,NBg8,RBh8,Ba7X,Bb7X,Bc7X,Bd7X,Be7X,Bf7X,Bg7X,Bh7X, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,Wa2X,Wb2X,Wc2X,Wd2X,We2X,Wf2X,Wg2X,Wh2X,RWa1,NWb1,BWc1,QWd1,KWe1,BWf1,NWg1,RWh1";
+        String expectedResultString = "RBa8,NBb8,BBc8,QBd8,KBe8,BBf8,NBg8,RBh8,Ba7X,Bb7X,Bc7X,Bd7X,Be7X,Bf7X,Bg7X,Bh7X, , , , , , , , , ,KBb5, , , , , , , , , , , , , , , , ,NWc3, , , , , ,Wa2X,Wb2X,Wc2X,Wd2X,We2X,Wf2X,Wg2X,Wh2X,RWa1,NWb1,BWc1,QWd1,KWe1,BWf1,NWg1,RWh1";
         Assertions.assertEquals(expectedResultString,board.boardToString());
 
     }
@@ -170,9 +170,6 @@ public class ProcessTests {
 
         Square withKing = board.getBoard()[4][0];
         Square withRook = board.getBoard()[7][0];
-
-        System.out.println(withKing.getPiece());
-        System.out.println(withRook.getPiece());
 
         Assertions.assertTrue(board.getKing(Color.WHITE).possibleMovement(board).contains(withRook));
 
