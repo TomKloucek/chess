@@ -141,9 +141,6 @@ public class UnitTests {
 
     }
 
-    public void setMotionToPawns(ArrayList<IPiece> IPieces, IPiece chosen) {
-    }
-
     // Mocked tests
 
     @Test
