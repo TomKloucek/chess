@@ -325,6 +325,7 @@ public class Board {
             if (this.getType() == GameType.SERVER) {
                 State.getInstance().getClient().printWriter.println(this.boardToString());
                 State.getInstance().getClient().printWriter.flush();
+                State.getInstance().getGame().addMove(this.boardToString());
             }
             return true;
         } else {

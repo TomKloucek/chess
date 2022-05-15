@@ -231,4 +231,19 @@ public class Helpers {
         }
         return result;
     }
+
+    public static String gameHistory(ArrayList<String> moves) {
+        StringBuilder resultString = new StringBuilder("History:");
+        boolean first = true;
+        for (String move : moves) {
+            if (first) {
+               resultString.append(move);
+               first = false;
+            }
+            else {
+                resultString.append(";").append(move);
+            }
+        }
+        return  resultString.toString();
+    }
 }

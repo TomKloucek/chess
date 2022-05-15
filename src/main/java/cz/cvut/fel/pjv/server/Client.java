@@ -28,14 +28,6 @@ public class Client {
         new Thread(clientListener).start();
     }
 
-
-    public void sendBoard(String board) {
-        printWriter.println(board);
-    }
-    public void sendLogin() {
-        printWriter.println("login:"+State.getInstance().getLogin());
-    }
-
     public void disconnectFromServer() throws IOException {
         System.out.println(player);
         player.close();

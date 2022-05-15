@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.State;
@@ -46,7 +47,7 @@ public class ClientHandler implements Runnable{
                 }
                 else if (receivedMessage.equals("OneOfPlayersDisconnected")){
                     State.getInstance().getGuiRef().showMainMenu();
-                    State.getInstance().getGuiRef().closeGameFrame();
+                    State.getInstance().getGuiRef().closeGameFrame(true);
                     JOptionPane.showMessageDialog(null,"Bohužel se Váš protihráč odpojil ze hry");
                 }
                 else if (receivedMessage.contains("White login:")){
@@ -66,9 +67,8 @@ public class ClientHandler implements Runnable{
             Logger.log(ClientHandler.class,"run","Nastal problem pri prijimani informaci od serveru");
             e.printStackTrace();
         }
-
-        // closing the connection
         try {
+            System.out.println("hello");
             clientSocket.close();
         } catch (IOException e) {
             Logger.log(ClientHandler.class, "run","Nastala chyba pri uzavirani socketu");

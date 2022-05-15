@@ -85,7 +85,6 @@ public class MainMenu extends JFrame {
                         State.getInstance().setLogin();
                     }
                     client.connectToServer();
-                    //client.sendLogin();
                 } catch (IOException ex) {
                     Logger.log(MainMenu.class, "Constructor",ex.getMessage());
                     JOptionPane.showMessageDialog(null,"Bohužel jsme nenašli žádný dostupný server, zkuste to prosím později");
@@ -307,7 +306,7 @@ public class MainMenu extends JFrame {
                         timeWhite.setText(Helpers.formatTime(0,0));
                         int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel  čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
                         if(answer == 0 || answer == -1){
-                            closeGameFrame();
+                            closeGameFrame(true);
                             showMainMenu();
                         }
                     }
@@ -320,7 +319,7 @@ public class MainMenu extends JFrame {
                         timeBlack.setText(Helpers.formatTime(0,0));
                         int answer = JOptionPane.showConfirmDialog(null, "Bílý vyhrál, černému došel čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
                         if(answer == 0 || answer == -1){
-                            closeGameFrame();
+                            closeGameFrame(true);
                             showMainMenu();
                         }
                     }
@@ -452,7 +451,7 @@ public class MainMenu extends JFrame {
                         timeWhite.setText(Helpers.formatTime(0,0));
                         int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel  čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
                         if(answer == 0 || answer == -1){
-                            closeGameFrame();
+                            closeGameFrame(false);
                             showMainMenu();
                         }
                     }
@@ -465,7 +464,7 @@ public class MainMenu extends JFrame {
                         timeBlack.setText(Helpers.formatTime(0,0));
                         int answer = JOptionPane.showConfirmDialog(null, " Bílý vyhrál, černému došel čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
                         if(answer == 0 || answer == -1){
-                            closeGameFrame();
+                            closeGameFrame(false);
                             showMainMenu();
                         }
                     }
@@ -616,7 +615,7 @@ public class MainMenu extends JFrame {
                         timeWhite.setText(Helpers.formatTime(0,0));
                         int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel  čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
                         if(answer == 0 || answer == -1){
-                            closeGameFrame();
+                            closeGameFrame(false);
                             showMainMenu();
                         }
                     }
@@ -629,7 +628,7 @@ public class MainMenu extends JFrame {
                         timeBlack.setText(Helpers.formatTime(0,0));
                         int answer = JOptionPane.showConfirmDialog(null, "Bílý vyhrál, černému došel čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
                         if(answer == 0 || answer == -1){
-                            closeGameFrame();
+                            closeGameFrame(false);
                             showMainMenu();
                         }
                     }
@@ -867,9 +866,8 @@ public class MainMenu extends JFrame {
             return false;
     }
 
-    public void closeGameFrame() {
-    this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
-
+    public void closeGameFrame(boolean network) {
+        this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
     }
 
     public void openLastPlayedGames() {

@@ -50,7 +50,6 @@ public class TwoClientsHandler implements Runnable {
             String  firstLetter = null;
             while (true) {
                 if (listenWhite == true) {
-
                     firstChar = inputStreamReaderWhite.read();
                     System.out.println((char)firstChar);
                     if(firstChar != -1){
@@ -75,13 +74,10 @@ public class TwoClientsHandler implements Runnable {
                     if (bufferedReaderWhite.ready()) {
                         while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null) {
                             if(receivedMessageFromWhite.contains("login")){
-                                System.out.println("W"+receivedMessageFromWhite);
-                                System.out.println("test");
                                 printWriterBlack.println("W"+receivedMessageFromWhite);
                                 printWriterBlack.flush();
                                 receivedMessageFromBlack = bufferedReaderBlack.readLine();
                                 if (receivedMessageFromBlack.contains("login")){
-                                    System.out.println("B"+receivedMessageFromBlack);
                                     printWriterWhite.println("B"+receivedMessageFromBlack);
                                     printWriterWhite.flush();
                                 }
@@ -113,7 +109,6 @@ public class TwoClientsHandler implements Runnable {
                     }
                 } else if (listenWhite == false) {
                     firstChar = inputStreamReaderBlack.read();
-                    System.out.println((char)firstChar);
                     if(firstChar != -1){
                         firstLetter = Character.toString(firstChar);
                     }

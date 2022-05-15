@@ -2,10 +2,14 @@ package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.server.Client;
 
+import java.util.ArrayList;
+
 public class Game {
     private Player playerWhite;
     private Player playerBlack;
     private Board board;
+
+    private ArrayList<String> moves;
 
     private boolean gameState = true;
     private Client client;
@@ -16,6 +20,7 @@ public class Game {
         this.playerWhite = playerWhite;
         this.playerBlack = playerBlack;
         this.board = board;
+        this.moves = new ArrayList<>();
     }
 
     public Player getPlayerWhite() {
@@ -49,5 +54,14 @@ public class Game {
         board.stringToBoard(boardString, true);
         State.getInstance().getGuiRef().getBw().repaintBoard();
         State.getInstance().reverseMove();
+        State.getInstance().getGame().addMove(boardString);
+    }
+
+    public ArrayList<String> getMoves() {
+        return moves;
+    }
+
+    public void addMove(String move) {
+        this.moves.add(move);
     }
 }
