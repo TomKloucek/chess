@@ -12,10 +12,11 @@ import cz.cvut.fel.pjv.models.GameType;
 import cz.cvut.fel.pjv.models.pieces.IPiece;
 import org.junit.jupiter.api.Assertions;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.concurrent.BlockingDeque;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class ProcessTests {
     @Test
@@ -138,5 +139,34 @@ public class ProcessTests {
         //ASSERT
         Assertions.assertEquals(expectedResult, result);
 
+    }
+
+    @Test
+    public void GetEveryXrayMove_PieceInXrayMoves_PieceInXrayMoves(){
+        //ARRANGE
+        Board board = new Board(GameType.PVP);
+        board.initializeBoard();
+        IPiece pawnInFrontOfWhiteKing = board.getPieces(Color.WHITE).get(12);
+
+        IPiece pawnInFrontOfBlackKing = board.getPieces(Color.BLACK).get(4);
+        IPiece blackQueen = board.getPieces(Color.BLACK).get(11);
+        Player p1 = new Player(cz.cvut.fel.pjv.models.Color.WHITE, null);
+        Player p2 = new Player(cz.cvut.fel.pjv.models.Color.BLACK, null);
+        Game game = new Game(p1, p2, board);
+
+        State.getInstance().setGame(game);
+        //ACT
+        board.movePiece(pawnInFrontOfWhiteKing, 4, 2);
+        board.movePiece(pawnInFrontOfBlackKing, 4, 4);
+        board.movePiece(pawnInFrontOfWhiteKing, 4, 3);
+        board.movePiece(blackQueen, 7, 3);
+        IPiece pawnWhichMovesAreBlocked = board.getPieces(Color.WHITE).get(5);
+
+        //ASSERT
+        boolean expectedOccurrence = true;
+        boolean resultOccurrence = board.getEveryXRayMove(board.getPieces(Color.BLACK)).contains(
+                board.getBoard()[pawnWhichMovesAreBlocked.getX()][pawnWhichMovesAreBlocked.getY()]);
+
+        Assertions.assertEquals(expectedOccurrence, resultOccurrence);
     }
 }

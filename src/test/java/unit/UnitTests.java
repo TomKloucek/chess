@@ -77,6 +77,9 @@ public class UnitTests {
         Assertions.assertEquals(expectedPointsOnSquareX5Y7, resultPointsOnSquareX5Y7);
     }
 
+
+    // Mocked tests
+
     @Test
     public void InitializeBoard_InitializeNewEditor(){
         //ARRANGE
@@ -141,10 +144,6 @@ public class UnitTests {
 
     }
 
-    public void setMotionToPawns(ArrayList<IPiece> IPieces, IPiece chosen) {
-    }
-
-    // Mocked tests
 
     @Test
     public void SetMotionToPawns_SetMotionToMovedPawns_MotionSet() {
