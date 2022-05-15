@@ -237,6 +237,7 @@ public class Board {
     }
 
     public boolean movePiece(IPiece chosen, int x, int y) {
+        System.out.println(boardToString());
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
         if (chosen.possibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {

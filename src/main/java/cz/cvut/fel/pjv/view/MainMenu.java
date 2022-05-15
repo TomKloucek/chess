@@ -12,6 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -122,12 +123,12 @@ public class MainMenu extends JFrame {
         JButton topten = new JButton();
         topten.setBackground(Color.black);
         topten.setForeground(Color.white);
-        topten.setText("TOP 10 her");
+        topten.setText("Všechny odehrané hry");
         topten.setCursor(new Cursor(Cursor.HAND_CURSOR));
         topten.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Zobrazi se 10 her");
+                MainMenu.this.openLastPlayedGames();
             }
         });
         JButton editor = new JButton();
@@ -815,12 +816,106 @@ public class MainMenu extends JFrame {
                 }
             }
             return false;
-        }
+    }
 
-        public void closeGameFrame() {
-        this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
+    public void closeGameFrame() {
+    this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
 
+    }
+
+    public void openLastPlayedGames() {
+        hideMainMenu();
+        LastGamesView lgview = new LastGamesView();
+
+        for (GameHistoryButton game : lgview.getButtons()) {
+            game.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    openGameExplorer((ArrayList<String>) game.getGh().getMoves());
+                }
+            });
         }
+        lgview.addButtons();
+
+        JFrame frame = new JFrame("Vsechny odehrane hry");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                showMainMenu();
+            }
+        });
+        JScrollPane scrollPane = new JScrollPane(lgview);
+        frame.getContentPane().add(scrollPane);
+        frame.setMinimumSize(new Dimension(930, 679));
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+    }
+
+    public void openGameExplorer(ArrayList<String> moves) {
+        Board board = new Board(GameType.SERVER);
+
+        hideMainMenu();
+        final int[] currentMove = {0};
+        board.stringToBoard(moves.get(currentMove[0]), false);
+
+        BoardView mainPanel = new BoardView(board);
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.getContentPane().add(mainPanel);
+        frame.setMinimumSize(new Dimension(930, 679));
+        frame.pack();
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+
+        JPanel gamePanel = new JPanel(new BorderLayout());
+
+        JButton forwardButton = new JButton("Dále");
+        forwardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentMove[0] + 1 > moves.size()) {
+                    JOptionPane.showMessageDialog(null, "Žádný tah potom neexistuje");
+                }
+                else {
+                    currentMove[0] += 1;
+                    board.stringToBoard(moves.get(currentMove[0]), true);
+                    mainPanel.repaintBoard();
+                }
+            }
+        });
+
+        JButton backButton = new JButton("Zpět");
+        backButton.setSize(100,100);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentMove[0] - 1 < 0) {
+                    JOptionPane.showMessageDialog(null, "Žádný tah předtím neexistuje");
+                }
+                else {
+                    currentMove[0] -= 1;
+                    board.stringToBoard(moves.get(currentMove[0]), true);
+                    mainPanel.repaintBoard();
+                }
+            }
+        });
+
+        JPanel middlePanel = new JPanel(new BorderLayout());
+
+        EmptyBorder margin = new EmptyBorder(128,80,128,80);
+        forwardButton.setBorder(new CompoundBorder(forwardButton.getBorder(), margin));
+        backButton.setBorder(new CompoundBorder(backButton.getBorder(), margin));
+
+        forwardButton.setFont(new Font("Serif", Font.PLAIN, 40));
+        backButton.setFont(new Font("Serif", Font.PLAIN, 40));
+
+        middlePanel.add(forwardButton,BorderLayout.NORTH);
+        middlePanel.add(backButton,BorderLayout.SOUTH);
+        gamePanel.add(middlePanel,BorderLayout.CENTER);
+        gamePanel.setAlignmentX(50);
+
+        frame.add(gamePanel,BorderLayout.EAST);
+    }
 }
 
 
