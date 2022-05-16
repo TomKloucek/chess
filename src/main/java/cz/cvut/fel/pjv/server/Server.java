@@ -36,14 +36,10 @@ public class Server {
                 System.exit(1);
             }
         }
-
-
     }
 
 
     public void handlePVPGame(Socket playerWhite, Socket playerBlack) throws IOException {
-
-
         TwoClientsHandler twoClientsHandler = new TwoClientsHandler(playerWhite, playerBlack);
         new Thread(twoClientsHandler).start();
 

@@ -26,7 +26,6 @@ public class ClientHandler implements Runnable{
         this.printWriter = printWriter;
 
     }
-
     @Override
     public void run() {
         try {
@@ -47,7 +46,7 @@ public class ClientHandler implements Runnable{
                 }
                 else if (receivedMessage.contains("OneOfPlayersDisconnected")){
                     State.getInstance().getGuiRef().showMainMenu();
-                    printWriter.println("Notation of game");
+                    printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
                     printWriter.flush();
                     State.getInstance().getGuiRef().closeGameFrame(true);
                     JOptionPane.showMessageDialog(null,"Bohužel se Váš protihráč odpojil ze hry");

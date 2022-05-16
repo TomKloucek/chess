@@ -122,12 +122,20 @@ public class MainMenu extends JFrame {
         JButton topten = new JButton();
         topten.setBackground(Color.black);
         topten.setForeground(Color.white);
-        topten.setText("Všechny odehrané hry");
+        topten.setText("Všechny hry");
         topten.setCursor(new Cursor(Cursor.HAND_CURSOR));
         topten.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainMenu.this.openLastPlayedGames();
+                try {
+                    Client client = new Client();
+                    MainMenu.this.openLastPlayedGames(client.getGamesHistory());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    Logger.log(MainMenu.class, "Constructor",ex.getMessage());
+                    JOptionPane.showMessageDialog(null,"Bohužel jsme nenašli žádný dostupný server, zkuste to prosím později");
+                    showMainMenu();
+                }
             }
         });
         JButton editor = new JButton();
@@ -889,9 +897,9 @@ public class MainMenu extends JFrame {
         this.game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING));
     }
 
-    public void openLastPlayedGames() {
+    public void openLastPlayedGames(String moves) {
         hideMainMenu();
-        LastGamesView lgview = new LastGamesView();
+        LastGamesView lgview = new LastGamesView(moves);
 
         for (GameHistoryButton game : lgview.getButtons()) {
             game.addActionListener(new ActionListener() {
@@ -981,6 +989,14 @@ public class MainMenu extends JFrame {
         gamePanel.setAlignmentX(50);
 
         frame.add(gamePanel,BorderLayout.EAST);
+    }
+
+    public JLabel getNameWhite() {
+        return nameWhite;
+    }
+
+    public JLabel getNameBlack() {
+        return nameBlack;
     }
 }
 
