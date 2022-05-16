@@ -1,13 +1,12 @@
 package cz.cvut.fel.pjv.server;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.loggers.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.time.LocalDateTime;
 
 public class TwoClientsHandler implements Runnable {
     private final Socket playerWhite;
@@ -75,7 +74,6 @@ public class TwoClientsHandler implements Runnable {
                         printWriterBlack.flush();
 
                     }
-
                     while (!bufferedReaderWhite.ready() && bufferedReaderBlack.ready() && !whiteDisconnected && !blackDisconnected) {
                         receivedMessageFromBlack = bufferedReaderBlack.readLine();
                         System.out.printf(
@@ -95,7 +93,6 @@ public class TwoClientsHandler implements Runnable {
                                     printWriterWhite.println("B"+receivedMessageFromBlack);
                                     printWriterWhite.flush();
                                 }
-
                             }
                             else {
                                 if(listenForLogin == true){
@@ -140,9 +137,6 @@ public class TwoClientsHandler implements Runnable {
                         printWriterWhite.println("OneOfPlayersDisconnected");
                         printWriterWhite.flush();
                     }
-
-
-
                     while (!bufferedReaderBlack.ready() && bufferedReaderWhite.ready() && !whiteDisconnected && !blackDisconnected) {
                         receivedMessageFromWhite = bufferedReaderWhite.readLine();
                         System.out.printf(
@@ -163,14 +157,13 @@ public class TwoClientsHandler implements Runnable {
                                 break;
                         }
                     }
-
                 }
                 if (blackDisconnected || whiteDisconnected){
                     if(blackDisconnected){
-                        System.out.println(bufferedReaderWhite.readLine());
+                        this.saveGameToFile(bufferedReaderWhite.readLine());
                     }
-                    else if (whiteDisconnected) {
-                        System.out.println(bufferedReaderBlack.readLine());
+                    else {
+                        this.saveGameToFile(bufferedReaderBlack.readLine());
                     }
                     blackDisconnected = false;
                     whiteDisconnected = false;
@@ -181,6 +174,15 @@ public class TwoClientsHandler implements Runnable {
         catch(IOException e){
             Logger.log(TwoClientsHandler.class, "run",e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void saveGameToFile(String game) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("games.txt", true));
+        if (game != null) {
+            bw.write(game);
+            bw.newLine();
+            bw.close();
         }
     }
 }

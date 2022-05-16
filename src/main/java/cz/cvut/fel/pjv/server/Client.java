@@ -23,6 +23,13 @@ public class Client {
         bufferedReader = new BufferedReader(inputStreamReader);
         setClientHandler();
     }
+
+    public String getGamesHistory() throws IOException {
+        player = new Socket("localhost", 5000);
+        inputStreamReader = new InputStreamReader(player.getInputStream());
+        bufferedReader = new BufferedReader(inputStreamReader);
+        return bufferedReader.readLine();
+    }
     public void setClientHandler(){
         clientListener = new ClientHandler(player, bufferedReader, printWriter);
         new Thread(clientListener).start();

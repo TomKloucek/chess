@@ -1,10 +1,8 @@
 package cz.cvut.fel.pjv.helpers;
 
 import cz.cvut.fel.pjv.loggers.Logger;
-import cz.cvut.fel.pjv.models.Board;
+import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.models.Color;
-import cz.cvut.fel.pjv.models.Square;
-import cz.cvut.fel.pjv.models.State;
 import cz.cvut.fel.pjv.models.pieces.*;
 
 import javax.imageio.ImageIO;
@@ -14,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -232,8 +231,8 @@ public class Helpers {
         return result;
     }
 
-    public static String gameHistory(ArrayList<String> moves) {
-        StringBuilder resultString = new StringBuilder("History:");
+    public static String gameHistory(ArrayList<String> moves, String loginWhite, String loginBlack) {
+        StringBuilder resultString = new StringBuilder();
         boolean first = true;
         for (String move : moves) {
             if (first) {
@@ -244,6 +243,24 @@ public class Helpers {
                 resultString.append(";").append(move);
             }
         }
+        resultString.append("$").append(loginWhite);
+        resultString.append("$").append(loginBlack);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        resultString.append("$").append(formatter.format(date));
         return  resultString.toString();
+    }
+
+    public static ArrayList<GameHistory> gamesFromString(String allgames) {
+        System.out.println(allgames);
+        ArrayList<GameHistory> result = new ArrayList<>();
+        String[] gamesSplit = allgames.split("@");
+        for (String game : gamesSplit) {
+            String[] data = game.split("\\$");
+            String[] moves = data[0].split(";");
+            ArrayList<String> movesList = new ArrayList<String>( Arrays.asList( moves ) );
+            result.add(new GameHistory(data[1],data[2],movesList,data[3]));
+        }
+        return result;
     }
 }
