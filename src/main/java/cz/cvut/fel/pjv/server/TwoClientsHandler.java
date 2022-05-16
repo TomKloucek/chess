@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class TwoClientsHandler implements Runnable {
     private final Socket playerWhite;
@@ -21,6 +22,8 @@ public class TwoClientsHandler implements Runnable {
 
     private boolean listenWhite = true;
     private boolean listenForLogin = true;
+
+    private boolean goCycle = true;
 
     private boolean whiteDisconnected = false;
     private boolean blackDisconnected = false;
@@ -50,22 +53,30 @@ public class TwoClientsHandler implements Runnable {
             String receivedMessageFromBlack = null;
             int firstChar;
             String  firstLetter = null;
-            while (true) {
+            while (goCycle) {
                 if (listenWhite == true) {
-                    firstChar = inputStreamReaderWhite.read();
-                    System.out.println((char)firstChar);
-                    if(firstChar != -1){
-                        firstLetter = Character.toString(firstChar);
+                    try{
+                        firstChar = inputStreamReaderWhite.read();
+                        System.out.println((char)firstChar);
+                        if(firstChar != -1){
+                            firstLetter = Character.toString(firstChar);
+                        }
+                        else {
+                            whiteDisconnected = true;
+                            System.out.println("Bily odpojen");
+                            printWriterBlack.println("OneOfPlayersDisconnected");
+                            printWriterBlack.flush();
+                        }
                     }
-                    else {
+                    catch (SocketException e){
                         whiteDisconnected = true;
                         System.out.println("Bily odpojen");
                         printWriterBlack.println("OneOfPlayersDisconnected");
                         printWriterBlack.flush();
+
                     }
 
-
-                    while (!bufferedReaderWhite.ready() && bufferedReaderBlack.ready()) {
+                    while (!bufferedReaderWhite.ready() && bufferedReaderBlack.ready() && !whiteDisconnected && !blackDisconnected) {
                         receivedMessageFromBlack = bufferedReaderBlack.readLine();
                         System.out.printf(
                                 "Black sent message but not allowed: %s\n", receivedMessageFromBlack);
@@ -74,6 +85,7 @@ public class TwoClientsHandler implements Runnable {
                         break;
                     }
                     if (bufferedReaderWhite.ready()) {
+
                         while ((receivedMessageFromWhite = bufferedReaderWhite.readLine()) != null) {
                             if(receivedMessageFromWhite.contains("login")){
                                 printWriterBlack.println("W"+receivedMessageFromWhite);
@@ -110,11 +122,19 @@ public class TwoClientsHandler implements Runnable {
                         }
                     }
                 } else if (listenWhite == false) {
-                    firstChar = inputStreamReaderBlack.read();
-                    if(firstChar != -1){
-                        firstLetter = Character.toString(firstChar);
+                    try{
+                        firstChar = inputStreamReaderBlack.read();
+                        if(firstChar != -1){
+                            firstLetter = Character.toString(firstChar);
+                        }
+                        else {
+                            blackDisconnected = true;
+                            System.out.println("Cerny odpojen");
+                            printWriterWhite.println("OneOfPlayersDisconnected");
+                            printWriterWhite.flush();
+                        }
                     }
-                    else {
+                    catch (SocketException e){
                         blackDisconnected = true;
                         System.out.println("Cerny odpojen");
                         printWriterWhite.println("OneOfPlayersDisconnected");
@@ -122,7 +142,8 @@ public class TwoClientsHandler implements Runnable {
                     }
 
 
-                    while (!bufferedReaderBlack.ready() && bufferedReaderWhite.ready()) {
+
+                    while (!bufferedReaderBlack.ready() && bufferedReaderWhite.ready() && !whiteDisconnected && !blackDisconnected) {
                         receivedMessageFromWhite = bufferedReaderWhite.readLine();
                         System.out.printf(
                                 "White sent a message but not allowed %s\n", receivedMessageFromWhite);
@@ -145,12 +166,15 @@ public class TwoClientsHandler implements Runnable {
 
                 }
                 if (blackDisconnected || whiteDisconnected){
-                    System.out.println(bufferedReaderWhite.readLine());
-                    System.out.println(bufferedReaderBlack.readLine());
+                    if(blackDisconnected){
+                        System.out.println(bufferedReaderWhite.readLine());
+                    }
+                    else if (whiteDisconnected) {
+                        System.out.println(bufferedReaderBlack.readLine());
+                    }
                     blackDisconnected = false;
                     whiteDisconnected = false;
-                    break;
-
+                    goCycle = false;
                 }
             }
         }
