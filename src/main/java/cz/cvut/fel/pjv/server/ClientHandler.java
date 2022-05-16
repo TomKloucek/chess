@@ -45,8 +45,10 @@ public class ClientHandler implements Runnable{
                     printWriter.println("Black login:" + State.getInstance().getLogin());
                     printWriter.flush();
                 }
-                else if (receivedMessage.equals("OneOfPlayersDisconnected")){
+                else if (receivedMessage.contains("OneOfPlayersDisconnected")){
                     State.getInstance().getGuiRef().showMainMenu();
+                    printWriter.println("Notation of game");
+                    printWriter.flush();
                     State.getInstance().getGuiRef().closeGameFrame(true);
                     JOptionPane.showMessageDialog(null,"Bohužel se Váš protihráč odpojil ze hry");
                 }

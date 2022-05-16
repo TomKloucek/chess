@@ -22,6 +22,8 @@ public class TwoClientsHandler implements Runnable {
     private boolean listenWhite = true;
     private boolean listenForLogin = true;
 
+    private boolean whiteDisconnected = false;
+    private boolean blackDisconnected = false;
 
     public TwoClientsHandler(Socket playerWhite, Socket playerBlack) {
         this.playerWhite = playerWhite;
@@ -56,10 +58,10 @@ public class TwoClientsHandler implements Runnable {
                         firstLetter = Character.toString(firstChar);
                     }
                     else {
+                        whiteDisconnected = true;
                         System.out.println("Bily odpojen");
                         printWriterBlack.println("OneOfPlayersDisconnected");
                         printWriterBlack.flush();
-                        break;
                     }
 
 
@@ -113,10 +115,10 @@ public class TwoClientsHandler implements Runnable {
                         firstLetter = Character.toString(firstChar);
                     }
                     else {
+                        blackDisconnected = true;
                         System.out.println("Cerny odpojen");
                         printWriterWhite.println("OneOfPlayersDisconnected");
                         printWriterWhite.flush();
-                        break;
                     }
 
 
@@ -140,6 +142,15 @@ public class TwoClientsHandler implements Runnable {
                                 break;
                         }
                     }
+
+                }
+                if (blackDisconnected || whiteDisconnected){
+                    System.out.println(bufferedReaderWhite.readLine());
+                    System.out.println(bufferedReaderBlack.readLine());
+                    blackDisconnected = false;
+                    whiteDisconnected = false;
+                    break;
+
                 }
             }
         }
