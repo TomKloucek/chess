@@ -69,7 +69,7 @@ public class EditorListener implements ActionListener {
                 if (board.getBoard()[x][y].getPiece() != null) {
                     if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
                             board.getKing(Helpers.getOtherColor(color)).getAttackMovesForKingMove(board).contains(board.getBoard()[x][y])) {
-                        JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe");
+                        JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe.");
                     } else {
                         board.removePiece(board.getBoard()[x][y].getPiece());
                         board.putPiece(x, y, type, color);
@@ -78,16 +78,18 @@ public class EditorListener implements ActionListener {
                 } else if (type.equals("King") && board.getKing(Helpers.getOtherColor(color)) != null &&
                         board.getKing(Helpers.getOtherColor(color)).getAttackMovesForKingMove(board).contains(board.getBoard()[x][y])) {
 
-                    JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe");
+                    JOptionPane.showMessageDialog(null, "Králové nemohou stát vedle sebe.");
+                } else if (type.equals("Pawn") && (y == 0 || y == 7)) {
+                    JOptionPane.showMessageDialog(null, "Toto umístění pěšce není možné.");
                 } else {
                     board.putPiece(x, y, type, color);
                     bw.repaintBoard();
                 }
             } catch (Exception ex) {
-                Logger.log(Board.class, "actionPerformed", "Hrac vybral policko ale ne figurku");
+                Logger.log(Board.class, "actionPerformed", "Hrac vybral policko ale ne figurku.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Toto pole už nelze editovat");
+            JOptionPane.showMessageDialog(null, "Toto pole už nelze editovat.");
         }
     }
 }

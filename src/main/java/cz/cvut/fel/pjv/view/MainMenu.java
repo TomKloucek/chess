@@ -494,9 +494,11 @@ public class MainMenu extends JFrame {
         frame.add(gamePanel, BorderLayout.EAST);
 
         if (fromEditor) {
-            checkWin(board);
-            timer.stop();
-            hideMainMenu();
+            if(checkWin(board, GameType.PVP)){
+                timer.stop();
+                hideMainMenu();
+            }
+
         }
     }
 
@@ -554,9 +556,7 @@ public class MainMenu extends JFrame {
         JLabel nameWhite = null;
         JLabel nameBlack = null;
         boolean end = false;
-        if (fromEditor) {
-            end = checkWin(board);
-        }
+
         if (p2.getColor() == cz.cvut.fel.pjv.models.Color.WHITE) {
             nameWhite = new JLabel("AI");
             nameBlack = new JLabel("Hrac");
@@ -666,6 +666,9 @@ public class MainMenu extends JFrame {
         }
         gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
         frame.add(gamePanel, BorderLayout.EAST);
+        if (fromEditor) {
+            end = checkWin(board, GameType.PVE);
+        }
         if (end) {
             timer.stop();
         }
@@ -703,8 +706,10 @@ public class MainMenu extends JFrame {
                 if (board.getKing(cz.cvut.fel.pjv.models.Color.WHITE) != null && board.getKing(cz.cvut.fel.pjv.models.Color.BLACK) != null) {
                     String[] options_color = {"White","Black"};
                     int answer = JOptionPane.showOptionDialog(null, "Výběr barvy",
-                            "Za jakou barvu si přejete hrát?",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
+                                "Za jakou barvu si přejete hrát?",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
+
+
                     openAIGame(board.boardToString(), answer, true);
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
                     hideMainMenu();
@@ -846,19 +851,33 @@ public class MainMenu extends JFrame {
         white.setBackground(State.getInstance().getWhite());
     }
 
-    public boolean checkWin(Board board) {
-            if (board.whiteInCheck()) {
+    public boolean checkWin(Board board, GameType gameType) {
+
+            if (board.whiteInCheck() && board.blackInCheck()){
+                JOptionPane.showMessageDialog(null, "Nemůžete spustit hru když oba králové jsou v šachu.");
+                closeGameFrame(false);
+                openEditor("");
+            }
+
+            else if (board.whiteInCheck()) {
                 System.out.println("Bílý je v šachu");
                 if (board.Mated(cz.cvut.fel.pjv.models.Color.WHITE)) {
                     JOptionPane.showMessageDialog(null, "Černý vyhrál");
+                    closeGameFrame(false);
+                    openEditor("");
                     State.getInstance().resetMove();
                     return true;
                 }
             }
-            if (board.blackInCheck()) {
+            else if (board.blackInCheck()) {
                 System.out.println("Černý je v šachu");
+                if(gameType != GameType.PVE) {
+                    State.getInstance().reverseMove();
+                }
                 if (board.Mated(cz.cvut.fel.pjv.models.Color.BLACK)) {
                     JOptionPane.showMessageDialog(null, "Bilý vyhrál");
+                    closeGameFrame(false);
+                    openEditor("");
                     State.getInstance().resetMove();
                     return true;
                 }

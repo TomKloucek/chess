@@ -20,7 +20,15 @@ public class Pawn implements IPiece {
         this.color = color;
         this.x = x;
         this.y = y;
-        this.atLeastOnceMoved = false;
+        if(color == Color.WHITE && y == 1){
+            this.atLeastOnceMoved = false;
+        }
+        else if(color == Color.BLACK && y == 6){
+            this.atLeastOnceMoved = false;
+        }
+        else {
+            this.atLeastOnceMoved = true;
+        }
         this.movedTwoSquares = false;
     }
 
@@ -29,7 +37,15 @@ public class Pawn implements IPiece {
         this.color = color;
         this.x = x;
         this.y = y;
-        this.atLeastOnceMoved = moved;
+        if(color == Color.WHITE && y == 1){
+            this.atLeastOnceMoved = false;
+        }
+        else if(color == Color.BLACK && y == 6){
+            this.atLeastOnceMoved = false;
+        }
+        else {
+            this.atLeastOnceMoved = true;
+        }
     }
     @Override
     public int getPoints() {
@@ -91,12 +107,15 @@ public class Pawn implements IPiece {
     }
 
     public Square getMovesIfNotMoved(Board board) {
-        int way = this.getColor()==Color.WHITE ? 2:-2;
-        int way_toblock = this.getColor()==Color.WHITE ? 1:-1;
-        if (board.getBoard()[this.getX()][getY()+way].getPiece() == null && board.getBoard()[this.getX()][getY()+way_toblock].getPiece() == null) {
-            return board.getBoard()[this.getX()][this.getY() + way];
+        if(this.atLeastOnceMoved == false) {
+            int way = this.getColor() == Color.WHITE ? 2 : -2;
+            int wayToBlock = this.getColor() == Color.WHITE ? 1 : -1;
+            if (board.getBoard()[this.getX()][getY() + way].getPiece() == null && board.getBoard()[this.getX()][getY() + wayToBlock].getPiece() == null) {
+                return board.getBoard()[this.getX()][this.getY() + way];
+            }
         }
         return null;
+
     }
 
     public Square getBasicMove(Board board) {
