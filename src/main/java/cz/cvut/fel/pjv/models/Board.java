@@ -10,9 +10,18 @@ import java.util.Collections;
 
 public class Board {
     private Square[][] board;
+
     private ArrayList<IPiece> whiteIPieces;
     private ArrayList<IPiece> blackIPieces;
     private GameType type;
+
+    private String notation ="";
+
+    private int counter = 1;
+
+    private int counterHelper = 0;
+
+    private boolean addFirstNotation = true;
 
     public Board(GameType type) {
         this.board = new Square[8][8];
@@ -160,6 +169,7 @@ public class Board {
             Logger.log(Board.class, "stringToBoard", "Nepodarilo se prevest string do boardu");
             e.printStackTrace();
         }
+
     }
 
     public IPiece pieceFromString(String piece) {
@@ -327,6 +337,9 @@ public class Board {
                 State.getInstance().getClient().printWriter.flush();
                 State.getInstance().getGame().addMove(this.boardToString());
             }
+            addMoveToNotation(chosen.toStringForNotation());
+            State.getInstance().getGuiRef().updateNotation(getNotation());
+            counterHelper+=1;
             return true;
         } else {
             System.out.println("Nezadal jsi spravne hodnoty");
@@ -374,7 +387,7 @@ public class Board {
     public void checkBoard() {
         if (blackInCheck()) {
             System.out.println("Černý je v šachu");
-            if (Mated(Color.BLACK)) {
+            if (mated(Color.BLACK)) {
                 JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                 State.getInstance().resetMove();
             } else {
@@ -605,7 +618,7 @@ public class Board {
         return getEveryPossibleMoves(this.getPieces(Color.WHITE)).contains(getBoard()[king.getX()][king.getY()]);
     }
 
-    public boolean Mated(Color color) {
+    public boolean mated(Color color) {
         if (color == Color.WHITE) {
             for (IPiece IPiece : whiteIPieces) {
                 if (canBlockOrEscapeFromCheck(IPiece)) {
@@ -623,6 +636,26 @@ public class Board {
         }
     }
 
+    public String getNotation(){
+        return notation;
+    }
+
+    public void addMoveToNotation(String move){
+        int oldCounter = counter;
+        if(counterHelper!= 0 && counterHelper % 2 == 0){
+            counter += 1;
+            notation += "\n";
+            counterHelper = 0;
+        }
+        if(addFirstNotation || counter != oldCounter ){
+            notation += counter+". "+move;
+            addFirstNotation = false;
+        }
+        else {
+            notation += " "+move+" ";
+        }
+
+    }
 
     public boolean inCheck() {
         if (blackInCheck()) {

@@ -277,5 +277,17 @@ public class Rook implements IPiece {
         return notation;
     }
 
+    @Override
+    public String toStringForNotation() {
+        String notation = "R";
+        if (color == Color.BLACK){
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        else {
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        return notation;
+    }
+
 
 }

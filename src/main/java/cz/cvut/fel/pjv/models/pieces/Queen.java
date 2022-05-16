@@ -469,4 +469,16 @@ public class Queen implements IPiece {
         return notation;
     }
 
+    @Override
+    public String toStringForNotation() {
+        String notation = "Q";
+        if (color == Color.BLACK){
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        else {
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        return notation;
+    }
+
 }

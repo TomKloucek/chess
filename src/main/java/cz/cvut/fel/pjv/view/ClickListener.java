@@ -33,8 +33,9 @@ public class ClickListener implements ActionListener {
                 bw.deleteButtonsOnSquaresWithoutPiece();
                 if (board.whiteInCheck()) {
                     System.out.println("Bílý je v šachu");
-                    if (board.Mated(Color.WHITE)) {
+                    if (board.mated(Color.WHITE)) {
                         JOptionPane.showMessageDialog(null, "Černý vyhrál");
+                        State.getInstance().getGuiRef().closeGameFrame(true);
                         State.getInstance().resetMove();
                     }
                 }
@@ -48,9 +49,10 @@ public class ClickListener implements ActionListener {
                 bw.deleteButtonsOnSquaresWithoutPiece();
                 if (board.blackInCheck()) {
                     System.out.println("Černý je v šachu");
-                    if (board.Mated(Color.BLACK)) {
+                    if (board.mated(Color.BLACK)) {
                         JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                         State.getInstance().resetMove();
+                        State.getInstance().getGuiRef().closeGameFrame(true);
                     }
                     else {
                         if (board.getKing(Color.BLACK).possibleMovement(board).isEmpty() && board.getPieces(Color.BLACK).size() == 1) {

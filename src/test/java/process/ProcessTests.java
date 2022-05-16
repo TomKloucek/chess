@@ -3,7 +3,6 @@ package process;
 import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.models.*;
 import cz.cvut.fel.pjv.models.pieces.King;
-import cz.cvut.fel.pjv.models.pieces.Pawn;
 import cz.cvut.fel.pjv.models.pieces.Rook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,13 +11,8 @@ import cz.cvut.fel.pjv.models.Board;
 import cz.cvut.fel.pjv.models.Color;
 import cz.cvut.fel.pjv.models.GameType;
 import cz.cvut.fel.pjv.models.pieces.IPiece;
-import org.junit.jupiter.api.Assertions;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.concurrent.BlockingDeque;
-
-import static org.mockito.Mockito.*;
 
 public class ProcessTests {
     @Test
@@ -68,8 +62,8 @@ public class ProcessTests {
         Assertions.assertFalse(board.blackInCheck());
 
         // Zadny z hracu nesmi byt v matu na po inicializaci boardy
-        Assertions.assertFalse(board.Mated(Color.WHITE));
-        Assertions.assertFalse(board.Mated(Color.BLACK));
+        Assertions.assertFalse(board.mated(Color.WHITE));
+        Assertions.assertFalse(board.mated(Color.BLACK));
     }
 
     @Test
@@ -134,7 +128,7 @@ public class ProcessTests {
         boolean expectedResult = false;
         //ACT
         board.putPiece(3, 2, "Knight", Color.BLACK);
-        boolean result = board.Mated(colorOfKing);
+        boolean result = board.mated(colorOfKing);
         //ASSERT
         Assertions.assertEquals(expectedResult, result);
         String expectedResultString = "RBa8,NBb8,BBc8,QBd8,KBe8,BBf8,NBg8,RBh8,Ba7X,Bb7X,Bc7X,Bd7X,Be7X,Bf7X,Bg7X,Bh7X, , , , , , , , , , , , , , , , , , , , , , , , , , , ,NBd3, , , , ,Wa2X,Wb2X,Wc2X,Wd2X,We2X,Wf2X,Wg2X,Wh2X,RWa1,NWb1,BWc1,QWd1,KWe1,BWf1,NWg1,RWh1";

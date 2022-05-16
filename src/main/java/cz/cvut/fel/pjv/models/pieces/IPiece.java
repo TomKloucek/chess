@@ -23,6 +23,8 @@ public interface IPiece {
     public void Move(int x, int y);
 
     public String toString();
+
+    public String toStringForNotation();
 }
 
 

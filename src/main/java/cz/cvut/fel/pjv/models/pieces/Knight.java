@@ -107,5 +107,17 @@ public class Knight implements IPiece {
         }
         return notation;
     }
+
+    @Override
+    public String toStringForNotation() {
+        String notation = "N";
+        if (color == Color.BLACK){
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        else {
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        return notation;
+    }
 }
 

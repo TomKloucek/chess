@@ -29,7 +29,7 @@ public class AiPlayer extends Player {
         } else {
             checked = board.blackInCheck();
         }
-        if (checked && board.Mated(getColor())) {
+        if (checked && board.mated(getColor())) {
             return true;
         }
         while (chosen.possibleMovement(board).isEmpty()) {

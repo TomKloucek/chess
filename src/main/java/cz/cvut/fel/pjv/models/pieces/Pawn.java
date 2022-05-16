@@ -208,4 +208,16 @@ public class Pawn implements IPiece {
             return notation+moved;
         }
     }
+
+    @Override
+    public String toStringForNotation() {
+        String notation = "";
+        if (color == Color.BLACK){
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        else {
+            notation += Helpers.XTranslate(this.getX()) + (getY()+1);
+        }
+        return notation;
+    }
 }

@@ -35,6 +35,8 @@ public class MainMenu extends JFrame {
 
     private BoardView bw;
 
+    private JTextArea notation;
+
     public MainMenu() {
         try {
             UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
@@ -304,7 +306,7 @@ public class MainMenu extends JFrame {
                     long secondsLeft = State.getInstance().getSecondsLeft(State.getInstance().getTimeLeftWhite());
                     if(minutesLeft <= 0 && secondsLeft <= 0){
                         timeWhite.setText(Helpers.formatTime(0,0));
-                        int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel  čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+                        int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, bílemu došel čas.", "Upozornění", JOptionPane.DEFAULT_OPTION);
                         if(answer == 0 || answer == -1){
                             closeGameFrame(true);
                             showMainMenu();
@@ -352,7 +354,11 @@ public class MainMenu extends JFrame {
             gamePanel.add(whitePlayerPanel,BorderLayout.NORTH);
             gamePanel.add(blackPlayerPanel, BorderLayout.SOUTH);
         }
-        gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
+        notation = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(notation);
+        notation.setEditable(false);
+        notation.setLineWrap(true);
+        gamePanel.add(scrollPane, BorderLayout.CENTER);
         frame.add(gamePanel, BorderLayout.EAST);
     }
 
@@ -490,7 +496,11 @@ public class MainMenu extends JFrame {
             gamePanel.add(whitePlayerPanel,BorderLayout.NORTH);
             gamePanel.add(blackPlayerPanel, BorderLayout.SOUTH);
         }
-        gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
+        notation = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(notation);
+        notation.setEditable(false);
+        notation.setLineWrap(true);
+        gamePanel.add(scrollPane, BorderLayout.CENTER);
         frame.add(gamePanel, BorderLayout.EAST);
 
         if (fromEditor) {
@@ -503,6 +513,11 @@ public class MainMenu extends JFrame {
     }
 
     public void openAIGame(String boardString, int answer, boolean fromEditor) {
+        JPanel gamePanel = new JPanel(new BorderLayout());
+        notation = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(notation);
+        notation.setEditable(false);
+        notation.setLineWrap(true);
         State.getInstance().resetTimers();
         if (!State.getInstance().isWhiteOnMove()) {
             State.getInstance().resetMove();
@@ -575,6 +590,7 @@ public class MainMenu extends JFrame {
         BoardView mainPanel = new BoardView(board);
         JFrame frame = new JFrame("Chess");
         this.game = frame;
+
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
@@ -582,7 +598,9 @@ public class MainMenu extends JFrame {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
-        JPanel gamePanel = new JPanel(new BorderLayout());
+
+        gamePanel.add(scrollPane, BorderLayout.CENTER);
+        frame.add(gamePanel, BorderLayout.EAST);
 
         JPanel whitePlayerPanel = new JPanel(new BorderLayout());
 
@@ -664,8 +682,7 @@ public class MainMenu extends JFrame {
             gamePanel.add(whitePlayerPanel,BorderLayout.NORTH);
             gamePanel.add(blackPlayerPanel, BorderLayout.SOUTH);
         }
-        gamePanel.add(new Button("OK, lets go"), BorderLayout.CENTER);
-        frame.add(gamePanel, BorderLayout.EAST);
+
         if (fromEditor) {
             end = checkWin(board, GameType.PVE);
         }
@@ -769,6 +786,10 @@ public class MainMenu extends JFrame {
         }
     }
 
+    public void updateNotation(String moves){
+        notation.setText(moves);
+    }
+
     public void setUpSettings() {
         this.settingsFrame = new JFrame("Nastavení");
         settingsFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -861,7 +882,7 @@ public class MainMenu extends JFrame {
 
             else if (board.whiteInCheck()) {
                 System.out.println("Bílý je v šachu");
-                if (board.Mated(cz.cvut.fel.pjv.models.Color.WHITE)) {
+                if (board.mated(cz.cvut.fel.pjv.models.Color.WHITE)) {
                     JOptionPane.showMessageDialog(null, "Černý vyhrál");
                     closeGameFrame(false);
                     openEditor("");
@@ -874,7 +895,7 @@ public class MainMenu extends JFrame {
                 if(gameType != GameType.PVE) {
                     State.getInstance().reverseMove();
                 }
-                if (board.Mated(cz.cvut.fel.pjv.models.Color.BLACK)) {
+                if (board.mated(cz.cvut.fel.pjv.models.Color.BLACK)) {
                     JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                     closeGameFrame(false);
                     openEditor("");
