@@ -146,7 +146,7 @@ public class King implements IPiece {
                 }
                 if (board.getBoard()[7][7].getPiece() instanceof Rook right_rook) {
                     if (!right_rook.isAtLeastOnceMoved() && board.getBoard()[5][7].getPiece() == null && board.getBoard()[6][7].getPiece() == null) {
-                        if (!board.willBeChecked(Color.WHITE, 4, 7) &&!board.willBeChecked(Color.BLACK, 5, 7) && !board.willBeChecked(Color.BLACK, 6, 7)) {
+                        if (!board.willBeChecked(Color.BLACK, 4, 7) &&!board.willBeChecked(Color.BLACK, 5, 7) && !board.willBeChecked(Color.BLACK, 6, 7)) {
                             possibilities.add(board.getBoard()[7][7]);
                         }
                     }

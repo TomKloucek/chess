@@ -339,6 +339,7 @@ public class Board {
             }
             addMoveToNotation(chosen.toStringForNotation());
             State.getInstance().getGuiRef().updateNotation(getNotation());
+            State.getInstance().getGame().setGameString(this.boardToString());
             counterHelper+=1;
             return true;
         } else {
@@ -720,6 +721,9 @@ public class Board {
         return (ArrayList<Square>) Helpers.intersection(squaresToBlock, piecePossibleMovements);
     }
 
+    public void addCounterHelper(){
+        counterHelper+=1;
+    }
     public GameType getType() {
         return type;
     }

@@ -4,6 +4,8 @@ import cz.cvut.fel.pjv.server.Client;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
     private Player playerWhite;
@@ -71,6 +73,10 @@ public class Game {
             }
         }
         State.getInstance().reverseMove();
+        board.addMoveToNotation(formatMoveToNotation(diff(gameString, boardString).toString()));
+        State.getInstance().getGuiRef().updateNotation(board.getNotation());
+        board.addCounterHelper();
+        gameString = boardString;
         State.getInstance().getGame().addMove(boardString);
     }
 
@@ -80,5 +86,72 @@ public class Game {
 
     public void addMove(String move) {
         this.moves.add(move);
+    }
+    public static Pair<String> diff(String a, String b) {
+        return diffHelper(a, b, new HashMap<>());
+    }
+
+    /**
+     * Recursively compute a minimal set of characters while remembering already computed substrings.
+     * Runs in O(n^2).
+     */
+    private static Pair<String> diffHelper(String a, String b, Map<Long, Pair<String>> lookup) {
+        long key = ((long) a.length()) << 32 | b.length();
+        if (!lookup.containsKey(key)) {
+            Pair<String> value;
+            if (a.isEmpty() || b.isEmpty()) {
+                value = new Pair<>(a, b);
+            } else if (a.charAt(0) == b.charAt(0)) {
+                value = diffHelper(a.substring(1), b.substring(1), lookup);
+            } else {
+                Pair<String> aa = diffHelper(a.substring(1), b, lookup);
+                Pair<String> bb = diffHelper(a, b.substring(1), lookup);
+                if (aa.first.length() + aa.second.length() < bb.first.length() + bb.second.length()) {
+                    value = new Pair<>(a.charAt(0) + aa.first, aa.second);
+                } else {
+                    value = new Pair<>(bb.first, b.charAt(0) + bb.second);
+                }
+            }
+            lookup.put(key, value);
+        }
+        return lookup.get(key);
+    }
+
+    public static class Pair<T> {
+        public Pair(T first, T second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public final T first, second;
+
+        public String toString() {
+            return (String) second+",";
+        }
+    }
+    public void setGameString(String gameString){
+        this.gameString = gameString;
+    }
+
+
+
+
+    public String formatMoveToNotation(String receivedMessage){
+        System.out.println(receivedMessage);
+        String result ="";
+        char[] character = new char[receivedMessage.length()];
+
+        for (int i = 0; i < receivedMessage.length(); i++) {
+            character[i] = receivedMessage.charAt(i);
+        }
+
+        for (int i = 0; i < receivedMessage.length(); i++){
+            if((character[i] == 'B' && character[i+1] == 'B' ) ||
+                    (character[i] != 'X' && character[i] != 'W' && character[i] != ',' && character[i] != ' ' && character[i] != 'B') ){
+                    result += Character.toString(character[i]);
+            }
+
+        }
+        return result;
     }
 }
