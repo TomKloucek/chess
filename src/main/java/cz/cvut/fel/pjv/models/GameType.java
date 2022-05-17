@@ -1,5 +1,5 @@
 package cz.cvut.fel.pjv.models;
 
 public enum GameType {
-    SERVER,PVE,PVP
+    SERVER,PVE,PVP,TEST
 }

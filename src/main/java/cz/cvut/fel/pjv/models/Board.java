@@ -247,7 +247,6 @@ public class Board {
     }
 
     public boolean movePiece(IPiece chosen, int x, int y) {
-        System.out.println(boardToString());
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
         if (chosen.possibleMovement(this).contains(board[x][y])) {
             if ((y == 0 || y == 7) && chosen instanceof Pawn) {
@@ -339,7 +338,9 @@ public class Board {
 
             }
             addMoveToNotation(chosen.toStringForNotation());
-            State.getInstance().getGuiRef().updateNotation(getNotation());
+            if(this.getType() != GameType.TEST){
+                State.getInstance().getGuiRef().updateNotation(getNotation());
+            }
             State.getInstance().getGame().setGameString(this.boardToString());
             if(this.mated(Color.WHITE) || this.mated(Color.BLACK) && this.getType() == GameType.SERVER){
                 State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
