@@ -68,6 +68,26 @@ public class BoardView extends JPanel {
             boardLayeredPane.add(boardPanel, JLayeredPane.DEFAULT_LAYER);
             boardLayeredPane.setVisible(true);
             this.add(boardLayeredPane, BorderLayout.CENTER);
+
+            JLabel left_side = null;
+            if (!boardReversed) {
+                left_side = new JLabel(new ImageIcon("resources/left_board.png"));
+            }
+            else {
+                left_side = new JLabel(new ImageIcon("resources/left_board_reversed.png"));
+            }
+            left_side.setSize(640,10);
+            this.add(left_side,BorderLayout.WEST);
+
+            JLabel top_side;
+            if (!boardReversed) {
+                top_side = new JLabel(new ImageIcon("resources/top_board.png"));
+            }
+            else {
+                top_side = new JLabel(new ImageIcon("resources/top_board_reversed.png"));
+            }
+            top_side.setSize(640,10);
+            this.add(top_side,BorderLayout.SOUTH);
         }
 
     public IPiece getPickedPiece() {
@@ -182,8 +202,6 @@ public class BoardView extends JPanel {
                     String[] values = data.split(":");
                     String[] white = values[1].split(",");
                     String[] black = values[2].split(",");
-                    System.out.println(Arrays.toString(white));
-                    System.out.println(Arrays.toString(black));
                     State.getInstance().setWhite(new Color(Integer.parseInt(white[0].trim()),Integer.parseInt(white[1].trim()),Integer.parseInt(white[2].trim())));
                     State.getInstance().setBlack(new Color(Integer.parseInt(black[0].trim()),Integer.parseInt(black[1].trim()),Integer.parseInt(black[2].trim())));
                 }

@@ -60,7 +60,6 @@ public class Game {
         board.stringToBoard(boardString, true);
         State.getInstance().getGuiRef().getBw().repaintBoard();
         if(board.mated(Color.WHITE) && !State.getInstance().isWhiteOnMove()){
-            System.out.println("Bilej v matu");
             board.addMoveToNotation(formatMoveToNotation(diff(gameString, boardString).toString()));
             State.getInstance().getGuiRef().updateNotation(board.getNotation());
             int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
@@ -72,7 +71,6 @@ public class Game {
             }
         }
         else if(board.mated(Color.BLACK) && State.getInstance().isWhiteOnMove()){
-            System.out.println("Cerny v matu");
             State.getInstance().getGame().addMove(boardString);
             board.addMoveToNotation(formatMoveToNotation(diff(gameString, boardString).toString()));
             int answer = JOptionPane.showConfirmDialog(null, "Bílý vyhrál, nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
@@ -148,7 +146,6 @@ public class Game {
 
 
     public String formatMoveToNotation(String receivedMessage){
-        System.out.println(receivedMessage);
         String result ="";
         char[] character = new char[receivedMessage.length()];
 

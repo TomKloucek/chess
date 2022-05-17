@@ -349,7 +349,6 @@ public class Board {
             counterHelper+=1;
             return true;
         } else {
-            System.out.println("Nezadal jsi spravne hodnoty");
             return false;
         }
     }
@@ -393,7 +392,6 @@ public class Board {
 
     public void checkBoard() {
         if (blackInCheck()) {
-            System.out.println("Černý je v šachu");
             if (mated(Color.BLACK)) {
                 JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                 State.getInstance().resetMove();
@@ -666,11 +664,9 @@ public class Board {
 
     public boolean inCheck() {
         if (blackInCheck()) {
-            System.out.println("Cerny je v checku");
             return true;
         }
         if (whiteInCheck()) {
-            System.out.println("Bily je v checku");
             return true;
         }
         return false;

@@ -261,7 +261,7 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(930, 679));
+        frame.setMinimumSize(new Dimension(800, 720));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
@@ -417,7 +417,7 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(760, 679));
+        frame.setMinimumSize(new Dimension(800, 720));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
@@ -602,7 +602,7 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(760, 679));
+        frame.setMinimumSize(new Dimension(800, 720));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
@@ -718,7 +718,7 @@ public class MainMenu extends JFrame {
             }
         });
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(930, 679));
+        frame.setMinimumSize(new Dimension(950, 720));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
@@ -889,7 +889,6 @@ public class MainMenu extends JFrame {
             }
 
             else if (board.whiteInCheck()) {
-                System.out.println("Bílý je v šachu");
                 if (board.mated(cz.cvut.fel.pjv.models.Color.WHITE)) {
                     JOptionPane.showMessageDialog(null, "Černý vyhrál");
                     closeGameFrame(false);
@@ -899,7 +898,6 @@ public class MainMenu extends JFrame {
                 }
             }
             else if (board.blackInCheck()) {
-                System.out.println("Černý je v šachu");
                 if(gameType != GameType.PVE) {
                     State.getInstance().reverseMove();
                 }

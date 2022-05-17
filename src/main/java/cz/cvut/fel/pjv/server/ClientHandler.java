@@ -60,7 +60,6 @@ public class ClientHandler implements Runnable{
                     State.getInstance().getGuiRef().setOpponentLogin(receivedMessage.split(":")[1]);
                 }
                 else {
-                    System.out.println(receivedMessage);
                     State.getInstance().getGame().updateGame(receivedMessage);
                 }
 
@@ -71,7 +70,6 @@ public class ClientHandler implements Runnable{
             e.printStackTrace();
         }
         try {
-            System.out.println("hello");
             clientSocket.close();
         } catch (IOException e) {
             Logger.log(ClientHandler.class, "run","Nastala chyba pri uzavirani socketu");

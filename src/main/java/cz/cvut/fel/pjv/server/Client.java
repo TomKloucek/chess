@@ -36,8 +36,6 @@ public class Client {
     }
 
     public void disconnectFromServer() throws IOException {
-        System.out.println(player);
         player.close();
-        System.out.println("Player is closed = "+ player.isClosed());
     }
 }

@@ -167,7 +167,6 @@ public class Helpers {
         }
         catch (Exception e) {
             Logger.log(Helpers.class, "getPieceImage","Nepovedlo se najit obrazek");
-            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -252,7 +251,6 @@ public class Helpers {
     }
 
     public static ArrayList<GameHistory> gamesFromString(String allgames) {
-        System.out.println(allgames);
         ArrayList<GameHistory> result = new ArrayList<>();
         String[] gamesSplit = allgames.split("@");
         for (String game : gamesSplit) {

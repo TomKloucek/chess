@@ -56,20 +56,17 @@ public class TwoClientsHandler implements Runnable {
                 if (listenWhite == true) {
                     try{
                         firstChar = inputStreamReaderWhite.read();
-                        System.out.println((char)firstChar);
                         if(firstChar != -1){
                             firstLetter = Character.toString(firstChar);
                         }
                         else {
                             whiteDisconnected = true;
-                            System.out.println("Bily odpojen");
                             printWriterBlack.println("OneOfPlayersDisconnected");
                             printWriterBlack.flush();
                         }
                     }
                     catch (SocketException e){
                         whiteDisconnected = true;
-                        System.out.println("Bily odpojen");
                         printWriterBlack.println("OneOfPlayersDisconnected");
                         printWriterBlack.flush();
 
@@ -131,14 +128,12 @@ public class TwoClientsHandler implements Runnable {
                         }
                         else {
                             blackDisconnected = true;
-                            System.out.println("Cerny odpojen");
                             printWriterWhite.println("OneOfPlayersDisconnected");
                             printWriterWhite.flush();
                         }
                     }
                     catch (SocketException e){
                         blackDisconnected = true;
-                        System.out.println("Cerny odpojen");
                         printWriterWhite.println("OneOfPlayersDisconnected");
                         printWriterWhite.flush();
                     }
@@ -170,10 +165,12 @@ public class TwoClientsHandler implements Runnable {
                 }
                 if (blackDisconnected || whiteDisconnected){
                     if(blackDisconnected){
-                        this.saveGameToFile(bufferedReaderWhite.readLine());
+                        String message = bufferedReaderWhite.readLine();
+                        this.saveGameToFile(message);
                     }
                     else {
-                        this.saveGameToFile(bufferedReaderBlack.readLine());
+                        String message = bufferedReaderBlack.readLine();
+                        this.saveGameToFile(message);
                     }
                     blackDisconnected = false;
                     whiteDisconnected = false;

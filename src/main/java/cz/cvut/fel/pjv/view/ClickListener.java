@@ -22,7 +22,6 @@ public class ClickListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Game game = State.getInstance().getGame();
-        System.out.println("26"+State.getInstance().isWhiteOnMove());
         SquareView[][] squarePanels = bw.getSquarePanels();
         ButtonCoord buttonCoord = (ButtonCoord) e.getSource();
         if (squarePanels[buttonCoord.getX()][buttonCoord.getY()].getDot() != null) {
@@ -32,7 +31,6 @@ public class ClickListener implements ActionListener {
             if (State.getInstance().isWhiteOnMove()) {
                 bw.deleteButtonsOnSquaresWithoutPiece();
                 if (board.whiteInCheck()) {
-                    System.out.println("Bílý je v šachu");
                     if (board.mated(Color.WHITE)) {
                         JOptionPane.showMessageDialog(null, "Černý vyhrál");
                         State.getInstance().getGuiRef().closeGameFrame(true);
@@ -49,7 +47,6 @@ public class ClickListener implements ActionListener {
             else {
                 bw.deleteButtonsOnSquaresWithoutPiece();
                 if (board.blackInCheck()) {
-                    System.out.println("Černý je v šachu");
                     if (board.mated(Color.BLACK)) {
                         JOptionPane.showMessageDialog(null, "Bilý vyhrál");
                         State.getInstance().getGuiRef().closeGameFrame(true);
@@ -139,7 +136,6 @@ public class ClickListener implements ActionListener {
                                 squarePanels[i][j].repaint();
                             } catch (IOException ex) {
                                 Logger.log(ClickListener.class, "actionPerformed",ex.getMessage());
-                                System.out.println("chyba");
                                 ex.printStackTrace();
                             }
                         } else {
@@ -150,7 +146,6 @@ public class ClickListener implements ActionListener {
                 }
             }
             else {
-                System.out.println("151"+State.getInstance().isWhiteOnMove());
                 JOptionPane.showMessageDialog(null, "Tento hráč není na tahu");
             }
         }
