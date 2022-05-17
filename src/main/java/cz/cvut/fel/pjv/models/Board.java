@@ -336,10 +336,15 @@ public class Board {
                 State.getInstance().getClient().printWriter.println(this.boardToString());
                 State.getInstance().getClient().printWriter.flush();
                 State.getInstance().getGame().addMove(this.boardToString());
+
             }
             addMoveToNotation(chosen.toStringForNotation());
             State.getInstance().getGuiRef().updateNotation(getNotation());
             State.getInstance().getGame().setGameString(this.boardToString());
+            if(this.mated(Color.WHITE) || this.mated(Color.BLACK) && this.getType() == GameType.SERVER){
+                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                State.getInstance().getClient().printWriter.flush();
+            }
             counterHelper+=1;
             return true;
         } else {

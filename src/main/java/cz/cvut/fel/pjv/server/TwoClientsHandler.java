@@ -95,7 +95,7 @@ public class TwoClientsHandler implements Runnable {
                                 }
                             }
                             else {
-                                if(listenForLogin == true){
+                                if(listenForLogin == true && !whiteDisconnected && !blackDisconnected){
                                     System.out.printf(
                                             "Sent from the White client: %s\n",
                                             receivedMessageFromWhite);
@@ -109,6 +109,9 @@ public class TwoClientsHandler implements Runnable {
                                     System.out.printf(
                                             "Sent from the White client: %s\n",
                                             firstLetter+receivedMessageFromWhite);
+                                    if(receivedMessageFromWhite.contains("$")){
+                                        this.saveGameToFile(firstLetter+receivedMessageFromWhite.strip());
+                                    }
                                     printWriterBlack.println(firstLetter + receivedMessageFromWhite);
                                     printWriterBlack.flush();
                                     listenWhite = false;
@@ -145,12 +148,15 @@ public class TwoClientsHandler implements Runnable {
                         printWriterWhite.flush();
                         break;
                     }
-                    if(bufferedReaderBlack.ready()) {
+                    if(bufferedReaderBlack.ready() && !blackDisconnected && !whiteDisconnected) {
                         while ((receivedMessageFromBlack = bufferedReaderBlack.readLine()) != null) {
 
                                 System.out.printf(
                                         " Sent from the Black client: %s\n",
                                         firstLetter+receivedMessageFromBlack);
+                                if(receivedMessageFromBlack.contains("$")){
+                                    this.saveGameToFile(firstLetter + receivedMessageFromBlack.strip());
+                                }
                                 printWriterWhite.println(firstLetter+receivedMessageFromBlack);
                                 printWriterWhite.flush();
                                 listenWhite = true;

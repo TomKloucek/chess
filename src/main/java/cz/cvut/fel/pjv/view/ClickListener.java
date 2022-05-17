@@ -42,6 +42,7 @@ public class ClickListener implements ActionListener {
                 else {
                     if (board.getKing(Color.WHITE).possibleMovement(board).isEmpty() && board.getPieces(Color.WHITE).size() == 1) {
                         JOptionPane.showMessageDialog(null, "Remíza");
+                        State.getInstance().getGuiRef().closeGameFrame(true);
                     }
                 }
             }
@@ -51,8 +52,8 @@ public class ClickListener implements ActionListener {
                     System.out.println("Černý je v šachu");
                     if (board.mated(Color.BLACK)) {
                         JOptionPane.showMessageDialog(null, "Bilý vyhrál");
-                        State.getInstance().resetMove();
                         State.getInstance().getGuiRef().closeGameFrame(true);
+                        State.getInstance().resetMove();
                     }
                     else {
                         if (board.getKing(Color.BLACK).possibleMovement(board).isEmpty() && board.getPieces(Color.BLACK).size() == 1) {

@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.models;
 
+import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.server.Client;
 
 import javax.swing.*;
@@ -60,15 +61,25 @@ public class Game {
         State.getInstance().getGuiRef().getBw().repaintBoard();
         if(board.mated(Color.WHITE) && !State.getInstance().isWhiteOnMove()){
             System.out.println("Bilej v matu");
+            board.addMoveToNotation(formatMoveToNotation(diff(gameString, boardString).toString()));
+            State.getInstance().getGuiRef().updateNotation(board.getNotation());
             int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
             if(answer == 0 || answer == -1){
+                State.getInstance().getGame().addMove(boardString);
+                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                State.getInstance().getClient().printWriter.flush();
                 State.getInstance().getGuiRef().closeGameFrame(true);
             }
         }
         else if(board.mated(Color.BLACK) && State.getInstance().isWhiteOnMove()){
             System.out.println("Cerny v matu");
+            State.getInstance().getGame().addMove(boardString);
+            board.addMoveToNotation(formatMoveToNotation(diff(gameString, boardString).toString()));
             int answer = JOptionPane.showConfirmDialog(null, "Bílý vyhrál, nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
             if(answer == 0 || answer == -1){
+                State.getInstance().getGuiRef().updateNotation(board.getNotation());
+                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                State.getInstance().getClient().printWriter.flush();
                 State.getInstance().getGuiRef().closeGameFrame(true);
             }
         }
