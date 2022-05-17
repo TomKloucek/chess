@@ -111,6 +111,8 @@ public class TwoClientsHandler implements Runnable {
                                             firstLetter+receivedMessageFromWhite);
                                     if(receivedMessageFromWhite.contains("$")){
                                         this.saveGameToFile(firstLetter+receivedMessageFromWhite.strip());
+                                        goCycle = false;
+                                        break;
                                     }
                                     printWriterBlack.println(firstLetter + receivedMessageFromWhite);
                                     printWriterBlack.flush();
@@ -156,6 +158,8 @@ public class TwoClientsHandler implements Runnable {
                                         firstLetter+receivedMessageFromBlack);
                                 if(receivedMessageFromBlack.contains("$")){
                                     this.saveGameToFile(firstLetter + receivedMessageFromBlack.strip());
+                                    goCycle = false;
+                                    break;
                                 }
                                 printWriterWhite.println(firstLetter+receivedMessageFromBlack);
                                 printWriterWhite.flush();
