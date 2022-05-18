@@ -1,7 +1,6 @@
 package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
-import cz.cvut.fel.pjv.server.Client;
 import cz.cvut.fel.pjv.view.MainMenu;
 
 import javax.swing.*;

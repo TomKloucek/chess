@@ -344,9 +344,15 @@ public class Board {
                 State.getInstance().getGuiRef().updateNotation(getNotation());
             }
             State.getInstance().getGame().setGameString(this.boardToString());
-            if(this.mated(Color.WHITE) || this.mated(Color.BLACK) && this.getType() == GameType.SERVER){
-                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
-                State.getInstance().getClient().printWriter.flush();
+            if(this.getType() == GameType.SERVER){
+                if (this.mated(Color.WHITE)) {
+                    State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText(),1));
+                    State.getInstance().getClient().printWriter.flush();
+                }
+                else if (this.mated(Color.BLACK)) {
+                    State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText(),2));
+                    State.getInstance().getClient().printWriter.flush();
+                }
             }
             counterHelper+=1;
             return true;

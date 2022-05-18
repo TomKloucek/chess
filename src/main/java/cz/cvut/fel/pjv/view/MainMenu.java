@@ -2,7 +2,7 @@ package cz.cvut.fel.pjv.view;// Java program to illustrate the BorderLayout
 import cz.cvut.fel.pjv.helpers.Helpers;
 import cz.cvut.fel.pjv.loggers.Logger;
 import cz.cvut.fel.pjv.models.*;
-import cz.cvut.fel.pjv.server.Client;
+import cz.cvut.fel.pjv.models.Client;
 
 import java.awt.*;
 import java.awt.Color;
@@ -124,14 +124,27 @@ public class MainMenu extends JFrame {
         JButton topten = new JButton();
         topten.setBackground(Color.black);
         topten.setForeground(Color.white);
-        topten.setText("Všechny hry");
+        topten.setText("Statistiky");
         topten.setCursor(new Cursor(Cursor.HAND_CURSOR));
         topten.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     Client client = new Client();
-                    MainMenu.this.openLastPlayedGames(client.getGamesHistory());
+
+                    String[] options_color = {"Osobní statistika","Všechny hry"};
+                    int answer = JOptionPane.showOptionDialog(null, "Jakou statistiku si přejete zobrazit?",
+                            "Jaké statistiky?",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
+                    if (answer == 0) {
+                        if (State.getInstance().getLogin() == null) {
+                            State.getInstance().setLogin();
+                        }
+                        MainMenu.this.openPlayerProfile(client.getPlayerStatistics(State.getInstance().getLogin()));
+                    }
+                    else {
+                        MainMenu.this.openLastPlayedGames(client.getGamesHistory());
+                    }
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     Logger.log(MainMenu.class, "Constructor",ex.getMessage());
@@ -1016,6 +1029,45 @@ public class MainMenu extends JFrame {
         gamePanel.setAlignmentX(50);
 
         frame.add(gamePanel,BorderLayout.EAST);
+    }
+
+    public void openPlayerProfile(String results) {
+        hideMainMenu();
+        String[] values = results.split(",");
+
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(930, 679));
+        frame.pack();
+        frame.setLocationByPlatform(true);
+        if (State.getInstance().getLogin() == null) {
+            State.getInstance().setLogin();
+        }
+        frame.setVisible(true);
+
+        frame.setLayout(new BorderLayout());
+
+        JLabel profile = new JLabel();
+        EmptyBorder margin = new EmptyBorder(50,320,0,60);
+        profile.setBorder(new CompoundBorder(profile.getBorder(), margin));
+        profile.setIcon(new ImageIcon(new ImageIcon("resources/profile.png").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
+        frame.add(profile, BorderLayout.NORTH);
+
+        JLabel name = new JLabel(State.getInstance().getLogin());
+        name.setBorder(new CompoundBorder(name.getBorder(), new EmptyBorder(0,320,10,60)));
+        name.setFont(new Font("Roboto", Font.PLAIN, 40));
+        frame.add(name,BorderLayout.CENTER);
+
+        JLabel stats = new JLabel("Počet odehraných her: "+values[0]+"    Výher: "+values[1]+"     Proher: "+values[2]+"    Remízy: "+values[3]);
+        stats.setBorder(new CompoundBorder(stats.getBorder(), new EmptyBorder(0,120,60,60)));
+        stats.setFont(new Font("Roboto", Font.PLAIN, 25));
+        frame.add(stats,BorderLayout.SOUTH);
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                showMainMenu();
+            }
+        });
     }
 
     public JLabel getNameWhite() {

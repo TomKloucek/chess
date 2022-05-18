@@ -230,7 +230,7 @@ public class Helpers {
         return result;
     }
 
-    public static String gameHistory(ArrayList<String> moves, String loginWhite, String loginBlack) {
+    public static String gameHistory(ArrayList<String> moves, String loginWhite, String loginBlack, int win) {
         StringBuilder resultString = new StringBuilder();
         boolean first = true;
         for (String move : moves) {
@@ -247,6 +247,7 @@ public class Helpers {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         resultString.append("$").append(formatter.format(date));
+        resultString.append("$").append(win);
         return  resultString.toString();
     }
 

@@ -1,7 +1,6 @@
 package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.helpers.Helpers;
-import cz.cvut.fel.pjv.server.Client;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class Game {
             int answer = JOptionPane.showConfirmDialog(null, "Černý vyhrál, nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
             if(answer == 0 || answer == -1){
                 State.getInstance().getGame().addMove(boardString);
-                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText(),2));
                 State.getInstance().getClient().printWriter.flush();
                 State.getInstance().getGuiRef().closeGameFrame(true);
             }
@@ -78,7 +77,7 @@ public class Game {
             int answer = JOptionPane.showConfirmDialog(null, "Bílý vyhrál, nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
             if(answer == 0 || answer == -1){
                 State.getInstance().getGuiRef().updateNotation(board.getNotation());
-                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText(),1));
                 State.getInstance().getClient().printWriter.flush();
                 State.getInstance().getGuiRef().closeGameFrame(true);
             }
@@ -89,7 +88,7 @@ public class Game {
             int answer = JOptionPane.showConfirmDialog(null, "Hra skončila remízou nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
             if(answer == 0 || answer == -1){
                 State.getInstance().getGame().addMove(boardString);
-                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText(),0));
                 State.getInstance().getClient().printWriter.flush();
                 State.getInstance().getGuiRef().closeGameFrame(true);
             }

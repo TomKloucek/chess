@@ -48,7 +48,15 @@ public class ClientHandler implements Runnable{
                 }
                 else if (receivedMessage.contains("OneOfPlayersDisconnected")){
                     State.getInstance().getGuiRef().showMainMenu();
-                    printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                    Color winner = State.getInstance().getGame().getMe().getColor();
+                    int win;
+                    if (winner == Color.WHITE) {
+                        win = 1;
+                    }
+                    else {
+                        win = 2;
+                    }
+                    printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText(),win));
                     printWriter.flush();
                     State.getInstance().getGuiRef().closeGameFrame(true);
                     JOptionPane.showMessageDialog(null,"Bohužel se Váš protihráč odpojil ze hry");
