@@ -17,50 +17,114 @@ Cílem projektu je vytvořit aplikaci umožňující hrát hru šachy dvou hrá�
 
 - hra dvou hráčů
 - člověk vs. člověk
-- příprava pro hru člověk vs. počítač
+- hra člověk vs. počítač
 - kompletní kontrola pravidel hry
 - možnost uložení a načtení rozehrané partie
 - možnost manuálního umístění figur před zahájením hry
 - šachové hodiny
-- Každý musí implementovat minimálně jednu z následujících vlastností/úkolů:
+- statistika hráčů
 - síťová hra
-- načítání, ukládání a prohlížení partií ve standardním PGN formátu
+
 
 ## Uživatelská dokumentace
-V současné době aplikace umožnujě hrát šachy v konzoli, kdy se dva hráči střídají metodou Pass&Play.
+Naše aplikace je šachový klient, který umožňuje hrát šachy dle všech platných pravidel této hry. A to jak lokálně na jednom počítači ve formátu
+hráč proti hráči nebo hráč proti umělé inteligenci, tak i online s pomocí serveru. Tento serve udržuje
+jednotlivé roomky tzv. „místnosti“, ve které je připojena dvojice hráčů, která hraje proti sobě. Dále
+naše aplikace také umožňuje vytvořit vlastní šachovou pozici a následně ji rozehrát opět buď proti
+hráči nebo proti umělé inteligenci. Tuto šachovou pozici lze také uložit do souboru a později z tohoto
+souboru načíst. Nyní se pojďme podívat na jednotlivé komponenty aplikace podrobněji.
 
-Hráč zapne hru, a zadává souřadnice jako figurku chce vybrat a v konzoli se vypíše zda je figurka validní a má možnost se někam pohnout, v případě že, ne, má hráč možnost si vybrat jinou figurku, v opačném případě se vypíšou možnosti kam se figurka může pohnout a hráč zadává finální souřadnice.
+Hlavní menu aplikace vypadá následovně:
 
-<img src="/media/gitlab/console.png" alt="UML" width="488"/>
 
-Budoucím plánem je následující implemetace v grafickém rozhraní viz. níže uvedené ukázky
+<img src="/media/gitlab/manual/main_menu.png" alt="main_menu"/>
 
-Úvodní obrazovka hry bude vypadat následovně:
+Zde můžeme vidět několik velké množství tlačítek, která jsou pojmenovaná podle funkcionality, za kterou odpovídají.
 
-<img src="/media/gitlab/manual/uvodni_obrazovka.png" alt="UML"/>
+První tlačítko hra po sítí je zodpovědná za připojení se k serveru, zařezení do fronty a po nalezení hráče za otevřerní hry, 
+která je hostovaná na serveru v tzv. „místnosti“. Před započetím hry, se klient uživatele zeptá na jeho herní jméno a to 
+následujícím způsobem:
 
-Okno hry bude vypadat takto:
+<img src="/media/gitlab/manual/name_question.png" alt="name_question"/>
 
-<img src="/media/gitlab/manual/nahled_hry.png" alt="UML" />
+Uživatel zadá své herní jméno po čemž se v případě dostupnosti serveru připojí na server, kde se mu otevře čekací dialog:
 
-Naše šachovnice bude vypadat následujicím způsobem
+<img src="/media/gitlab/manual/waiting_dialogue.png" alt="name_question"/>
 
-<img src="/media/gitlab/manual/chess_board.jpg" alt="UML" width="400"/>
+V opačném případě, pokud server není dostupný se mu otevře okno, které uživatele informuje o nedostupnosti serveru:
 
-Po zvolení figurky se na šachovnici zobrazí možné tahy vybrané figurky
+<img src="/media/gitlab/manual/server_not_available.png" alt="server_not_availible"/>
 
-<img src="/media/gitlab/manual/chess_board_move_example.jpg" alt="UML" width="400"/>
+V případě připojení na server druhého hráče, se otevře místnost pro šachovou hru, která vypadá následovně
 
-Pokud figurka bude mít možnost vzít figurku protivníka, bude to znázorněno následujícím způsobem
+Naše šachovnice bude vypadat následujicím způsobem:
 
-<img src="/media/gitlab/manual/chess_board_take_example.jpg" alt="UML" width="400"/>
+<img src="/media/gitlab/manual/game_window.png" alt="game_window" />
 
-Po zvolení políčka, na které se figurka má posunout kliknutím na jednu z vykreslených "teček" se figurka pohne na 
-zvolené místo 
+V něm můžeme spatřit několik elementů takových jako uživatelská jména hráčů, šachové hodiny (které jsou v online hře nastaveny na výchozích 10 minut času pro každého hráče), okno s notací a samozřejmě šachovnici.
 
-<img src="/media/gitlab/manual/chess_board_after_move_example.jpg" alt="UML" width="400"/>
+Po zvolení figurky se na šachovnici zobrazí možné tahy vybrané figurky, odpovídající pravidlům šachu:
 
-Pokud se po tahu protivníkův král ocitne v šachu bude to vypadat následovně
+<img src="/media/gitlab/manual/move_example.png" alt="game_window" />
+
+Následovně hra probíhá dle klasického scénáře dokud nenastane remíza, nebo jeden z hráču neprohraje.
+
+Po ukončení hry se uživateli zobrazí hláška, kdo vyhrál a bude odpojen od serveru, čímž se mu také zavře okno s 
+šachovou hrou a otevře hlavní menu.
+
+<img src="/media/gitlab/manual/end_of_game.png" alt="end_of_game" />
+
+Dále se podíváme na tlačítko Hra s počítačem. Toto tlačítko umožňuje spustit hru s počítačem. S předem navoleným časovým limitem pro každého hráče.
+Toto nastavení se dá měnit uvnitř šachového klienta po kliknutí na tlačítko nastavení a následně na tlačítko změnit délku hry.
+
+Hra v tomto módu probíhá stejně jako v síťové hře, akorát, že proti hráči hraje umělá inteligence. Hra končí za stejných podmínek jako 
+v přechozím herním režimu.
+
+Další režim hry je PvP. Jedná se o klasickou implementaci lokální hry v jednom šachovém klientu, kdy proti sobě hrají dva hráči na jednom počítači.
+Ukončovací podmínky jsou opět stejné.
+
+Tlačítko Statistiky odpovídá za načtení statistik jednolivého hráče z herního serveru nebo za načtení veškerých her, které byly na serveru odehrány. 
+Pro výběr toho co si uživatel chce zobrazit je vykresleno speciální okno:
+
+<img src="/media/gitlab/manual/statistics_dialogue.png" alt="statistics_dialogue" />
+
+Pokud uživatel zvolí první možnost čili osobní statistika, bude vyzván k zadání jména hráče, kterého si chce zobrazit:
+
+<img src="/media/gitlab/manual/name_question.png" alt="name_question" />
+
+Poté se uživateli zobrazí okno se statistikou
+
+<img src="/media/gitlab/manual/statistics_window.png" alt="statistics_window" />
+
+Když uživatel klikne na tlačítko: Všechny hry, tak se mu zobrazí okno s nabídkou her, které si může prohlédnout:
+
+<img src="/media/gitlab/manual/game_history.png" alt="game_history" />
+
+Poté uživatel může kliknout na jednotlivou hru a tam se mu zobrazí toto okno se dvěmi tlačítky, kterými může průběh hry posouvat 
+a zobrazovat si tak tahy, které proběhly ve hře:
+
+<img src="/media/gitlab/manual/game_browser.png" alt="game_browser" />
+
+
+Tlačítko Editor, otevírá rozhraní, ve kterém si uživatel může vytvořit vlastní šachovou pozici a následně ji rozehrát proti počítači, 
+proti reálnému hráči lokálně, nebo si tuto pozici může uložit toto rozhraní vypadá následovně: 
+
+<img src="/media/gitlab/manual/editor.png" alt="editor" />
+
+Na pravé straně můžeme vidět tlačítka odpovídající za výše popsanou funkcionalitu. 
+
+Pokud uživatel chce umístit figurku na šachovnici, musí kliknout na políčko kam figurku chce umístit na což se mu zobrazí
+dva dialogy, jeden pro zvolení barvy figurky:
+
+<img src="/media/gitlab/manual/choose_color_of_piece.png" alt="choose_color_of_piece" />
+
+
+a druhý pro zvolení požadované figurky:
+
+<img src="/media/gitlab/manual/choose_piece.png" alt="choose_piece" />
+
+
+
 
 <img src="/media/gitlab/manual/chess_board_check_example.jpg" alt="UML" width="400"/>
 

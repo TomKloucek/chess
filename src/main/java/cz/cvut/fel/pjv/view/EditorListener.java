@@ -49,7 +49,7 @@ public class EditorListener implements ActionListener {
             int answer;
             if (board.getKing(color) == null) {
                 answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",
-                        "Vyber si barvu",
+                        "Vyber si figurku",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_piece_king, options_piece_king[0]);
             } else {
                 answer = JOptionPane.showOptionDialog(null, "Vyber si figurku",

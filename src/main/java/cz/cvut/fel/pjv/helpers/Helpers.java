@@ -110,55 +110,55 @@ public class Helpers {
         try {
             if (IPiece instanceof Pawn) {
                 if (IPiece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("resources/pieces/set2/white_pawn.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/white_pawn.png"));
                 } else {
-                    return ImageIO.read(new File("resources/pieces/set2/black_pawn.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/black_pawn.png"));
                 }
             }
             if (IPiece instanceof Knight) {
                 if (IPiece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("resources/pieces/set2/white_knight.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/white_knight.png"));
                 } else {
-                    return ImageIO.read(new File("resources/pieces/set2/black_knight.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/black_knight.png"));
                 }
             }
             if (IPiece instanceof Bishop) {
                 if (IPiece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("resources/pieces/set2/white_bishop.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/white_bishop.png"));
                 } else {
 
-                    return ImageIO.read(new File("resources/pieces/set2/black_bishop.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/black_bishop.png"));
                 }
             }
             if (IPiece instanceof Rook) {
                 if (IPiece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("resources/pieces/set2/white_rook.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/white_rook.png"));
                 } else {
-                    return ImageIO.read(new File("resources/pieces/set2/black_rook.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/black_rook.png"));
                 }
             }
             if (IPiece instanceof Queen) {
                 if (IPiece.getColor() == Color.WHITE) {
-                    return ImageIO.read(new File("resources/pieces/set2/white_queen.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/white_queen.png"));
                 } else {
-                    return ImageIO.read(new File("resources/pieces/set2/black_queen.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/black_queen.png"));
                 }
             }
             if (IPiece instanceof King) {
                 if (IPiece.getColor() == Color.WHITE) {
                     if (State.getInstance().isWhiteOnMove() && board.whiteInCheck()) {
 
-                        return ImageIO.read(new File("resources/pieces/set2/white_king_in_check.png"));
+                        return ImageIO.read(new File("resources/pieces/set1/white_king_in_check.png"));
                     }
                     else {
-                        return ImageIO.read(new File("resources/pieces/set2/white_king.png"));
+                        return ImageIO.read(new File("resources/pieces/set1/white_king.png"));
                     }
 
                 } else {
                     if (!State.getInstance().isWhiteOnMove() && board.blackInCheck()){
-                        return ImageIO.read(new File("resources/pieces/set2/black_king_in_check.png"));
+                        return ImageIO.read(new File("resources/pieces/set1/black_king_in_check.png"));
                     }
-                    return ImageIO.read(new File("resources/pieces/set2/black_king.png"));
+                    return ImageIO.read(new File("resources/pieces/set1/black_king.png"));
                 }
             }
             else {

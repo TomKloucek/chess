@@ -825,7 +825,7 @@ public class MainMenu extends JFrame {
         JPanel settingsPanel = new JPanel(new FlowLayout());
 
         JButton selectColorWhite = new JButton();
-        selectColorWhite.setText("Policka bile barvy");
+        selectColorWhite.setText("Políčka bílé barvy");
         selectColorWhite.setCursor(new Cursor(Cursor.HAND_CURSOR));
         selectColorWhite.setSize(100,50);
         selectColorWhite.addActionListener(new ActionListener() {
@@ -842,7 +842,7 @@ public class MainMenu extends JFrame {
         });
 
         JButton selectColorBlack = new JButton();
-        selectColorBlack.setText("Policka cerne barvy");
+        selectColorBlack.setText("Políčka černé barvy");
         selectColorBlack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         selectColorBlack.setSize(50,50);
         selectColorBlack.addActionListener(new ActionListener() {
@@ -858,7 +858,7 @@ public class MainMenu extends JFrame {
             }
         });
         JButton selectGameLength = new JButton();
-        selectGameLength.setText("Zmenit delku hry");
+        selectGameLength.setText("Změni délku hry");
         selectGameLength.setCursor(new Cursor(Cursor.HAND_CURSOR));
         selectGameLength.setSize(50,50);
         selectGameLength.addActionListener(new ActionListener() {
