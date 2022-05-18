@@ -35,7 +35,7 @@ public class State {
     }
 
     public void setLogin() {
-        this.login = JOptionPane.showInputDialog("Zadej svoje herni jmeno:");
+        this.login = JOptionPane.showInputDialog("Zadejte svoje herní jméno:");
     }
 
     public State() {
