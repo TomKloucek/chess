@@ -37,7 +37,7 @@ public class BoardView extends JPanel {
         }
 
         try {
-            BoardView.readColors();
+            BoardView.readColorsAndFigures();
         } catch (Exception e) {
             Logger.log(BoardView.class, "Constructor read colors", e.getMessage());
         }
@@ -46,7 +46,7 @@ public class BoardView extends JPanel {
         COLOR_GREEN = State.getInstance().getBlack();
 
         try {
-            Helpers.writeColors();
+            Helpers.writeColorsAndFigures();
         } catch (Exception e) {
             Logger.log(BoardView.class, "Constructor", e.getMessage());
         }
@@ -188,7 +188,7 @@ public class BoardView extends JPanel {
         return board;
     }
 
-    public static void readColors() throws Exception {
+    public static void readColorsAndFigures() throws Exception {
         try {
             File client = new File("client.txt");
             Scanner clientReader = new Scanner(client);
@@ -200,6 +200,7 @@ public class BoardView extends JPanel {
                     String[] black = values[2].split(",");
                     State.getInstance().setWhite(new Color(Integer.parseInt(white[0].trim()), Integer.parseInt(white[1].trim()), Integer.parseInt(white[2].trim())));
                     State.getInstance().setBlack(new Color(Integer.parseInt(black[0].trim()), Integer.parseInt(black[1].trim()), Integer.parseInt(black[2].trim())));
+                    State.getInstance().setPiecesSet(values[3]);
                 }
             }
             clientReader.close();

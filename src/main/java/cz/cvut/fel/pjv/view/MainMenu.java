@@ -10,10 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -44,11 +46,11 @@ public class MainMenu extends JFrame {
             e.printStackTrace();
         }
         try {
-            BoardView.readColors();
+            BoardView.readColorsAndFigures();
         } catch (Exception e) {
             Logger.log(MainMenu.class, "Constructor", e.getMessage());
             try {
-                Helpers.writeColors();
+                Helpers.writeColorsAndFigures();
             } catch (Exception ex) {
                 Logger.log(MainMenu.class, "Constructor", ex.getMessage());
             }
@@ -813,9 +815,13 @@ public class MainMenu extends JFrame {
 
     public void setUpSettings() {
         this.settingsFrame = new JFrame("Nastavení");
+        final JFrame[] figurky = {null};
         settingsFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         settingsFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                if (figurky[0] != null) {
+                    figurky[0].dispose();
+                }
                 showMainMenu();
             }
         });
@@ -834,7 +840,7 @@ public class MainMenu extends JFrame {
                 State.getInstance().setWhite(JColorChooser.showDialog(null,"Vyber barvu",State.getInstance().getWhite()));
                 setUpColorButtons(selectColorWhite,null);
                 try {
-                    Helpers.writeColors();
+                    Helpers.writeColorsAndFigures();
                 } catch (Exception error) {
                     Logger.log(MainMenu.class, "Vyber barev", error.getMessage());
                 }
@@ -851,7 +857,7 @@ public class MainMenu extends JFrame {
                 State.getInstance().setBlack(JColorChooser.showDialog(null,"Vyber barvu",State.getInstance().getBlack()));
                 setUpColorButtons(selectColorWhite,selectColorBlack);
                 try {
-                    Helpers.writeColors();
+                    Helpers.writeColorsAndFigures();
                 } catch (Exception error) {
                     Logger.log(MainMenu.class, "Vyber barev", error.getMessage());
                 }
@@ -872,11 +878,27 @@ public class MainMenu extends JFrame {
             }
         });
 
+        JButton selectFiguresSet = new JButton();
+        selectFiguresSet.setText("Vybrat vzhled figurek");
+        selectFiguresSet.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectFiguresSet.setSize(50,50);
+        selectFiguresSet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    figurky[0] = showPiecesPicker();
+                } catch (IOException ex) {
+                    Logger.log(MainMenu.class, "Vyber setu figurek", ex.getMessage());
+                }
+            }
+        });
+
         setUpColorButtons(selectColorWhite,selectColorBlack);
 
         settingsPanel.add(selectColorWhite,FlowLayout.LEFT);
         settingsPanel.add(selectColorBlack,FlowLayout.CENTER);
         settingsPanel.add(selectGameLength,FlowLayout.RIGHT);
+        settingsPanel.add(selectFiguresSet);
         settingsFrame.getContentPane().add(settingsPanel);
     }
 
@@ -1076,6 +1098,64 @@ public class MainMenu extends JFrame {
 
     public JLabel getNameBlack() {
         return nameBlack;
+    }
+
+    public JFrame showPiecesPicker() throws IOException {
+        JFrame frame = new JFrame("Figurky");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(250, 120));
+        frame.setMaximumSize(new Dimension(250, 120));
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+
+        JButton setOneButton = new JButton(new ImageIcon(new ImageIcon("resources/pieces/set1/black_pawn.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+        JButton setTwoButton = new JButton(new ImageIcon(new ImageIcon("resources/pieces/set2/black_pawn.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+        JButton setThreeButton = new JButton(new ImageIcon(new ImageIcon("resources/pieces/set3/black_pawn.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+
+        setOneButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                State.getInstance().setPiecesSet("set1");
+                try {
+                    Helpers.writeColorsAndFigures();
+                } catch (IOException ex) {
+                    Logger.log(MainMenu.class, "Vyber setu figurek", ex.getMessage());
+                }
+                frame.dispose();
+            }
+        });
+        setTwoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                State.getInstance().setPiecesSet("set2");
+                try {
+                    Helpers.writeColorsAndFigures();
+                } catch (IOException ex) {
+                    Logger.log(MainMenu.class, "Vyber setu figurek", ex.getMessage());
+                }
+                frame.dispose();
+            }
+        });
+        setThreeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                State.getInstance().setPiecesSet("set3");
+                try {
+                    Helpers.writeColorsAndFigures();
+                } catch (IOException ex) {
+                    Logger.log(MainMenu.class, "Vyber setu figurek", ex.getMessage());
+                }
+                frame.dispose();
+            }
+        });
+
+
+        frame.getContentPane().setLayout(new BorderLayout());
+        frame.getContentPane().add(setOneButton,BorderLayout.WEST);
+        frame.getContentPane().add(setTwoButton, BorderLayout.CENTER);
+        frame.getContentPane().add(setThreeButton, BorderLayout.EAST);
+
+        return frame;
     }
 }
 

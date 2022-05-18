@@ -24,6 +24,7 @@ public class State {
 
     private long timeLeftBlack = 600;
 
+    private String piecesSet = "set1";
 
     private Client client;
 
@@ -186,5 +187,21 @@ public class State {
         setTimeLeftWhite(Helpers.getGameLength(this.gameLength));
         setTimeLeftBlack(Helpers.getGameLength(this.gameLength));
         setTimeOfMoveStart(0);
+    }
+
+    public String getPiecesSet() {
+        return piecesSet;
+    }
+
+    public void setPiecesSet(int pieceSet) {
+        switch (pieceSet) {
+            case 1 -> this.piecesSet = "set2";
+            case 2 -> this.piecesSet = "set3";
+            default -> this.piecesSet = "set1";
+        }
+    }
+
+    public void setPiecesSet(String set) {
+        this.piecesSet = set;
     }
 }
