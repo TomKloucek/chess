@@ -950,6 +950,7 @@ public class MainMenu extends JFrame {
     }
 
     public void openGameExplorer(ArrayList<String> moves) {
+        State.getInstance().resetMove();
         Board board = new Board(GameType.SERVER);
 
         hideMainMenu();
@@ -971,10 +972,11 @@ public class MainMenu extends JFrame {
         forwardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentMove[0] + 1 > moves.size()) {
+                if (currentMove[0] + 2 > moves.size()) {
                     JOptionPane.showMessageDialog(null, "Žádný tah potom neexistuje");
                 }
                 else {
+                    State.getInstance().reverseMove();
                     currentMove[0] += 1;
                     board.stringToBoard(moves.get(currentMove[0]), true);
                     mainPanel.repaintBoard();
@@ -991,6 +993,7 @@ public class MainMenu extends JFrame {
                     JOptionPane.showMessageDialog(null, "Žádný tah předtím neexistuje");
                 }
                 else {
+                    State.getInstance().reverseMove();
                     currentMove[0] -= 1;
                     board.stringToBoard(moves.get(currentMove[0]), true);
                     mainPanel.repaintBoard();

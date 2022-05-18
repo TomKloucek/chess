@@ -144,6 +144,8 @@ public class Board {
     }
 
     public void stringToBoard(String s, boolean network) {
+        this.getPieces(Color.WHITE).clear();
+        this.getPieces(Color.BLACK).clear();
         if (!network) {
             for (int i = 7; i > -1; i--) {
                 for (int j = 0; j < 8; j++) {

@@ -103,7 +103,6 @@ public class King implements IPiece {
         }
         // LOWER LINE
             for (int i = -1; i <= 1; i++){
-                System.out.println(board.getPieces(Helpers.getOtherColor(this.getColor())));
                 if (this.getX()+i <= 7 && this.getX()+i >= 0 && this.getY()-1 >= 0 && this.getY()-1 <= 7) {
 
                     if (board.getBoard()[this.getX() + i][this.getY() - 1].getPiece() != null) {
