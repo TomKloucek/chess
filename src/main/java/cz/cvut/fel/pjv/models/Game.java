@@ -57,6 +57,8 @@ public class Game {
     }
 
     public void updateGame(String boardString) {
+        board.getPieces(Color.WHITE).clear();
+        board.getPieces(Color.BLACK).clear();
         board.stringToBoard(boardString, true);
         State.getInstance().getGuiRef().getBw().repaintBoard();
         if(board.mated(Color.WHITE) && !State.getInstance().isWhiteOnMove()){
@@ -81,6 +83,18 @@ public class Game {
                 State.getInstance().getGuiRef().closeGameFrame(true);
             }
         }
+        else if(board.isDraw()){
+            board.addMoveToNotation(formatMoveToNotation(diff(gameString, boardString).toString()));
+            State.getInstance().getGuiRef().updateNotation(board.getNotation());
+            int answer = JOptionPane.showConfirmDialog(null, "Hra skončila remízou nyní budete odpojen.", "Upozornění", JOptionPane.DEFAULT_OPTION);
+            if(answer == 0 || answer == -1){
+                State.getInstance().getGame().addMove(boardString);
+                State.getInstance().getClient().printWriter.println(Helpers.gameHistory(State.getInstance().getGame().getMoves(), State.getInstance().getGuiRef().getNameWhite().getText(),State.getInstance().getGuiRef().getNameBlack().getText()));
+                State.getInstance().getClient().printWriter.flush();
+                State.getInstance().getGuiRef().closeGameFrame(true);
+            }
+        }
+
         State.getInstance().reverseMove();
         board.addMoveToNotation(formatMoveToNotation(diff(gameString, boardString).toString()));
         State.getInstance().getGuiRef().updateNotation(board.getNotation());

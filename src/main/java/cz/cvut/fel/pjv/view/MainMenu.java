@@ -883,10 +883,15 @@ public class MainMenu extends JFrame {
     public boolean checkWin(Board board, GameType gameType) {
 
             if (board.whiteInCheck() && board.blackInCheck()){
-                JOptionPane.showMessageDialog(null, "Nemůžete spustit hru když oba králové jsou v šachu.");
+                JOptionPane.showMessageDialog(null, "Nemůžete spustit hru, když oba králové jsou v šachu.");
                 closeGameFrame(false);
                 openEditor("");
             }
+        if (board.isDraw()){
+            JOptionPane.showMessageDialog(null, "Nemůžete spustit hru z remízové pozice.");
+            closeGameFrame(false);
+            openEditor("");
+        }
 
             else if (board.whiteInCheck()) {
                 if (board.mated(cz.cvut.fel.pjv.models.Color.WHITE)) {

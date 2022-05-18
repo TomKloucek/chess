@@ -38,7 +38,7 @@ public class ClickListener implements ActionListener {
                     }
                 }
                 else {
-                    if (board.getKing(Color.WHITE).possibleMovement(board).isEmpty() && board.getPieces(Color.WHITE).size() == 1) {
+                    if (board.isDraw()) {
                         JOptionPane.showMessageDialog(null, "Remíza");
                         State.getInstance().getGuiRef().closeGameFrame(true);
                     }
@@ -52,10 +52,11 @@ public class ClickListener implements ActionListener {
                         State.getInstance().getGuiRef().closeGameFrame(true);
                         State.getInstance().resetMove();
                     }
-                    else {
-                        if (board.getKing(Color.BLACK).possibleMovement(board).isEmpty() && board.getPieces(Color.BLACK).size() == 1) {
-                            JOptionPane.showMessageDialog(null, "Remíza");
-                        }
+                }
+                else {
+                    if (board.isDraw()) {
+                        JOptionPane.showMessageDialog(null, "Remíza");
+                        State.getInstance().getGuiRef().closeGameFrame(true);
                     }
                 }
             }
@@ -77,8 +78,9 @@ public class ClickListener implements ActionListener {
                 bw.setPickedPiece(-1,-1);
                 JOptionPane.showMessageDialog(null, "Tento výběr vas nedostane z šachu");
             }
-            else if (State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE && board.whiteInCheck() || !State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK
-            && board.blackInCheck()) {
+            else if ((State.getInstance().isWhiteOnMove() && picked.getColor() == Color.WHITE && board.whiteInCheck() )|| (!State.getInstance().isWhiteOnMove() && picked.getColor() == Color.BLACK
+            && board.blackInCheck())) {
+
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         if (picked instanceof King && possibleMovement.contains(squarePanels[i][j].getSquare())){

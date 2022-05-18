@@ -723,6 +723,58 @@ public class Board {
         return (ArrayList<Square>) Helpers.intersection(squaresToBlock, piecePossibleMovements);
     }
 
+    public boolean isDraw() {
+        if (this.getKing(Color.WHITE).possibleMovement(this).isEmpty() && this.getPieces(Color.WHITE).size() == 1) {
+            return true;
+        } else if (this.getKing(Color.BLACK).possibleMovement(this).isEmpty() && this.getPieces(Color.BLACK).size() == 1) {
+            return true;
+        } else if ((isThereOnlyKingOnTheBoard(Color.WHITE) || isThereOnlyKingAndKnightOnTheBoard(Color.WHITE)
+                || isThereOnlyKingAndBishopOnTheBoard(Color.WHITE)) &&
+                (isThereOnlyKingOnTheBoard(Color.BLACK) || isThereOnlyKingAndKnightOnTheBoard(Color.BLACK)
+                || isThereOnlyKingAndBishopOnTheBoard(Color.BLACK))){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isThereOnlyKingOnTheBoard(Color color){
+        if(this.getPieces(color).size() == 1 && this.getPieces(color).contains(getKing(color))){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean isThereOnlyKingAndKnightOnTheBoard(Color color){
+        if(this.getPieces(color).size() == 2 && this.getPieces(color).contains(getKing(color))) {
+            int countOfKnights = 0;
+            for (IPiece piece: this.getPieces(color)) {
+                if(piece instanceof Knight){
+                    countOfKnights += 1;
+                    if (countOfKnights == 1){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isThereOnlyKingAndBishopOnTheBoard(Color color){
+        if(this.getPieces(color).size() == 2 && this.getPieces(color).contains(getKing(color))) {
+            int countOfBishops = 0;
+            for (IPiece piece: this.getPieces(color)) {
+                if(piece instanceof Bishop){
+                    countOfBishops += 1;
+                    if (countOfBishops == 1){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     public void addCounterHelper(){
         counterHelper+=1;
     }
