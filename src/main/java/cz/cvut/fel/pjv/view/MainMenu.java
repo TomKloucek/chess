@@ -274,7 +274,7 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(800, 720));
+        frame.setMinimumSize(new Dimension(820, 720));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
@@ -430,7 +430,7 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(800, 720));
+        frame.setMinimumSize(new Dimension(820, 720));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
@@ -615,7 +615,7 @@ public class MainMenu extends JFrame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.getContentPane().add(mainPanel);
-        frame.setMinimumSize(new Dimension(800, 720));
+        frame.setMinimumSize(new Dimension(820, 720));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
