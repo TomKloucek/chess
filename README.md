@@ -123,10 +123,37 @@ a druhý pro zvolení požadované figurky:
 
 <img src="/media/gitlab/manual/choose_piece.png" alt="choose_piece" />
 
+Dalším tlačítkem je tlačítko, které slouží pro načtení pozice, ze souboru, do kterého uživatel uložil hru, viz výše popsané možnosti.
+
+Po kliknutí na toto tlačítko stejně tak jako po kliknutí na tlačítko exportuj šachovnici pro pozdější načtení se zobrazí tento dialog:
+
+<img src="/media/gitlab/manual/file_browser.png" alt="file_browser" />
+
+Ve kterém si uživatel vybere soubor, ze kterého se mu načtě pozice.
+
+<img src="/media/gitlab/manual/editor_preview.png" alt="editor_preview" />
+
+Posledním tlačítkem je Nastavení. Název je vypovídající, po kliknutí na toto tlačítko se zobrazí menu, ve kterém si uživatel
+zvolí co chce nastavit 
+
+<img src="/media/gitlab/manual/settings.png" alt="settings" />
+
+Uživatel si může nastavit barvu políček jak bílé tak černé barvy, 
+
+<img src="/media/gitlab/manual/color_settings.png" alt="color_settings" />
+
+délku trvání her, které se budou odehrávat lokálně 
+
+<img src="/media/gitlab/manual/time_settings.png" alt="time_settings" />
+
+a nakonec vzhled šachových figurek. 
+
+<img src="/media/gitlab/manual/pieces_setting.png" alt="time_settings" />
+
+Pro uložení nastavení je potřeba zvolit požadované nastavení a pak okno s nastavením jen zavřít.
+Následně se pak všechny provedené změny zobrazí v šachovém klientu.
 
 
-
-<img src="/media/gitlab/manual/chess_board_check_example.jpg" alt="UML" width="400"/>
 
 ## Technická Dokumentace
 
