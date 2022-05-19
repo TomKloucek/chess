@@ -6,6 +6,13 @@ import cz.cvut.fel.pjv.view.MainMenu;
 import javax.swing.*;
 import java.awt.Color;
 
+/**
+ * State is one of the main classes of the whole project. It has references to many needed classes to run the game. It is also a singleton.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class State {
     private static State _instance;
     private String login = null;
@@ -82,23 +89,56 @@ public class State {
     }
 
 
+    /**
+     * This method provides a GUI reference.
+     *
+     * @return MainMenu reference
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public MainMenu getGuiRef() {
         return guiRef;
     }
 
+    /**
+     * This method gets a start time of game.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public long getStartTime() {
         return startTime;
     }
 
 
+    /**
+     * This method sets a GUI reference.
+     *
+     * @return MainMenu reference
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void setGuiRef(MainMenu guiRef) {
         this.guiRef = guiRef;
     }
+
 
     public boolean isWhiteOnMove() {
         return whiteOnMove;
     }
 
+    /**
+     * This method reverses a move.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void reverseMove() {
         whiteOnMove = !whiteOnMove;
         if (!State.getInstance().isWhiteOnMove()) {
@@ -113,6 +153,13 @@ public class State {
         State.getInstance().setTimeOfMoveStart(System.currentTimeMillis());
     }
 
+    /**
+     * This method resets a move.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void resetMove() {
         whiteOnMove = true;
     }
@@ -129,6 +176,13 @@ public class State {
         this.client = client;
     }
 
+    /**
+     * This method gets a seconds of remaining time of a player.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public long getSecondsLeft(long timeLeft) {
         if (timeOfMoveStart == 0) {
             long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
@@ -143,6 +197,13 @@ public class State {
         }
     }
 
+    /**
+     * This method gets a minutes of remaining time of a player.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public long getMinutesLeft(long timeLeft) {
         if (timeOfMoveStart == 0) {
             long elapsedTime = System.currentTimeMillis() - State.getInstance().getStartTime();
@@ -178,11 +239,25 @@ public class State {
         this.gameLength = gameLength;
     }
 
+    /**
+     * This method setups remaining time of both players.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void setupPlayersTimes() {
         this.timeLeftBlack = Helpers.getGameLength(this.gameLength);
         this.timeLeftWhite = Helpers.getGameLength(this.gameLength);
     }
 
+    /**
+     * This method resets remaining time of both players.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void resetTimers(){
         setTimeLeftWhite(Helpers.getGameLength(this.gameLength));
         setTimeLeftBlack(Helpers.getGameLength(this.gameLength));

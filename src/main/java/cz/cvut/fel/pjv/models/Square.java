@@ -2,10 +2,28 @@ package cz.cvut.fel.pjv.models;
 
 import cz.cvut.fel.pjv.models.pieces.IPiece;
 
+/**
+ * Square is a class for  modeling the board into two-dimensional array.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class Square implements Comparable<Square> {
     private int x,y;
     private IPiece IPiece;
 
+    /**
+     * A constructor of Square.
+     *
+     * @param x x coordinate of Square
+     * @param x y coordinate of Square
+     * @param IPiece piece which is on this square
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public Square(int x, int y, IPiece IPiece) {
         this.x = x;
         this.y = y;

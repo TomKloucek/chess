@@ -27,14 +27,13 @@ public class Game {
 
     private Player me;
 
-
-
     /**
      * A constructor of Game.
      *
      * @param playerWhite player which plays with white pieces
      * @param playerBlack player which plays with black pieces
      * @param board the board of the game
+     *
      * @author Tomas Kloucek
      * @author Vladyslav Babyc
      *
@@ -229,7 +228,7 @@ public class Game {
     }
 
     /**
-     * This method gets a move from diff method and converts it to nootation.
+     * This method gets a move from diff method and converts it to notation.
      *
      * @author Tomas Kloucek
      * @author Vladyslav Babyc

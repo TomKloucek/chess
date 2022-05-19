@@ -8,6 +8,13 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Scanner;
 
+/**
+ * PlayerServer is class which handles statistics of players which played games online.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class PlayerServer implements Runnable {
 
     @Override
@@ -46,6 +53,17 @@ public class PlayerServer implements Runnable {
         }
     }
 
+    /**
+     * This method provides statistics of player with specific username.
+     *
+     * @param playerName username of player
+     *
+     * @return String representation of statistics, which are then displayed in GUI
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public String getPlayerStatistic(String playerName) throws FileNotFoundException {
         File file = new File("games.txt");
         int wins = 0;

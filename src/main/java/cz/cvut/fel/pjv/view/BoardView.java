@@ -12,6 +12,13 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * BoardView is class which shows board.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class BoardView extends JPanel {
     private static final int SQUARE_HEIGHT_WIDTH = 64;
     private static final String[] LETTERS = new String[]{"a", "b", "c", "d", "e", "f", "g", "h"};
@@ -29,6 +36,15 @@ public class BoardView extends JPanel {
 
     private IPiece pickedIPiece;
 
+    /**
+     * A constructor of BoardView.
+     *
+     * @param board board which has to be viewed
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public BoardView(Board board) {
         super(new BorderLayout());
         this.board = board;
@@ -58,6 +74,14 @@ public class BoardView extends JPanel {
     public SquareView[][] getSquarePanels() {
         return this.squarePanels;
     }
+
+    /**
+     * This method resets initiates the view of board.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
 
     private void initializeBoardLayeredPane() {
         boardPanel = new JPanel(new GridLayout(8, 8));
@@ -101,6 +125,13 @@ public class BoardView extends JPanel {
         }
     }
 
+    /**
+     * This method resets initiates the single squares of board.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     private void initializeSquares() {
         squarePanels = new SquareView[8][8];
         if (boardReversed) {
@@ -126,6 +157,13 @@ public class BoardView extends JPanel {
         }
     }
 
+    /**
+     * This method deletes buttons where there are unnecessary.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void deleteButtonsOnSquaresWithoutPiece() {
         for (int r = 7; r >= 0; r--) {
             for (int f = 0; f < 8; f++) {
@@ -138,6 +176,7 @@ public class BoardView extends JPanel {
         }
     }
 
+
     public void restoreBoard() {
         for (int r = 7; r >= 0; r--) {
             for (int f = 0; f < 8; f++) {
@@ -146,7 +185,13 @@ public class BoardView extends JPanel {
         }
     }
 
-
+    /**
+     * This method initiates single square panel.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     private void initializeSingleSquarePanel(int f, int r) {
         if (board.getPieces(cz.cvut.fel.pjv.models.Color.WHITE).isEmpty()) {
             squarePanels[f][r] = new SquareView(new GridLayout(1, 1), board.getBoard()[f][r], board, this, true);
@@ -188,6 +233,14 @@ public class BoardView extends JPanel {
         return board;
     }
 
+
+    /**
+     * This method reads user settings of the view. (Colors of the squares and chosen pieces icons.)
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static void readColorsAndFigures() throws Exception {
         try {
             File client = new File("client.txt");

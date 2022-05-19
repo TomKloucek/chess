@@ -8,6 +8,18 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.time.LocalDateTime;
 
+/**
+ * TwoClientsHandler is class which handles room for a single online game.
+ * It has senders and readers from both of the players.
+ * This class is like a provider of messages between two clients.
+ * It controls whole traffic of messages. The basic concept of this class is that it firstly allows white player to send a message and when
+ * it is waiting for white player, black player is not able to send a message. As soon as it receives message from white player, black player is allowed to send message
+ * and this cycle repeats until one of the players wins disconnects or draws with another player.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class TwoClientsHandler implements Runnable {
     private final Socket playerWhite;
     private PrintWriter printWriterWhite;

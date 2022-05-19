@@ -2,6 +2,13 @@ package cz.cvut.fel.pjv.models;
 
 import java.util.List;
 
+/**
+ * GameHistory is class for storing games which were played on server.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class GameHistory {
     private String playerWhite;
     private String playerBlack;
@@ -9,6 +16,19 @@ public class GameHistory {
     private String timeGameFinished;
     private List<String> moves;
 
+
+    /**
+     * A constructor of GameHistory.
+     *
+     * @param playerWhite player which plays with white pieces
+     * @param playerBlack player which plays with black pieces
+     * @param moves all moves of the game
+     * @param timeGameFinished time when the game was finished
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public GameHistory(String playerWhite, String playerBlack, List<String> moves, String timeGameFinished) {
         this.playerWhite = playerWhite;
         this.playerBlack = playerBlack;

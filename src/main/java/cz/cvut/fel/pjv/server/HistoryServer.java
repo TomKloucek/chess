@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * HistoryServer is class which handles history of online games.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class HistoryServer implements Runnable{
     @Override
     public void run() {
@@ -46,6 +53,13 @@ public class HistoryServer implements Runnable{
         }
     }
 
+    /**
+     * This method provides all games played on this server.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public String getAllGames() throws FileNotFoundException {
         File file = new File("games.txt");
         StringBuilder resultString = new StringBuilder();

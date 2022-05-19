@@ -16,18 +16,45 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * ClientHandler is class which handles client (online).
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class ClientHandler implements Runnable{
     private final Socket clientSocket;
     public BufferedReader bufferedReader;
 
     public PrintWriter printWriter;
 
+    /**
+     * A constructor of ClientHandler.
+     *
+     * @param client clients socket color
+     * @param bufferedReader serves for reading received messages
+     * @param printWriter serves for sending messages
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ClientHandler(Socket client, BufferedReader bufferedReader, PrintWriter printWriter){
         this.clientSocket = client;
         this.bufferedReader = bufferedReader;
         this.printWriter = printWriter;
 
     }
+    /**
+     * In case of specific messages does action which is mainly displayed in the view of the game.
+     * Such as receiving login and message which informs this player that the other one was disconnected.
+     *
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     @Override
     public void run() {
         try {
@@ -85,6 +112,13 @@ public class ClientHandler implements Runnable{
         }
     }
 
+    /**
+     * This method opens a dialogue which shows waiting screen. Because player has to wait until the second player connects.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public JDialog openLoadingDialogue() {
         JDialog dialog = new JDialog();
         dialog.setLayout(new BorderLayout());

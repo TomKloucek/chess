@@ -9,6 +9,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Server is class which handles online PvP games.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class Server {
 
     public void handleServer() throws IOException {
@@ -39,6 +46,15 @@ public class Server {
     }
 
 
+    /**
+     * This method opens a room for online game.
+     *
+     * @return MainMenu reference
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void handlePVPGame(Socket playerWhite, Socket playerBlack) throws IOException {
         TwoClientsHandler twoClientsHandler = new TwoClientsHandler(playerWhite, playerBlack);
         new Thread(twoClientsHandler).start();
