@@ -12,6 +12,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * EditorListener is ActionListener which is on every button in editor.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class EditorListener implements ActionListener {
 
     private Square square;
@@ -24,6 +31,12 @@ public class EditorListener implements ActionListener {
         this.bw = bw;
     }
 
+    /**
+     * <p>
+     * After click on any square in editor this method is called. Gives the user choice to pick color and type of figure he wants to place on the square he already clicked/
+     * </p>
+     * @param e ActionEvent which is click on the button.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         SquareView[][] squarePanels = bw.getSquarePanels();

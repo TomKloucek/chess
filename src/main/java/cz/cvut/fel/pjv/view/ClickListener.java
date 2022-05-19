@@ -14,11 +14,26 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * ClickListener is ActionListener which is called if the user clicks in the game on square where is piece or dot.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class ClickListener implements ActionListener {
     private Square square;
     private Board board;
     private BoardView bw;
 
+    /**
+     * <p>
+     * After click on any square in the game this method is called. If player clicked on the piece the possible moves are drawn on the board and the dots buttons are generated,
+     * If he clicks on the dot picked piece is moved there and the board is checked if any player is not in check or mated.
+     *
+     * </p>
+     * @param e ActionEvent which is click on the button.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Game game = State.getInstance().getGame();
