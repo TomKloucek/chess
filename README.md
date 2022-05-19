@@ -157,7 +157,7 @@ Následně se pak všechny provedené změny zobrazí v šachovém klientu.
 
 ## Technická Dokumentace
 
-TODO vygenerovaná dokumentace
+Technická dokumentace je vygenerována v JavaDoc a nachází se v repositáři ve složce javadoc.
 
 ### UML Diagram
 
