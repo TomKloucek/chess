@@ -21,7 +21,4 @@ public class ButtonCoord extends JButton {
         return y;
     }
 
-    public String getCoords() {
-        return x + " " + y;
-    }
 }

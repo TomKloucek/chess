@@ -21,7 +21,14 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-// class extends JFrame
+/**
+ * MainMenu is the main class and component of the application. It serves as the main menu of the application.
+ * It creates buttons for every client interaction possible and creates listeners with corresponding actions afterwards.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class MainMenu extends JFrame {
     JFrame frame;
 
@@ -169,7 +176,7 @@ public class MainMenu extends JFrame {
         JButton loadGame = new JButton();
         loadGame.setBackground(Color.white);
         loadGame.setForeground(Color.black);
-        loadGame.setText("Načti editor ze souboru");
+        loadGame.setText("Nacti editor ze souboru");
         loadGame.setFont(new Font("Roboto", Font.PLAIN, 10));
         loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loadGame.addActionListener(new ActionListener() {
@@ -776,7 +783,7 @@ public class MainMenu extends JFrame {
             }
         });
 
-        JButton exportButton = new JButton("Exportuj šachovnici pro pozdější načtění");
+        JButton exportButton = new JButton("Exportuj sachovnici pro pozdejsi nacteni");
         exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -864,15 +871,15 @@ public class MainMenu extends JFrame {
             }
         });
         JButton selectGameLength = new JButton();
-        selectGameLength.setText("Změnit délku hry");
+        selectGameLength.setText("Změni délku hry");
         selectGameLength.setCursor(new Cursor(Cursor.HAND_CURSOR));
         selectGameLength.setSize(50,50);
         selectGameLength.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] options_color = {"1","3","5","10","30"};
-                int answer = JOptionPane.showOptionDialog(null, "Zvolte požadovanou délku hry",
-                        "Délka hry",
+                int answer = JOptionPane.showOptionDialog(null, "Delka hry",
+                        "Delka hry",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options_color, options_color[0]);
                 State.getInstance().setGameLength(answer);
             }

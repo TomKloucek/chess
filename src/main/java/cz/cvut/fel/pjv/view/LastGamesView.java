@@ -10,6 +10,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * LastGameView serves as GUI for showing all already played games.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class LastGamesView extends JPanel {
     private List<GameHistory> gameInfo;
     private ArrayList<GameHistoryButton> buttons;
@@ -18,6 +25,11 @@ public class LastGamesView extends JPanel {
         this.setLayout(new GridLayout(gameInfo.size(),1));
         generateButtons();
     }
+    /**
+     * <p>
+     * For every game loaded in the list adds buttons to the view.
+     * </p>
+     */
     public void addButtons() {
         for (GameHistoryButton button : this.buttons) {
             this.add(button);
@@ -28,6 +40,11 @@ public class LastGamesView extends JPanel {
         return buttons;
     }
 
+    /**
+     * <p>
+     * This method generates button for every game that is in the gameInfo list.
+     * </p>
+     */
     public void generateButtons() {
         ArrayList<GameHistoryButton> buttons = new ArrayList<>();
         for (GameHistory gh : gameInfo) {
@@ -44,9 +61,5 @@ public class LastGamesView extends JPanel {
 
     public List<GameHistory> getGameInfo() {
         return gameInfo;
-    }
-
-    public void setGameInfo(List<GameHistory> gameInfo) {
-        this.gameInfo = gameInfo;
     }
 }

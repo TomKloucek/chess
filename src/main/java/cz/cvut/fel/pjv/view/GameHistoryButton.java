@@ -4,6 +4,13 @@ import cz.cvut.fel.pjv.models.GameHistory;
 
 import javax.swing.*;
 
+/**
+ * This class is custom button with added GameHistory field.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class GameHistoryButton extends JButton {
     private GameHistory gh;
 
@@ -15,7 +22,4 @@ public class GameHistoryButton extends JButton {
         return gh;
     }
 
-    public void setGh(GameHistory gh) {
-        this.gh = gh;
-    }
 }
