@@ -180,7 +180,17 @@ public class Rook implements IPiece {
         return possibilities;
     }
 
-
+    /**
+     * This method generates all xray moves of the piece.
+     *
+     * @param board given board of game
+     *
+     * @return list of squares of all xrayedmoves
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ArrayList<Square> getXRayedMoves(Board board) {
         ArrayList<Square> possibilities = new ArrayList<>();
         ArrayList<Square> betweenKingAndPiece = new ArrayList<>();

@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Game is one of the main classes of the whole project. It has all information about the chess game and players.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class Game {
     private Player playerWhite;
     private Player playerBlack;
@@ -20,6 +27,18 @@ public class Game {
 
     private Player me;
 
+
+
+    /**
+     * A constructor of Game.
+     *
+     * @param playerWhite player which plays with white pieces
+     * @param playerBlack player which plays with black pieces
+     * @param board the board of the game
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public Game(Player playerWhite, Player playerBlack, Board board) {
         this.playerWhite = playerWhite;
         this.playerBlack = playerBlack;
@@ -44,6 +63,16 @@ public class Game {
         this.me = me;
     }
 
+
+    /**
+     * This method plays a move for artificial intelligence player.
+     *
+     * @return true if move was successful
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean playForAi() {
         boolean turn = State.getInstance().isWhiteOnMove();
         if (turn && playerWhite instanceof AiPlayer) {
@@ -55,6 +84,14 @@ public class Game {
         return false;
     }
 
+    /**
+     * This method updates game view and shows some messages in case of ending of the game.
+     *
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void updateGame(String boardString) {
         board.getPieces(Color.WHITE).clear();
         board.getPieces(Color.BLACK).clear();
@@ -106,16 +143,44 @@ public class Game {
         return moves;
     }
 
+    /**
+     * This method adds move to game moves.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void addMove(String move) {
         this.moves.add(move);
     }
+
+
+    /**
+     * This method adds move to game moves.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
+
+    /**
+     * This method finds difference between two Strings.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static Pair<String> diff(String a, String b) {
         return diffHelper(a, b, new HashMap<>());
     }
 
+
     /**
-     * Recursively compute a minimal set of characters while remembering already computed substrings.
-     * Runs in O(n^2).
+     * This method helps diff method to find difference between two Strings.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
      */
     private static Pair<String> diffHelper(String a, String b, Map<Long, Pair<String>> lookup) {
         long key = ((long) a.length()) << 32 | b.length();
@@ -139,6 +204,13 @@ public class Game {
         return lookup.get(key);
     }
 
+    /**
+     * This method helps diff method to find difference between two Strings.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static class Pair<T> {
         public Pair(T first, T second) {
             this.first = first;
@@ -151,13 +223,18 @@ public class Game {
             return (String) second+",";
         }
     }
+
     public void setGameString(String gameString){
         this.gameString = gameString;
     }
 
-
-
-
+    /**
+     * This method gets a move from diff method and converts it to nootation.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public String formatMoveToNotation(String receivedMessage){
         String result ="";
         char[] character = new char[receivedMessage.length()];

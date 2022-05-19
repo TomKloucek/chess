@@ -10,17 +10,42 @@ import java.util.Random;
 
 import static cz.cvut.fel.pjv.models.Color.WHITE;
 
+/**
+ * AiPlayer is a class for artificial intelligence to play against player.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class AiPlayer extends Player {
 
     private Board board;
     private Random random;
 
+    /**
+     * A constructor of AiPlayer.
+     *
+     * @param color color of AiPlayer
+     * @param pieces pieces of AiPlayer
+     * @param board board of game
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public AiPlayer(Color color, ArrayList<IPiece> pieces, Board board) {
         super(color, pieces);
         this.random = new Random();
         this.board = board;
     }
 
+    /**
+     * This method transfers moves a piece for artificial intelligence.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean doAMove() {
         IPiece chosen = board.getPieces(getColor()).get(Helpers.randomNumber(0, board.getPieces(getColor()).size()));
         boolean checked = false;
@@ -77,6 +102,14 @@ public class AiPlayer extends Player {
         return false;
     }
 
+
+    /**
+     * This method gets best move for artificial intelligence.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ArrayList<Object> getBestAiMove(ArrayList<IPiece> pieces) {
         ArrayList<Square> bestMoves = new ArrayList<>();
         for (IPiece chosen : pieces) {

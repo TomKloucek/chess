@@ -8,6 +8,13 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Board is one of the main classes of the whole project. It has all information of the positions and pieces.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class Board {
     private Square[][] board;
 
@@ -23,6 +30,16 @@ public class Board {
 
     private boolean addFirstNotation = true;
 
+
+    /**
+     * A constructor of Board.
+     *
+     * @param type type of game which is played
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public Board(GameType type) {
         this.board = new Square[8][8];
         this.blackIPieces = new ArrayList<>();
@@ -30,6 +47,17 @@ public class Board {
         this.type = type;
     }
 
+    /**
+     * This method returns all pieces of the required color.
+     *
+     * @param color required color of pieces
+     *
+     * @return list of pieces of the required color
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ArrayList<IPiece> getPieces(Color color) {
         if (color == Color.WHITE) {
             return whiteIPieces;
@@ -38,10 +66,27 @@ public class Board {
         }
     }
 
+    /**
+     * This method returns squares of board.
+     *
+     * @return list squares
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public Square[][] getBoard() {
         return board;
     }
 
+
+    /**
+     * This method initiates editor of board.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void initializeEditor() {
         for (int i = 7; i > -1; i--) {
             for (int j = 0; j < 8; j++) {
@@ -50,6 +95,14 @@ public class Board {
         }
     }
 
+
+    /**
+     * This method initiates board for game.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void initializeBoard() {
 
         for (int i = 7; i > -1; i--) {
@@ -109,6 +162,19 @@ public class Board {
         }
     }
 
+
+    /**
+     * This method puts piece on the board.
+     *
+     * @param x required x coordinate of piece
+     * @param y required y coordinate of piece
+     * @param type required type of piece
+     * @param color required color of piece
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void putPiece(int x, int y, String type, Color color) {
         IPiece IPiece = switch (type) {
             case "Pawn" -> new Pawn(color, x, y);
@@ -127,6 +193,15 @@ public class Board {
         board[x][y].setPiece(IPiece);
     }
 
+    /**
+     * This method puts piece into the list of the same colored pieces.
+     *
+     * @param IPiece piece to be put into the list
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void putPiece(IPiece IPiece) {
         if (IPiece.getColor() == Color.WHITE) {
             whiteIPieces.add(IPiece);
@@ -135,6 +210,18 @@ public class Board {
         }
     }
 
+    /**
+     * This method picks piece from the given coordinates.
+     *
+     * @param x required x from where the piece has to be picked
+     * @param y required y from where the piece has to be picked
+     *
+     * @return piece on the given coordinates
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public IPiece pickPiece(int x, int y) {
         if (this.board[x][y].getPiece() == null) {
             return null;
@@ -142,6 +229,18 @@ public class Board {
             return this.board[x][y].getPiece();
         }
     }
+
+    /**
+     * This method converts string to board.
+     *
+     * @param s board String which would be converted
+     *
+     * @return board representation of String
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
 
     public void stringToBoard(String s, boolean network) {
         this.getPieces(Color.WHITE).clear();
@@ -174,6 +273,18 @@ public class Board {
 
     }
 
+
+    /**
+     * This method converts string to piece.
+     *
+     * @param piece piece String which would be converted
+     *
+     * @return piece representation of String
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public IPiece pieceFromString(String piece) {
         piece = piece.trim();
         char[] chars = piece.toCharArray();
@@ -240,6 +351,14 @@ public class Board {
         return null;
     }
 
+
+    /**
+     * This method sets motion to all pawns which were not moved two squares ahead.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void setMotionToPawns(ArrayList<IPiece> IPieces, IPiece chosen) {
         for (IPiece IPiece : IPieces) {
             if (chosen != IPiece && IPiece instanceof Pawn) {
@@ -248,6 +367,20 @@ public class Board {
         }
     }
 
+
+    /**
+     * This method moves piece on the board.
+     *
+     * @param chosen chosen piece which has to be moved
+     * @param x required x of the demanded move
+     * @param y required y of the demanded move
+     *
+     * @return true if the piece was succesfully moved
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean movePiece(IPiece chosen, int x, int y) {
         setMotionToPawns(this.getPieces(chosen.getColor()), chosen);
         if (chosen.possibleMovement(this).contains(board[x][y])) {
@@ -361,6 +494,18 @@ public class Board {
         }
     }
 
+
+    /**
+     * This method promotes pawn to chosen piece.
+     *
+     * @param pawn chosen pawn which has to be promoted
+     *
+     * @return demanded piece (result of promotion)
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     private IPiece PromoteTo(Pawn pawn) {
         String[] options = {"Rook", "Queen", "Bishop", "Knight"};
         int answer;
@@ -381,6 +526,19 @@ public class Board {
         };
     }
 
+
+
+    /**
+     * This method gets piece of the required color on the board.
+     *
+     * @param color required color
+     *
+     * @return king of the required color
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public IPiece getKing(Color color) {
         if (color == Color.WHITE) {
             for (IPiece IPiece : this.getPieces(Color.WHITE)) {
@@ -411,6 +569,16 @@ public class Board {
         }
     }
 
+
+    /**
+     * This method removes piece from the list of pieces.
+     *
+     * @param IPiece piece which has to be removed
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void removePiece(IPiece IPiece) {
         if (IPiece.getColor() == Color.WHITE) {
             whiteIPieces.remove(IPiece);
@@ -419,6 +587,14 @@ public class Board {
         }
     }
 
+
+    /**
+     * This method refills pieces lists.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void refillPiecesLists() {
         ArrayList<IPiece> whiteIPieces = new ArrayList<>();
         ArrayList<IPiece> blackIPieces = new ArrayList<>();
@@ -446,6 +622,17 @@ public class Board {
         return moves;
     }
 
+    /**
+     * This method gets all possible moves of all pieces on the board.
+     *
+     * @param IPieces pieces list, from which all moves have to be calculated
+     *
+     * @return all possible moves (their square representation)
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ArrayList<Square> getEveryPossibleMovesWithCover(ArrayList<IPiece> IPieces) {
         ArrayList<Square> moves = new ArrayList<>();
         for (IPiece IPiece : IPieces) {
@@ -454,6 +641,17 @@ public class Board {
         return moves;
     }
 
+    /**
+     * This method gets all xray moves of all pieces on the board.
+     *
+     * @param IPieces pieces list, from which all xray moves have to be calculated
+     *
+     * @return all possible xray moves (their square representation)
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ArrayList<Square> getEveryXRayMove(ArrayList<IPiece> IPieces) {
         ArrayList<Square> moves = new ArrayList<>();
         for (IPiece IPiece : IPieces) {
@@ -470,6 +668,18 @@ public class Board {
         return moves;
     }
 
+
+    /**
+     * This method gets squares which have to be blocked to avoid check.
+     *
+     * @param IPieces pieces list, from which all squares to block have to be calculated
+     *
+     * @return all squares which have to be blocked (their square representation)
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ArrayList<Square> getSquaresToBlock(ArrayList<IPiece> IPieces) {
         ArrayList<Square> squaresToBlock = new ArrayList<>();
         Square kingSquare = this.board[getKing(Helpers.getOtherColor((IPieces.get(0)).getColor())).getX()][getKing(Helpers.getOtherColor((IPieces.get(0)).getColor())).getY()];
@@ -620,17 +830,44 @@ public class Board {
         return squaresToBlock;
     }
 
-
+    /**
+     * This method checks if white king is in check
+     *
+     * @return true if white king is in check
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean whiteInCheck() {
         IPiece king = getKing(Color.WHITE);
         return getEveryPossibleMoves(this.getPieces(Color.BLACK)).contains(getBoard()[king.getX()][king.getY()]);
     }
 
+    /**
+     * This method checks if black king is in check
+     *
+     * @return true if black king is in check
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean blackInCheck() {
         IPiece king = getKing(Color.BLACK);
         return getEveryPossibleMoves(this.getPieces(Color.WHITE)).contains(getBoard()[king.getX()][king.getY()]);
     }
 
+
+    /**
+     * This method checks if the given color is mated
+     *
+     * @return true if the given color king is mated
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean mated(Color color) {
         if (color == Color.WHITE) {
             for (IPiece IPiece : whiteIPieces) {
@@ -649,10 +886,28 @@ public class Board {
         }
     }
 
+    /**
+     * This method returns notation of the game.
+     *
+     * @return string of the whole notation
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public String getNotation(){
         return notation;
     }
 
+    /**
+     * This method adds move to notation of the game.
+     *
+     * @param move performed move
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void addMoveToNotation(String move){
         int oldCounter = counter;
         if(counterHelper!= 0 && counterHelper % 2 == 0){
@@ -680,6 +935,18 @@ public class Board {
         return false;
     }
 
+
+    /**
+     * This method checks if the given color on the given position will be checked on the given coordinates.
+     *
+     * @param color given color
+     * @param x x position to check if it will be checked
+     * @param y x position to check if it will be checked
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean willBeChecked(Color color,int x, int y) {
         if (color == Color.WHITE) {
             IPiece king = getKing(Color.WHITE);
@@ -691,6 +958,13 @@ public class Board {
         }
     }
 
+    /**
+     * This method converts board to String.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public String boardToString() {
         StringBuilder game = new StringBuilder();
         for (int i = 7; i > -1; i--) {
@@ -709,6 +983,16 @@ public class Board {
         return game.toString();
     }
 
+    /**
+     * This method checks if piece can save king from check or if king could escape.
+     *
+     * @return true if the conditions mentioned above are fulfilled
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
+
     public boolean canBlockOrEscapeFromCheck(IPiece IPiece){
         if(IPiece instanceof King){
             if (IPiece.possibleMovement(this).isEmpty()){
@@ -725,12 +1009,35 @@ public class Board {
             return false;
         }
     }
+
+
+    /**
+     * This method returns all possible moves of piece to uncheck the king.
+     *
+     * @param IPiece given piece to check its possible moves to uncheck
+     *
+     * @return all possible moves of piece to uncheck the king.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public ArrayList<Square> possibleMovesToUncheck(IPiece IPiece){
         ArrayList<Square> squaresToBlock = getSquaresToBlock(this.getPieces(Helpers.getOtherColor(IPiece.getColor())));
         ArrayList<Square> piecePossibleMovements = IPiece.possibleMovement(this);
         return (ArrayList<Square>) Helpers.intersection(squaresToBlock, piecePossibleMovements);
     }
 
+
+    /**
+     * This method checks if the game is drawn.
+     *
+     * @return true if all conditions all fulfilled
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean isDraw() {
         if (this.getKing(Color.WHITE).possibleMovement(this).isEmpty() && this.getPieces(Color.WHITE).size() == 1) {
             return true;
@@ -745,6 +1052,15 @@ public class Board {
         return false;
     }
 
+    /**
+     * This method checks if there is only king of the given color left on the board.
+     *
+     * @return true if there is only king
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean isThereOnlyKingOnTheBoard(Color color){
         if(this.getPieces(color).size() == 1 && this.getPieces(color).contains(getKing(color))){
             return true;
@@ -754,6 +1070,17 @@ public class Board {
         }
     }
 
+
+
+    /**
+     * This method checks if there is only king and knight of the given color left on the board.
+     *
+     * @return true if there is only king and one knight
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean isThereOnlyKingAndKnightOnTheBoard(Color color){
         if(this.getPieces(color).size() == 2 && this.getPieces(color).contains(getKing(color))) {
             int countOfKnights = 0;
@@ -769,6 +1096,16 @@ public class Board {
         return false;
     }
 
+
+    /**
+     * This method checks if there is only king and bishop of the given color left on the board.
+     *
+     * @return true if there is only king and one bishop
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public boolean isThereOnlyKingAndBishopOnTheBoard(Color color){
         if(this.getPieces(color).size() == 2 && this.getPieces(color).contains(getKing(color))) {
             int countOfBishops = 0;
@@ -783,9 +1120,27 @@ public class Board {
         }
         return false;
     }
+
+    /**
+     * This method is used for count of moves in the game.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public void addCounterHelper(){
         counterHelper+=1;
     }
+
+    /**
+     * This method returns type of game.
+     *
+     * @return type of the played game
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public GameType getType() {
         return type;
     }

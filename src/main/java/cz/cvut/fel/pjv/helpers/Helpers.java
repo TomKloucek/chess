@@ -16,7 +16,24 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Helpers is a class in which all helping methods are stored.
+ *
+ * @author Tomas Kloucek
+ * @author Vladyslav Babyc
+ *
+ */
 public class Helpers {
+    /**
+     * This method translates a number of x coordinate into its letter representation.
+     *
+     * @param x is a number of coordinate
+     * @return letter representation of number coordinate
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static String XTranslate(int x) {
         return switch (x + 1) {
             case 1 -> "a";
@@ -31,11 +48,31 @@ public class Helpers {
         };
     }
 
+    /**
+     * This method generates a random number in the given range.
+     *
+     * @param start start of given range
+     * @param end end of given range
+     * @return random number in the given range
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static int randomNumber(int start, int end) {
         Random random = new Random();
         return random.nextInt(start,end);
     }
-
+    /**
+     * This method translates a letter representation of x coordinate into its number representation.
+     *
+     * @param x letter representation of given coordinate
+     * @return number representation of x coordinate
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static int XTranslateBack(String x) {
         return switch (x) {
             case "a" -> 0;
@@ -50,9 +87,35 @@ public class Helpers {
         };
     }
 
+    /**
+     * This method checks if move with the given coordinates is inside the board.
+     *
+     * @param x x coordinate of move
+     * @param y y coordinate of move
+     * @return true if x and y are in range between 0 and 7 (including)
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static boolean MoveInBoard(int x, int y) {
         return x <= 7 && x >= 0 && y <= 7 && y >= 0;
     }
+
+    /**
+     * This method checks if move of pieces with the given coordinates is inside the board.
+     *
+     * @param actualCoordinateX x coordinate of piece which will be moved
+     * @param actualCoordinateY y coordinate of piece which will be moved
+     * @param additionToCoordinateX number which has to be added to x coordinate to check whether the move is inside the board
+     * @param additionToCoordinateY number which has to be added to y coordinate to check whether the move is inside the board
+     * @param coordinate determines which coordinate has to be returned
+     * @return value of actual coordinate if move is not inside the board, or value of wanted coordinate
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static int checkSquareCoordinates(int actualCoordinateX, int additionToCoordinateX, int actualCoordinateY, int additionToCoordinateY, String coordinate){
         int requiredCoordinateX =  actualCoordinateX + additionToCoordinateX;
         int requiredCoordinateY = actualCoordinateY + additionToCoordinateY;
@@ -72,6 +135,16 @@ public class Helpers {
         }
     }
 
+    /**
+     * This method gets the opposite color.
+     *
+     * @param color color opposite to which has to be found
+     * @return opposite color of parameter color
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static Color getOtherColor(Color color) {
         if (color == Color.WHITE) {
             return Color.BLACK;
@@ -82,6 +155,17 @@ public class Helpers {
         return color;
     }
 
+    /**
+     * This method returns intersection of two lists.
+     *
+     * @param list1 first list with values which might be intersected with the other list
+     * @param list2 second list with values which might be intersected with the other list
+     * @return intersection of two lists
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static  <T> List<T> intersection(List<T> list1, List<T> list2) {
         List<T> list = new ArrayList<T>();
 
@@ -102,6 +186,18 @@ public class Helpers {
         return new ArrayList<T>(set);
     }
 
+
+    /**
+     * This method returns image of piece.
+     *
+     * @param square square on which the piece is located
+     * @param board parameter to help the method to know if king is checked or not
+     * @return image of piece on the given square
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static Image getPieceImage(Square square, Board board) {
         IPiece IPiece = square.getPiece();
         String set = State.getInstance().getPiecesSet();
@@ -172,6 +268,15 @@ public class Helpers {
         }
     }
 
+    /**
+     * This method exports board to String in file.
+     *
+     * @param board board which has to be exported
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static void exportBoard(String board) throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -182,6 +287,15 @@ public class Helpers {
         }
     }
 
+    /**
+     * This method imports String from file.
+     *
+     * @return String representation of board from file
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static String importBoard() throws FileNotFoundException {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -194,6 +308,13 @@ public class Helpers {
         return "";
     }
 
+    /**
+     * This method writes colors and figures settings the client file.
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static void writeColorsAndFigures() throws IOException {
             File file = new File("client.txt");
             FileWriter myWriter = new FileWriter(file.getAbsolutePath());
@@ -203,6 +324,15 @@ public class Helpers {
             myWriter.close();
     }
 
+    /**
+     * This method sets length of the game from given choices.
+     *
+     * @param value required number of seconds of game length
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static long getGameLength(int value) {
         return switch (value) {
             case 0 -> 60;
@@ -213,6 +343,19 @@ public class Helpers {
         };
     }
 
+
+    /**
+     * This method formats time so the user has better experience.
+     *
+     * @param minutes count of minutes
+     * @param seconds count of seconds
+     *
+     * @return String with or without added zeroes for better user experience
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static String formatTime(long minutes, long seconds) {
         String result = "";
         if (minutes < 10) {
@@ -231,6 +374,20 @@ public class Helpers {
         return result;
     }
 
+    /**
+     * This method sends game history with additional information such as player logins and determination of winner.
+     *
+     * @param moves moves which were made in the game
+     * @param loginWhite login of white player
+     * @param loginBlack login of black player
+     * @param win determination of winner
+     *
+     * @return String of the whole game with the additional information
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static String gameHistory(ArrayList<String> moves, String loginWhite, String loginBlack, int win) {
         StringBuilder resultString = new StringBuilder();
         boolean first = true;
@@ -252,6 +409,17 @@ public class Helpers {
         return  resultString.toString();
     }
 
+    /**
+     * This method translates Strings to games.
+     *
+     * @param allgames String representation of all games
+     *
+     * @return individual games to be displayed
+     *
+     * @author Tomas Kloucek
+     * @author Vladyslav Babyc
+     *
+     */
     public static ArrayList<GameHistory> gamesFromString(String allgames) {
         ArrayList<GameHistory> result = new ArrayList<>();
         String[] gamesSplit = allgames.split("@");
